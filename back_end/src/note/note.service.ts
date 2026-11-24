@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive } from 'src/utils';
-import QueryDto from 'src/validators/query.dto';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive } from '../utils';
+import QueryDto from '../validators/query.dto';
 
 @Injectable()
 export class NoteService {

@@ -5,7 +5,7 @@ import {
   Matches,
   IsOptional,
 } from 'class-validator';
-import { Trim } from 'src/validators/is-in-set.validator';
+import { Trim } from '../../validators/is-in-set.validator';
 
 const videoUrlRegex =
   /^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\/?.*\.(mp4|mov|avi|webm)$/i;

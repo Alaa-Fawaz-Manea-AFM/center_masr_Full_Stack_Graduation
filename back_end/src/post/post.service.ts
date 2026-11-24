@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/createPost.dto';
 import { UpdatePostDto } from './dto/updatePost.dto';
-import { PrismaService } from 'src/prisma.service';
-import { RoleEnumDto } from 'src/validators/roles.dto';
+import { PrismaService } from '../prisma.service';
+import { RoleEnumDto } from '../validators/roles.dto';
 import GetAllPostsDto from './dto/getAllPosts.dto';
-import { roleTeacherAndCenterSet, sendResponsive } from 'src/utils';
+import { roleTeacherAndCenterSet, sendResponsive } from '../utils';
 
 @Injectable()
 export class PostService {

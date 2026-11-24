@@ -9,8 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { BookedWeeklyService } from './booked.weekly.service';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { STUDENT } from 'src/utils';
+import RolesDecorator from '../decorator/roles.decorator';
+import { STUDENT } from '../utils';
 
 @Controller('booked-weekly')
 export class BookedWeeklyController {

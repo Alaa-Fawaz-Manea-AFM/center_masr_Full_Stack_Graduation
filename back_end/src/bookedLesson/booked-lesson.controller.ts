@@ -1,7 +1,7 @@
 import { Controller, Post, Param, Req, ParseUUIDPipe } from '@nestjs/common';
-import RolesDecorator from 'src/decorator/roles.decorator';
+import RolesDecorator from '../decorator/roles.decorator';
 import { BookedLessonService } from './booked-lesson.service';
-import { STUDENT } from 'src/utils';
+import { STUDENT } from '../utils';
 
 @Controller('booked-lessons')
 export class BookedLessonController {

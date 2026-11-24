@@ -13,9 +13,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { GetAllUsersDto } from './dto/getAllUsersDto';
-import { RoleTeacherAndCenterDto } from 'src/validators/roles.dto';
+import { RoleTeacherAndCenterDto } from '../validators/roles.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 
 @Controller('users')
 export class UsersController {

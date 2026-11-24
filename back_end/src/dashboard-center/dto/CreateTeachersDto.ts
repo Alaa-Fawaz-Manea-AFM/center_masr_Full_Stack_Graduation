@@ -1,6 +1,6 @@
 import { IntersectionType, OmitType } from '@nestjs/mapped-types';
-import BaseDataUserDto from 'src/validators/baseDataUser.dto';
-import { TeacherDto } from 'src/validators/teacher.dto';
+import BaseDataUserDto from '../../validators/baseDataUser.dto';
+import { TeacherDto } from '../../validators/teacher.dto';
 
 class baseDataUser extends OmitType(BaseDataUserDto, [
   'password',

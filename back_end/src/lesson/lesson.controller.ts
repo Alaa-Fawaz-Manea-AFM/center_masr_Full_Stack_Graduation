@@ -13,10 +13,10 @@ import {
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { LessonService } from './lesson.service';
-import RolesDecorator from 'src/decorator/roles.decorator';
+import RolesDecorator from '../decorator/roles.decorator';
 import { GetAllLessonDto } from './dto/getAllLessonDto';
-import QueryDto from 'src/validators/query.dto';
-import { TEACHER } from 'src/utils';
+import QueryDto from '../validators/query.dto';
+import { TEACHER } from '../utils';
 
 @Controller('courses/lessons')
 export class LessonController {

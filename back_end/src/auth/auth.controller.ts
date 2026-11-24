@@ -9,12 +9,12 @@ import {
   Patch,
   BadRequestException,
 } from '@nestjs/common';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 import SignUpAuthDto from './dto/sign-up-auth.dto';
 import SignInAuthDto from './dto/sign-in-auth.dto';
 import { AuthService } from './auth.service';
 import type { Response } from 'express';
-import { ChangePasswordDto } from 'src/validators/changePassword.dto';
+import { ChangePasswordDto } from '../validators/changePassword.dto';
 
 @Controller('auth')
 export class AuthController {

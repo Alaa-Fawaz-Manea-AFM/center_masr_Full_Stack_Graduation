@@ -12,7 +12,7 @@ import {
   educationalStageSet,
   studyMaterialSet,
   studySystemSet,
-} from 'src/utils/constant';
+} from '../utils/constant';
 
 export class TeacherDto {
   @Trim()

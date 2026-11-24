@@ -13,8 +13,8 @@ import {
 import { WeeklyScheduleService } from './weekly-schedule.service';
 import { GetWeeklyScheduleDto } from './dto/GetWeeklyScheduleDto';
 import { CreateWeeklyDto } from './dto/create-weekly-schedule.dto';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { CENTER } from 'src/utils';
+import RolesDecorator from '../decorator/roles.decorator';
+import { CENTER } from '../utils';
 import { TeacherDayDto } from './dto/TeacherDayDto';
 
 @Controller('weekly-schedule')

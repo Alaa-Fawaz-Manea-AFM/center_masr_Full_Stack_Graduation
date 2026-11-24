@@ -5,16 +5,16 @@ import {
   ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
-import { roleTeacherAndCenterSet, sendResponsive, STUDENT } from 'src/utils';
+import { roleTeacherAndCenterSet, sendResponsive, STUDENT } from '../utils';
 import SignUpAuthDto from './dto/sign-up-auth.dto';
 import SignInAuthDto from './dto/sign-in-auth.dto';
-import { PayloadTokenType } from 'src/types/type';
+import { PayloadTokenType } from '../types/type';
 import { PrismaService } from '../prisma.service';
 import AppConfig from '../config/app.config';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
 import { Response } from 'express';
-import { ChangePasswordDto } from 'src/validators/changePassword.dto';
+import { ChangePasswordDto } from '../validators/changePassword.dto';
 
 const secureCookieOptions = (type = 'accessToken') => {
   if (process.env.NODE_ENV === 'development') return {};

@@ -13,12 +13,12 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import GetAllPostsDto from './dto/getAllPosts.dto';
-import { RequestType } from 'src/types/type';
+import { RequestType } from '../types/type';
 import { CreatePostDto } from './dto/createPost.dto';
-import { CENTER, TEACHER } from 'src/utils';
+import { CENTER, TEACHER } from '../utils';
 import { UpdatePostDto } from './dto/updatePost.dto';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import QueryPageDto from 'src/validators/queryPageDto';
+import RolesDecorator from '../decorator/roles.decorator';
+import QueryPageDto from '../validators/queryPageDto';
 
 @Controller('posts')
 export class PostController {

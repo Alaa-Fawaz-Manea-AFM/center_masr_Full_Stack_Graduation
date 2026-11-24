@@ -1,4 +1,4 @@
-import { RoleEnumDto } from 'src/validators/roles.dto';
+import { RoleEnumDto } from '../validators/roles.dto';
 
 type PayloadTokenType = {
   userId: string;

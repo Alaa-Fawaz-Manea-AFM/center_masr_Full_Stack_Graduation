@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive } from 'src/utils';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive } from '../utils';
 import { GetAllLessonDto } from './dto/getAllLessonDto';
-import QueryDto from 'src/validators/query.dto';
+import QueryDto from '../validators/query.dto';
 
 @Injectable()
 export class LessonService {

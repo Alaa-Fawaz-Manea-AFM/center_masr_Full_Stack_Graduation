@@ -4,8 +4,8 @@ import {
   studyMaterialSet,
   weekDays,
   weekDaysSet,
-} from 'src/utils/constant';
-import { IsInSet, Trim } from 'src/validators/is-in-set.validator';
+} from '../../utils/constant';
+import { IsInSet, Trim } from '../../validators/is-in-set.validator';
 
 export class CreateCourseDto {
   @IsNotEmpty()

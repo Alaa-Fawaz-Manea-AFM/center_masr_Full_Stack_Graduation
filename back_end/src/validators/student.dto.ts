@@ -1,4 +1,4 @@
-import { classRoomSet, educationalStageSet } from 'src/utils/constant';
+import { classRoomSet, educationalStageSet } from '../utils/constant';
 import { IsInSet, Trim } from './is-in-set.validator';
 import { IsArray } from 'class-validator';
 export class StudentDto {

@@ -1,8 +1,8 @@
 import { IntersectionType, OmitType, PartialType } from '@nestjs/mapped-types';
-import BaseDataUserDto from 'src/validators/baseDataUser.dto';
-import { TeacherDto } from 'src/validators/teacher.dto';
-import { CenterDto } from 'src/validators/center.dto';
-import { StudentDto } from 'src/validators/student.dto';
+import BaseDataUserDto from '../../validators/baseDataUser.dto';
+import { TeacherDto } from '../../validators/teacher.dto';
+import { CenterDto } from '../../validators/center.dto';
+import { StudentDto } from '../../validators/student.dto';
 import { Role } from '@prisma/client';
 import { ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';

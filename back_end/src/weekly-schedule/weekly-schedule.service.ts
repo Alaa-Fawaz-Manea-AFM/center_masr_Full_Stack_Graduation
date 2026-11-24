@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive, STUDENT, weekDays } from 'src/utils';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive, STUDENT, weekDays } from '../utils';
 import { CreateWeeklyDto } from './dto/create-weekly-schedule.dto';
 import { TeacherDayDto } from './dto/TeacherDayDto';
 

@@ -3,14 +3,14 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { GetAllUsersDto } from './dto/getAllUsersDto';
 import {
   CENTER,
   roleTeacherAndCenterSet,
   sendResponsive,
   TEACHER,
-} from 'src/utils';
+} from '../utils';
 import { Role } from '@prisma/client';
 import { UpdateUserDto } from './dto/updateUser.dto';
 
