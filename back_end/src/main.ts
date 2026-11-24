@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { ChatWsService } from './WS_Chat2/ChatWsService';
+import morgan from 'morgan';
 import { json } from 'express';
 
 async function bootstrap() {
