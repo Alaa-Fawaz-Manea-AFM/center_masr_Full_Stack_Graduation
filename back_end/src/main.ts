@@ -2,9 +2,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './globalErrorHandler';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { WinstonConfig } from './utils/logger';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import { ChatWsService } from './WS_Chat2/ChatWsService';
 import { json } from 'express';
 
 async function bootstrap() {
@@ -19,6 +21,10 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  const server = app.getHttpServer();
+  const wsServer = app.get(ChatWsService);
+  wsServer.setServer(server);
 
   app.useGlobalFilters(new GlobalExceptionFilter());
 
@@ -36,20 +42,6 @@ async function bootstrap() {
     methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
-
-  // const allowedOrigins = [process.env.CLIENT_URL1, process.env.CLIENT_URL2];
-  // const allowedOrigins = [process.env.CLIENT_URL1];
-
-  // app.enableCors({
-  //   origin: (origin, callback) => {
-  //     if (!origin || allowedOrigins.includes(origin)) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Not allowed by CORS'));
-  //     }
-  //   },
-  //   credentials: true,
-  // });
 
   app.enableShutdownHooks();
 

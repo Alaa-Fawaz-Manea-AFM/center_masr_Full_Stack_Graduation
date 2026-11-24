@@ -21,6 +21,7 @@ import { BookedLessonModule } from './bookedLesson/booked-lesson.module';
 import { BookedWeeklyModule } from './bookedWeekly/booked.weekly.module';
 import { StudentDashboardModule } from './dashboard-student/student-dashboard.module';
 import { HomeController } from './homePage.controller';
+import { ChatModule } from './WS_Chat2/ChatModule';
 import { TeacherDashboardModule } from './dashboard-teacher/teacher-dashboard.module';
 import { CenterDashboardModule } from './dashboard-center/center-dashboard.module';
 
@@ -47,6 +48,7 @@ import { CenterDashboardModule } from './dashboard-center/center-dashboard.modul
     BookedWeeklyModule,
     WeeklyScheduleModule,
     StudentDashboardModule,
+    ChatModule,
     TeacherDashboardModule,
     CenterDashboardModule,
   ],
