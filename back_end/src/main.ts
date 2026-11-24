@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import morgan from 'morgan';
 import { ChatWsService } from './WS_Chat2/ChatWsService';
 import { json } from 'express';
 

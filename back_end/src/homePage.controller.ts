@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import * as os from 'os';
 import AuthDecorator from './decorator/auth.decorator';
 
-@Controller('docs')
+@Controller()
 export class HomeController {
   constructor(private configService: ConfigService) {}
 
