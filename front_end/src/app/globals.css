@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@import "nprogress/nprogress.css";
+/* @import "aos/dist/aos.css"; */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+@theme {
+  --breakpoint-xxs: 375px;
+  --breakpoint-xs: 480px;
+  --breakpoint-ssx: 620px;
+  --breakpoint-ss: 680px;
+  --breakpoint-sm: 768px;
+  --breakpoint-mdD: 930px;
+  --breakpoint-md: 1060px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-lgg: 1500px;
+  --breakpoint-xl: 1700px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: #f8fafc;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+   overflow-x: hidden;
+}
+#nprogress .bar {
+  background: #f59e0b !important;
+  height: 4px !important;
+}
+
+#nprogress .peg {
+  box-shadow: none !important;
+}
