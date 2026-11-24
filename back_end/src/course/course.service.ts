@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive } from 'src/utils';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive } from '../utils';
 import GetAllCourseDto from './dto/getAllCourseDto';
 
 @Injectable()

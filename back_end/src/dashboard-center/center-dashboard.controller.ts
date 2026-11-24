@@ -10,8 +10,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { CenterDashboardService } from './center-dashboard.service';
-import { CENTER } from 'src/utils';
-import RolesDecorator from 'src/decorator/roles.decorator';
+import { CENTER } from '../utils';
+import RolesDecorator from '../decorator/roles.decorator';
 import { GetAllDashboardCenterTeacherDto } from './dto/getAllTeacherDto';
 import { CreateTeachersDto } from './dto/CreateTeachersDto';
 

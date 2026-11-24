@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateHomeWorkDto } from './dto/create-home-work.dto';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive } from 'src/utils';
-import { GetAllLessonDto } from 'src/lesson/dto/getAllLessonDto';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive } from '../utils';
+import { GetAllLessonDto } from '../lesson/dto/getAllLessonDto';
 
 @Injectable()
 export class HomeWorkService {

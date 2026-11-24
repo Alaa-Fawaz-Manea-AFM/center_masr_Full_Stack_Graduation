@@ -7,8 +7,8 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { TeacherDayDto } from './TeacherDayDto';
-import { IsInSet } from '../validators/is-in-set.validator';
-import { classRoomSet } from '../utils/constant';
+import { IsInSet } from '../../validators/is-in-set.validator';
+import { classRoomSet } from '../../utils/constant';
 
 export class CreateWeeklyDto {
   @IsString()

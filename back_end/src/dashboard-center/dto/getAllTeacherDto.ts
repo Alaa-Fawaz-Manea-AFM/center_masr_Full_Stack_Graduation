@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { Trim } from 'src/validators/is-in-set.validator';
+import { Trim } from '../../validators/is-in-set.validator';
 
 export class GetAllDashboardCenterTeacherDto {
   @Trim()

@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { ExamService } from './exam.service';
 import { CreateExamDto } from './dto/create-exam.dto';
-import { GetAllLessonDto } from 'src/lesson/dto/getAllLessonDto';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { TEACHER } from 'src/utils';
-import QueryDto from 'src/validators/query.dto';
+import { GetAllLessonDto } from '../lesson/dto/getAllLessonDto';
+import RolesDecorator from '../decorator/roles.decorator';
+import { TEACHER } from '../utils';
+import QueryDto from '../validators/query.dto';
 
 @Controller('exams')
 export class ExamController {

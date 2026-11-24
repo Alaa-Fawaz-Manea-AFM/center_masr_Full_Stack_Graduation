@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { HomeWorkService } from './home-work.service';
 import { CreateHomeWorkDto } from './dto/create-home-work.dto';
-import { GetAllLessonDto } from 'src/lesson/dto/getAllLessonDto';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { TEACHER } from 'src/utils';
-import QueryDto from 'src/validators/query.dto';
+import { GetAllLessonDto } from '../lesson/dto/getAllLessonDto';
+import RolesDecorator from '../decorator/roles.decorator';
+import { TEACHER } from '../utils';
+import QueryDto from '../validators/query.dto';
 
 @Controller('homeWorks')
 export class HomeWorkController {

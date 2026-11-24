@@ -1,9 +1,9 @@
 import { Controller, Get, Query, Req } from '@nestjs/common';
 import { TeacherDashboardService } from './teacher-dashboard.service';
-import { TEACHER } from 'src/utils';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { CourseService } from 'src/course/course.service';
-import GetAllCourseDto from 'src/course/dto/getAllCourseDto';
+import { TEACHER } from '../utils';
+import RolesDecorator from '../decorator/roles.decorator';
+import { CourseService } from '../course/course.service';
+import GetAllCourseDto from '../course/dto/getAllCourseDto';
 
 @Controller('teacher-dashboard')
 export class TeacherDashboardController {

@@ -14,11 +14,11 @@ import {
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import RolesDecorator from 'src/decorator/roles.decorator';
-import { TEACHER } from 'src/utils';
+import RolesDecorator from '../decorator/roles.decorator';
+import { TEACHER } from '../utils';
 import GetAllCourseDto from './dto/getAllCourseDto';
-import QueryPageDto from 'src/validators/queryPageDto';
-import QueryDto from 'src/validators/query.dto';
+import QueryPageDto from '../validators/queryPageDto';
+import QueryDto from '../validators/query.dto';
 
 @Controller('courses')
 export class CourseController {

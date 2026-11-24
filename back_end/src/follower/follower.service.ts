@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { roleTeacherAndCenterSet, sendResponsive } from 'src/utils';
+import { PrismaService } from '../prisma.service';
+import { roleTeacherAndCenterSet, sendResponsive } from '../utils';
 
 @Injectable()
 export class FollowerService {

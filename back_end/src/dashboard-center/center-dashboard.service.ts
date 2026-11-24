@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { sendResponsive } from 'src/utils';
+import { PrismaService } from '../prisma.service';
+import { sendResponsive } from '../utils';
 import { CreateTeachersDto } from './dto/CreateTeachersDto';
 
 @Injectable()
