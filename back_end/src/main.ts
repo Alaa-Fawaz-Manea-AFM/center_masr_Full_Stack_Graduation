@@ -2,7 +2,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './globalErrorHandler';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { WinstonConfig } from './utils/logger';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
