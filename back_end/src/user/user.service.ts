@@ -31,31 +31,55 @@ export class UsersService {
     if (!roleTeacherAndCenterSet.has(role))
       throw new BadRequestException('invalid Role, must be teacher or center');
 
-    const user = await this.prisma.user.findUnique({
-      where: { id: targetUserId },
-      include: {
-        [role]: includeAndOmit,
-      },
-      omit: { email: true, password: true, updatedAt: true },
-    });
-
-    if (!user || user.role !== role)
-      throw new NotFoundException('User not found');
-
-    let isFollowed = false;
-    if (currentUserId) {
-      const follow = await this.prisma.follower.findUnique({
-        where: {
-          followingId_followerId: {
-            followerId: currentUserId,
-            followingId: targetUserId,
-          },
+    const [user, follow] = await Promise.all([
+      await this.prisma.user.findUnique({
+        where: { id: targetUserId },
+        include: {
+          [role]: includeAndOmit,
         },
-        select: { id: true },
-      });
+        omit: { email: true, password: true, updatedAt: true },
+      }),
+      !currentUserId
+        ? false
+        : await this.prisma.follower.findUnique({
+            where: {
+              followingId_followerId: {
+                followerId: currentUserId,
+                followingId: targetUserId,
+              },
+            },
+            select: { id: true },
+          }),
+    ]);
 
-      isFollowed = !!follow;
-    }
+    // if (!user || user.role !== role)
+    // throw new NotFoundException('User not found');
+    const isFollowed = !!follow;
+    // const user = await this.prisma.user.findUnique({
+    //   where: { id: targetUserId },
+    //   include: {
+    //     [role]: includeAndOmit,
+    //   },
+    //   omit: { email: true, password: true, updatedAt: true },
+    // });
+
+    // if (!user || user.role !== role)
+    //   throw new NotFoundException('User not found');
+
+    // let isFollowed = false;
+    // if (currentUserId) {
+    //   const follow = await this.prisma.follower.findUnique({
+    //     where: {
+    //       followingId_followerId: {
+    //         followerId: currentUserId,
+    //         followingId: targetUserId,
+    //       },
+    //     },
+    //     select: { id: true },
+    //   });
+
+    //   isFollowed = !!follow;
+    // }
 
     return sendResponsive(
       {

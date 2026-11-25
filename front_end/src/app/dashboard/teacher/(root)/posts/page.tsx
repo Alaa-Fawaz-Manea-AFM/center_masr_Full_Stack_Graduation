@@ -17,7 +17,7 @@ import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import ButtonLikes from "@/app/components/button/ButtonLike";
 import { formatDate } from "@/app/components/helper";
-import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
+import { useDashboardTeacherContext } from "@/context/MyState";
 
 const postsData = [
   {
@@ -52,7 +52,7 @@ type PostType = {
 };
 
 export default function PostsManagement() {
-  const { dataProfile } = useDashboardTeacherContext();
+  const { user } = useDashboardTeacherContext();
   const [posts, setPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -126,10 +126,10 @@ export default function PostsManagement() {
                 <div className="p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-full bg-slate-100 border border-slate-50 overflow-hidden">
-                      {dataProfile?.imageUrl && (
+                      {user?.imageUrl && (
                         <Image
-                          src={dataProfile?.imageUrl}
-                          alt={dataProfile?.name}
+                          src={user?.imageUrl}
+                          alt={user?.name}
                           width={44}
                           height={44}
                           className="w-11 h-11 object-cover"
@@ -139,7 +139,7 @@ export default function PostsManagement() {
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-800 text-sm">
-                        {dataProfile?.name}
+                        {user?.name}
                       </h4>
                       <div className="flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
                         <Clock size={12} /> {formatDate(post.createdAt)}

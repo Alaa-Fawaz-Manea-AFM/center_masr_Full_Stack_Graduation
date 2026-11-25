@@ -8,16 +8,19 @@ import { User, Mail, Lock, Loader2 } from "lucide-react";
 import { DOMAIN } from "@/utils/constants";
 import { authSchema, AuthFormData } from "@/lib/validation";
 import { AuthInput } from "./AuthInput";
-import { AuthResponse } from "@/types/auth";
+import { AuthResponse, Iform } from "@/types/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useSocket } from "@/context/WsSocket";
+import { loginAction, loginAndSignUpAction } from "@/actions/auth";
+import { useUserContext } from "@/context/MyState";
 interface AuthFormProps {
   mode: "login" | "signup";
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
-  const { setSenderId } = useSocket();
+  // const { setSenderId } = useSocket();
+  const { setUser } = useUserContext();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -35,40 +38,50 @@ export default function AuthForm({ mode }: AuthFormProps) {
     const { terms, ...apiPayload } = values;
     const endpoint = mode === "signup" ? "auth/signup" : "auth/login";
 
-    try {
-      const { data } = await axios.post<AuthResponse>(
-        `${DOMAIN}${endpoint}`,
-        apiPayload,
-        {
-          withCredentials: true,
-        },
-      );
-      const { accessToken } = data.token;
-      const { name, imageUrl, role, id } = data.data;
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("userId", id);
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userImage", imageUrl || "");
-
-      setSenderId(id);
-      Cookies.set("token", accessToken, { expires: 1 });
-      Cookies.set("role", role, { expires: 1 });
-      toast.success(data.message || "تمت العملية بنجاح");
-      window.dispatchEvent(new Event("storage"));
-
-      setTimeout(() => {
-        router.push("/");
-      }, 500);
-    } catch (error: any) {
-      const apiErrors = error.response?.data?.errors;
-      if (Array.isArray(apiErrors)) {
-        apiErrors.forEach((err: any) => toast.error(err.message));
-      } else {
-        toast.error(error.response?.data?.message || "فشل الاتصال بالسيرفر");
-      }
-    } finally {
+    // try {
+    const result = await loginAndSignUpAction(endpoint, apiPayload as Iform);
+    // console.log("====================================");
+    // console.log("result", result);
+    // console.log("====================================");
+    if (!result.success) {
+      toast.error(result?.message);
       setLoading(false);
+      return;
     }
+    // const { data } = await axios.post<AuthResponse>(
+    //   `${DOMAIN}${endpoint}`,
+    //   apiPayload,
+    //   {
+    //     withCredentials: true,
+    //   },
+    // );
+    // const { accessToken } = data.token;
+    // const { name, imageUrl, role, id } = data.data;
+    // localStorage.setItem("token", accessToken);
+    // localStorage.setItem("userId", id);
+    // localStorage.setItem("userName", name);
+    // localStorage.setItem("userImage", imageUrl || "");
+
+    // Cookies.set("token", accessToken, { expires: 1 });
+    // Cookies.set("role", role, { expires: 1 });
+    setUser(result.data);
+    toast.success(result.message);
+    window.dispatchEvent(new Event("storage"));
+
+    setTimeout(() => {
+      router.push("/");
+    }, 500);
+    setLoading(false);
+    // } catch (error: any) {
+    //   const apiErrors = error.response?.data?.errors;
+    //   if (Array.isArray(apiErrors)) {
+    //     apiErrors.forEach((err: any) => toast.error(err.message));
+    //   } else {
+    //     toast.error(error.response?.data?.message || "فشل الاتصال بالسيرفر");
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

@@ -189,6 +189,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useUserContext } from "./MyState";
 
 export type ConversationsType = {
   id: string;
@@ -218,8 +219,8 @@ export type MessageType = {
 type ValueType = {
   setOpenChat: Dispatch<SetStateAction<string>>;
   openChat: string;
-  senderId: string | null;
-  setSenderId: Dispatch<SetStateAction<string | null>>;
+  // senderId: string | null;
+  // setSenderId: Dispatch<SetStateAction<string | null>>;
   AllOnline: Set<string>;
   setAllOnline: Dispatch<SetStateAction<Set<string>>>;
   socket: WebSocket | null;
@@ -242,10 +243,11 @@ export const useSocket = () => {
 };
 
 const WsSocket = ({ children }: { children: React.ReactNode }) => {
+  const { user } = useUserContext();
   const [openChat, setOpenChat] = useState<string>("");
   const [dataHeader, setDataHeader] = useState<ConversationsType | null>(null);
 
-  const [senderId, setSenderId] = useState<string | null>(null);
+  // const [senderId, setSenderId] = useState<string | null>(null);
 
   const [AllOnline, setAllOnline] = useState<Set<string>>(new Set());
 
@@ -256,16 +258,18 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
   const [socketConnected, setSocketConnected] = useState(false);
 
   // 1. Get userId when the application starts
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
+  // useEffect(() => {
+  // const userId = localStorage.getItem("userId");
 
-    if (userId) {
-      setSenderId(userId);
-    }
-  }, []);
+  // if (userId) {
+  //   setSenderId(userId);
+  // }
+  // }, []);
 
   // 2. Connect / Disconnect WebSocket based on authentication
   useEffect(() => {
+    const senderId = user?.id;
+    // if (!senderId) {
     if (!senderId) {
       setSocket(null);
       setSocketConnected(false);
@@ -369,10 +373,11 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
 
       setSocket((current) => (current === ws ? null : current));
     };
-  }, [senderId]);
+  }, [user]);
 
   // 3. Initialize conversations after connection
   useEffect(() => {
+    const senderId = user?.id;
     if (socket && socketConnected && conversations.length > 0 && senderId) {
       socket.send(
         JSON.stringify({
@@ -384,7 +389,7 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
         }),
       );
     }
-  }, [socket, socketConnected, conversations, senderId]);
+  }, [socket, socketConnected, conversations, user]);
   // useEffect(() => {
   //   if (
   //     socket?.readyState === WebSocket.OPEN &&
@@ -405,11 +410,11 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
 
   const value: ValueType = {
     setOpenChat,
-    senderId,
+    // senderId,
     AllOnline,
     setAllOnline,
     socket,
-    setSenderId,
+    // setSenderId,
     openChat,
     conversations,
     setConversations,

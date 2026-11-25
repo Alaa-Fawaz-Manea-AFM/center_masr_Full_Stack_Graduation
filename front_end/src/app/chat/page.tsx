@@ -3,17 +3,19 @@ import { useState, useEffect } from "react";
 import { MessageType, useSocket } from "@/context/WsSocket";
 import ChatMessages from "@/app/components/chat/ChatMessages";
 import ChatSidebar from "@/app/components/chat/SideBarChat";
+import { useUserContext } from "@/context/MyState";
 
 export default function PureWSChat() {
+  const { user } = useUserContext();
   const {
     dataHeader,
     setDataHeader,
-    senderId,
+    // senderId,
     conversations,
     setConversations,
     setAllOnline,
     socket,
-  }: any = useSocket();
+  } = useSocket();
 
   const [isTyping, setIsTyping] = useState<Record<string, boolean>>({});
   const [AllMessages, setAllMessages] = useState<Record<string, MessageType[]>>(
@@ -27,12 +29,12 @@ export default function PureWSChat() {
           type: "init_conversations",
           payload: conversations.map((c: any) => ({
             conversationId: c.id,
-            receiverId: senderId === c.senderId ? c.receiverId : c.senderId,
+            receiverId: user?.id === c.senderId ? c.receiverId : c.senderId,
           })),
         }),
       );
     }
-  }, [conversations, socket, senderId]);
+  }, [conversations, socket, user]);
 
   useEffect(() => {
     if (!socket) return;
@@ -42,7 +44,7 @@ export default function PureWSChat() {
         case "AllPresence": {
           const targetId = data.payload.receiverId;
           const isOnline = data.payload.isOnline;
-          if (data.payload.senderId === senderId) {
+          if (data.payload.senderId === user?.id) {
             setAllOnline((prevSet: any) => {
               const newSet = new Set(prevSet);
               isOnline ? newSet.add(targetId) : newSet.delete(targetId);
@@ -54,7 +56,7 @@ export default function PureWSChat() {
         case "presence": {
           const targetId = data.payload.senderId;
           const isOnline = data.payload.isOnline;
-          if (data.payload.receiverId === senderId) {
+          if (data.payload.receiverId === user?.id) {
             setAllOnline((prevSet: any) => {
               const newSet = new Set(prevSet);
               isOnline ? newSet.add(targetId) : newSet.delete(targetId);
@@ -98,7 +100,7 @@ export default function PureWSChat() {
     };
     socket.addEventListener("message", handleMessage);
     return () => socket.removeEventListener("message", handleMessage);
-  }, [socket, setAllOnline, setConversations, senderId]);
+  }, [socket, setAllOnline, setConversations, user?.id]);
 
   return (
     <div

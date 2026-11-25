@@ -5,27 +5,28 @@ import { Send, X, User } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { formatDateTime } from "../helper";
+import { useUserContext } from "@/context/MyState";
 
-const ChatMessages = ({ setAllMessages, AllMessages, isTyping }: any) => {
+const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
 
-  const { dataHeader, setDataHeader, senderId, AllOnline, socket }: any =
-    useSocket();
+  const { user } = useUserContext();
+  const { dataHeader, setDataHeader, AllOnline, socket } = useSocket();
   const [refresh, setRefresh] = useState(0);
   const receiverId =
-    dataHeader?.receiverId === senderId
+    dataHeader?.receiverId === user?.id
       ? dataHeader?.senderId
       : dataHeader?.receiverId;
 
   const messages = AllMessages[dataHeader?.id] || [];
 
   const openChat = async () => {
-    if (!dataHeader?.id || !senderId) return;
+    if (!dataHeader?.id || !user?.id) return;
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${senderId}&receiverId=${receiverId}`,
+        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user?.id}&receiverId=${receiverId}`,
       );
       const data = await res.json();
       setAllMessages((prev: any) => ({
@@ -56,8 +57,8 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }: any) => {
     }
   }, [messages]);
 
-  const userOnline = AllOnline?.has(receiverId);
-  const typing = isTyping[receiverId] || false;
+  const userOnline = AllOnline?.has(receiverId!);
+  const typing = isTyping[receiverId!] || false;
 
   const sendMessage = useCallback(() => {
     if (!inputValue.trim() || !dataHeader || !socket) return;
@@ -66,7 +67,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }: any) => {
       type: "send_message",
       payload: {
         conversationId: dataHeader.id,
-        senderId: senderId,
+        senderId: user?.id,
         receiverId: dataHeader.receiverId,
         content: inputValue,
       },
@@ -74,7 +75,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }: any) => {
 
     socket?.send(JSON.stringify(messagePayload));
     setInputValue("");
-  }, [inputValue, dataHeader, socket, senderId]);
+  }, [inputValue, dataHeader, socket, user?.id]);
 
   if (!dataHeader) {
     return (
@@ -141,7 +142,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }: any) => {
         className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F8F9FA] custom-scrollbar"
       >
         {messages.map((msg: any, index: number) => {
-          const isMe = msg.senderId === senderId;
+          const isMe = msg.senderId === user?.id;
           return (
             <div
               key={msg.id || index}

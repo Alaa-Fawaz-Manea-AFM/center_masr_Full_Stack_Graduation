@@ -8,37 +8,40 @@ import { UserMenu } from "./UserMenu";
 import axios from "axios";
 import { DOMAIN } from "@/utils/constants";
 import Cookies from "js-cookie";
+import { useUserContext } from "@/context/MyState";
 
 const Nav = () => {
+  const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [userName, setUserName] = useState("");
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const checkAuth = async () => {
-        const token = Cookies.get("token");
-        const storedName = localStorage.getItem("userName");
+  // useEffect(() => {
+  // if (typeof window !== "undefined") {
+  // const checkAuth = async () => {
+  // const token = Cookies.get("token");
+  // const storedName = localStorage.getItem("userName");
 
-        if (token) {
-          setIsLoggedIn(true);
-          setUserName(storedName || "أ. حسن علي");
-        } else {
-          setIsLoggedIn(false);
-        }
-      };
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //     setUserName(storedName || "أ. حسن علي");
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // };
 
-      checkAuth();
+  // checkAuth();
 
-      window.addEventListener("storage", checkAuth);
+  // window.addEventListener("storage", checkAuth);
 
-      return () => window.removeEventListener("storage", checkAuth);
-    }
-  }, []);
+  // return () => window.removeEventListener("storage", checkAuth);
+  // }
+  // }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+  const isLoggedIn = user !== null;
   return (
     <nav className="relative bg-white text-[#204658] shadow-sm z-50">
       <div className="flex items-center justify-between px-6 py-4 md:px-16">
@@ -88,7 +91,7 @@ const Nav = () => {
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center gap-4">
             {isLoggedIn ? (
-              <UserMenu userName={userName} closeMenu={closeMenu} />
+              <UserMenu userName={user.name} closeMenu={closeMenu} />
             ) : (
               <>
                 <Link
@@ -121,7 +124,7 @@ const Nav = () => {
 
       <div
         className={`
-           top-0 bg-white z-40 transition-transform duration-300 ease-in-out lg:hidden
+          top-0 bg-white z-40 transition-transform duration-300 ease-in-out lg:hidden
           ${isOpen ? "sticky" : "hidden"}
         `}
       >
@@ -164,7 +167,7 @@ const Nav = () => {
 
           <div className="flex flex-col gap-4 pt-4">
             {isLoggedIn ? (
-              <UserMenu userName={userName} />
+              <UserMenu userName={user?.name} />
             ) : (
               <>
                 <Link

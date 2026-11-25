@@ -2,7 +2,7 @@
 
 import HeroSectionDashboardTeacherCursers from "@/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
 import { formatDate } from "@/app/components/helper";
-import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
+import { useDashboardTeacherContext } from "@/context/MyState";
 import { useSocket } from "@/context/WsSocket";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
@@ -22,11 +22,7 @@ type Course = {
 
 const minWidthHeaders = "min-w-[100px] text-center";
 const LIMIT_PER_PAGE = 5;
-const classRooms = [
-  "الثالث الثانوي",
-  "الثاني الثانوي",
-  "الاول الثانوي",
-];
+const classRooms = ["الثالث الثانوي", "الثاني الثانوي", "الاول الثانوي"];
 
 const CoursesPage = () => {
   const [filter, setFilter] = useState<string>("الثالث الثانوي");
@@ -50,7 +46,6 @@ const CoursesPage = () => {
   useEffect(() => {
     handleGetTeachers();
   }, [filter]);
-
 
   const totalPages = Math.ceil(coursesData.length / LIMIT_PER_PAGE);
 

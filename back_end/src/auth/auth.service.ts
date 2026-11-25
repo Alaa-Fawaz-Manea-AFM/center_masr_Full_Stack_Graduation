@@ -79,22 +79,22 @@ export class AuthService {
 
       const accessToken = await this.JWTSign(payload);
 
-      const refreshToken = await this.JWTSign(payload, true);
+      // const refreshToken = await this.JWTSign(payload, true);
 
-      const hashRefreshToken = await hash(refreshToken, 12);
+      // const hashRefreshToken = await hash(refreshToken, 12);
 
-      await prisma.refreshToken.upsert({
-        where: { userId },
-        update: { token: hashRefreshToken },
-        create: { userId, token: hashRefreshToken },
-      });
+      // await prisma.refreshToken.upsert({
+      //   where: { userId },
+      //   update: { token: hashRefreshToken },
+      //   create: { userId, token: hashRefreshToken },
+      // });
 
       res.cookie('accessToken', accessToken, this.secureCookieOptions());
-      res.cookie(
-        'refreshToken',
-        refreshToken,
-        this.secureCookieOptions('refresh'),
-      );
+      // res.cookie(
+      //   'refreshToken',
+      //   refreshToken,
+      //   this.secureCookieOptions('refresh'),
+      // );
 
       return sendResponsive(
         {
@@ -105,10 +105,10 @@ export class AuthService {
           profileId: roleModel.id,
         },
         'Logged in successfully',
-        {
-          accessToken,
-          refreshToken,
-        },
+        // {
+        //   accessToken,
+        //   refreshToken,
+        // },
       );
     });
   }
@@ -159,22 +159,22 @@ export class AuthService {
 
     const accessToken = await this.JWTSign(payload);
 
-    const refreshToken = await this.JWTSign(payload, true);
+    // const refreshToken = await this.JWTSign(payload, true);
 
-    const hashRefreshToken = await hash(refreshToken, 12);
+    // const hashRefreshToken = await hash(refreshToken, 12);
 
-    await this.prisma.refreshToken.upsert({
-      where: { userId },
-      update: { token: hashRefreshToken },
-      create: { userId, token: hashRefreshToken },
-    });
+    // await this.prisma.refreshToken.upsert({
+    //   where: { userId },
+    //   update: { token: hashRefreshToken },
+    //   create: { userId, token: hashRefreshToken },
+    // });
 
     res.cookie('accessToken', accessToken, this.secureCookieOptions());
-    res.cookie(
-      'refreshToken',
-      refreshToken,
-      this.secureCookieOptions('refresh'),
-    );
+    // res.cookie(
+    //   'refreshToken',
+    //   refreshToken,
+    //   this.secureCookieOptions('refresh'),
+    // );
 
     return sendResponsive(
       {
@@ -185,19 +185,19 @@ export class AuthService {
         profileId,
       },
       'Logged in successfully',
-      {
-        accessToken,
-        refreshToken,
-      },
+      // {
+      //   accessToken,
+      //   refreshToken,
+      // },
     );
   }
 
   async logout(userId: string, res: Response) {
-    await this.prisma.refreshToken.deleteMany({
-      where: { userId },
-    });
+    // await this.prisma.refreshToken.deleteMany({
+    //   where: { userId },
+    // });
 
-    res.clearCookie('accessToken').clearCookie('refreshToken');
+    res.clearCookie('accessToken');
 
     return sendResponsive(null, 'Logged out successfully');
   }

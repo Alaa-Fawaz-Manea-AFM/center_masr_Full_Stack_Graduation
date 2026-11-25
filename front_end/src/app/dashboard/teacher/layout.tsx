@@ -4,8 +4,8 @@ import {
   SideBarDashboardTeacher,
 } from "@/app/components/dashboard/teacher";
 import { useState } from "react";
-import Script from "next/script"; 
-import DashBoardTeacherContext from "@/context/DashboardTeacher";
+import Script from "next/script";
+import DashBoardTeacherContext from "@/context/MyState";
 
 const LayoutDashboardTeacher = ({
   children,

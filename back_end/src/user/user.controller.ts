@@ -38,7 +38,7 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) targetUserId: string,
     @Query('role', new ParseEnumPipe(RoleTeacherAndCenterDto))
     role: string,
-    @Req() req,
+    @Req() req: any,
   ) {
     return this.usersService.getUserById(targetUserId, role, req?.user?.userId);
   }

@@ -5,6 +5,14 @@ export interface AuthResponse {
   token: Tokens;
 }
 
+export interface Iform {
+  name: string | undefined;
+  email: string;
+  password: string;
+  terms: boolean | undefined;
+  role?: "teacher" | "center" | "student";
+}
+
 export interface UserData {
   id: string;
   name: string;

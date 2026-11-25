@@ -18,6 +18,8 @@ import avatarImage from "../../../../assets/ceterProfile/teacherTap1.jpeg";
 import { DOMAIN } from "@/utils/constants";
 import Cookies from "js-cookie";
 import { useSocket } from "@/context/WsSocket";
+import { useUserContext } from "@/context/MyState";
+import { logoutAction } from "@/actions/auth";
 
 interface UserMenuProps {
   userName: string;
@@ -26,7 +28,9 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
-  const { setSenderId, setAllOnline } = useSocket();
+  const { setUser } = useUserContext();
+  const { setAllOnline } = useSocket();
+  // const { setSenderId, setAllOnline } = useSocket();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
@@ -34,30 +38,35 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
   const [userRole, setUserRole] = useState<string>("student");
   const shouldShowDropdown = isMobile || showDropdown;
   const handleLogout = async () => {
-    try {
-      const token = Cookies.get("token");
-      await axios.post(
-        `${DOMAIN}auth/logout`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-
-      closeMenu();
-      toast.success("تم تسجيل الخروج بنجاح");
-      router.push("/login");
-    } catch (error: any) {
+    // try {
+    // const token = Cookies.get("token");
+    // await axios.post(
+    //   `${DOMAIN}auth/logout`,
+    //   {},
+    //   {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   },
+    // );
+    const result = await logoutAction();
+    if (!result.success) {
       toast.error("حدث خطأ أثناء تسجيل الخروج");
-      router.push("/login");
+      closeMenu();
+      return;
     }
+    closeMenu();
+    toast.success("تم تسجيل الخروج بنجاح");
+    router.push("/login");
+    // } catch {
+    //   toast.error("حدث خطأ أثناء تسجيل الخروج");
+    //   router.push("/login");
+    // }
 
-    setSenderId(null);
+    setUser(null);
     setAllOnline(new Set());
-    Cookies.remove("token");
-    Cookies.remove("role");
-    localStorage.clear();
-    window.dispatchEvent(new Event("storage"));
+    // Cookies.remove("token");
+    // Cookies.remove("role");
+    // localStorage.clear();
+    // window.dispatchEvent(new Event("storage"));
   };
   const getDashboardPath = () => {
     switch (userRole) {

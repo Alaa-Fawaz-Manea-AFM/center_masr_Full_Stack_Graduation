@@ -2,18 +2,18 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { profileTeacher } from "./constant/constant";
-import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
+import { useDashboardTeacherContext } from "@/context/MyState";
 
 const ProfileDashboardTeacher = () => {
-  const { dataProfile } = useDashboardTeacherContext();
+  const { user } = useDashboardTeacherContext();
 
   return (
     <div className="flex flex-col items-center px-4">
       <div className="relative">
-        {dataProfile?.imageUrl && (
+        {user?.imageUrl && (
           <Image
-            src={dataProfile?.imageUrl}
-            alt={dataProfile?.name}
+            src={user?.imageUrl}
+            alt={user?.name}
             width={100}
             height={100}
             className="rounded-full"
@@ -24,13 +24,13 @@ const ProfileDashboardTeacher = () => {
       </div>
 
       <div className="flex flex-col justify-center items-center mt-2">
-        <p className="text-xl font-bold text-[#6B7280]">{dataProfile?.name}</p>
+        <p className="text-xl font-bold text-[#6B7280]">{user?.name}</p>
         <p className="text-xl font-semibold text-[#A9363D]">
-          {dataProfile?.studyMaterial}
+          {user?.studyMaterial}
         </p>
         <p className="flex items-center gap-1 text-md font-bold text-[#F59E0B]">
           <Star color="#F59E0B" size={16} />
-          {dataProfile?.teacher?.star}
+          {user?.teacher?.star}
         </p>
       </div>
     </div>
