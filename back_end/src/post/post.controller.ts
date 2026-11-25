@@ -19,7 +19,7 @@ import { CENTER, TEACHER } from '../utils';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import RolesDecorator from '../decorator/roles.decorator';
 import QueryPageDto from '../validators/queryPageDto';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 
 @Controller('posts')
 export class PostController {
