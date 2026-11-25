@@ -19,7 +19,7 @@ import { TEACHER } from '../utils';
 import GetAllCourseDto from './dto/getAllCourseDto';
 import QueryPageDto from '../validators/queryPageDto';
 import QueryDto from '../validators/query.dto';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 
 @Controller('courses')
 export class CourseController {

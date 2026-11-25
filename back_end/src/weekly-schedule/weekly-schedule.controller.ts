@@ -16,7 +16,7 @@ import { CreateWeeklyDto } from './dto/create-weekly-schedule.dto';
 import RolesDecorator from '../decorator/roles.decorator';
 import { CENTER } from '../utils';
 import { TeacherDayDto } from './dto/TeacherDayDto';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 
 @Controller('weekly-schedule')
 export class WeeklyScheduleController {
