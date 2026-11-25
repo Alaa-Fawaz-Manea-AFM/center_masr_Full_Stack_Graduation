@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ProfileFeed } from "@/src/app/components/profile/ProfileFeed";
-import { ProfileHeader } from "@/src/app/components/profile/ProfileHeader";
-import { ProfileTabs } from "@/src/app/components/profile/ProfileTabs";
-import { ProfileSidebar } from "@/src/app/components/profile/ProfileSidebar";
-import TeachersTab from "@/src/app/components/profile/TeachersTab";
-import ScheduleTab from "@/src/app/components/profile/ScheduleTab";
-import LocationTab from "@/src/app/components/profile/LocationTap";
-import { DOMAIN } from "@/src/utils/constants";
+import { ProfileFeed } from "@/app/components/profile/ProfileFeed";
+import { ProfileHeader } from "@/app/components/profile/ProfileHeader";
+import { ProfileTabs } from "@/app/components/profile/ProfileTabs";
+import { ProfileSidebar } from "@/app/components/profile/ProfileSidebar";
+import TeachersTab from "@/app/components/profile/TeachersTab";
+import ScheduleTab from "@/app/components/profile/ScheduleTab";
+import LocationTab from "@/app/components/profile/LocationTap";
+import { DOMAIN } from "@/utils/constants";
 import { useParams } from "next/navigation";
-import CenterProfileSkeleton from "@/src/app/components/profile/CenterProfileSkeleton";
+import CenterProfileSkeleton from "@/app/components/profile/CenterProfileSkeleton";
 
 export default function CenterProfilePage() {
   const param = useParams() as { id: string };

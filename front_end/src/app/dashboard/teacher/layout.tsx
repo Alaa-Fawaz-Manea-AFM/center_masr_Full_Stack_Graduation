@@ -2,10 +2,10 @@
 import {
   HeroSectionDashboardTeacher,
   SideBarDashboardTeacher,
-} from "@/src/app/components/dashboard/teacher";
+} from "@/app/components/dashboard/teacher";
 import { useState } from "react";
-import Script from "next/script"; // 👈 مهم
-import DashBoardTeacherContext from "@/src/context/DashboardTeacher";
+import Script from "next/script"; 
+import DashBoardTeacherContext from "@/context/DashboardTeacher";
 
 const LayoutDashboardTeacher = ({
   children,

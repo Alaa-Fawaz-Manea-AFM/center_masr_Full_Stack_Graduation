@@ -1,6 +1,6 @@
 "use client";
-import { formatDate } from "@/src/app/components/helper";
-import { DOMAIN } from "@/src/utils/constants";
+import { formatDate } from "@/app/components/helper";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { FileText, Lock, Download, FolderOpen } from "lucide-react";
 import { useEffect } from "react";

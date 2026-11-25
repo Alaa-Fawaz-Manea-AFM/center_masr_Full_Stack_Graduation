@@ -1,4 +1,4 @@
-import { Center } from "../types/listing";
+import { Center } from "@/types/listing";
 import centerCard1 from "../assets/Center Card/1.jpg";
 import centerCard2 from "../assets/Center Card/2.png";
 import centerCard3 from "../assets/Center Card/3.jpg";

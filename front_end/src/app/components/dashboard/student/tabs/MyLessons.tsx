@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { MapPin, Calendar, Clock } from "lucide-react";
 
 const lessonsData: { [key: string]: any[] } = {
-  "5": [
+  "10": [
     {
       id: 1,
       subject: "الرياضيات - أ/ خالد",
@@ -15,6 +15,34 @@ const lessonsData: { [key: string]: any[] } = {
       subject: "الفيزياء - أ/ محمود",
       center: "أونلاين",
       time: "الساعة 8:00 مساءً",
+    },
+  ],
+  "11": [
+    {
+      id: 1,
+      subject: "الرياضيات - أ/ خالد",
+      center: "سنتر النور - الدقى",
+      time: "الساعة 4:00 عصراً",
+    }
+  ],
+  "12": [
+    {
+      id: 1,
+      subject: "الرياضيات - أ/ خالد",
+      center: "سنتر النور - الدقى",
+      time: "الساعة 4:00 عصراً",
+    },
+    {
+      id: 2,
+      subject: "الفيزياء - أ/ محمود",
+      center: "أونلاين",
+      time: "الساعة 8:00 مساءً",
+    },
+    {
+      id: 3,
+      subject: "الاحياء - أ/ سيد",
+      center: "أونلاين",
+      time: "الساعة 10:00 مساءً",
     },
   ],
 };
@@ -60,7 +88,6 @@ const MyLessons = ({ handleGetLessons, cash }: any) => {
 
   return (
     <div className="animate-in fade-in duration-500">
-      {/* قسم الجدول القادم - ديناميكي */}
       <section className="mb-10">
         <h3 className="text-2xl font-normal text-black mb-6">الجدول القادم</h3>
         <div className="flex flex-row justify-between gap-2 overflow-x-auto pb-4 scrollbar-hide">
@@ -81,7 +108,6 @@ const MyLessons = ({ handleGetLessons, cash }: any) => {
         </div>
       </section>
 
-      {/* قسم الحصص المحجوزة - يتغير حسب اليوم المختار */}
       <section>
         <h3 className="text-2xl font-normal text-black mb-4">الحصص المحجوزة</h3>
 

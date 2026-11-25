@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { ListFilter } from "lucide-react";
 import TeachersHeader from "../components/Teacher/TeachersHeader";
 import TeachersFilters from "../components/Teacher/TeachersFilters";
 import TeacherCard from "../components/Teacher/TeacherCard";
 import axios from "axios";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import CenterCardSkeleton from "../components/Center/CenterCardSkeleton";
 
 export default function TeachersPage() {
@@ -14,77 +14,87 @@ export default function TeachersPage() {
   const [system, setSystem] = useState("");
   const [grade, setGrade] = useState("");
   const [subject, setSubject] = useState("");
+
+  const [appliedFilters, setAppliedFilters] = useState({
+    search: "",
+    system: "",
+    grade: "",
+    subject: "",
+  });
+
   const [loading, setLoading] = useState(true);
-  const [filteredTeachers, setFilteredTeachers] = useState([]);
+  const [allTeachers, setAllTeachers] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [isSorted, setIsSorted] = useState(false);
 
-  const handleFilter = () => {
-    const result = filteredTeachers.filter((teacher) => {
-      const matchSearch = teacher.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-
-      const matchSystem = system
-        ? teacher?.teacher.studySystem.includes(system)
-        : true;
-
-      const matchSubject = subject
-        ? teacher.educationalStage === subject
-        : true;
-
-      const matchGrade = grade
-        ? teacher?.teacher?.classRoom.includes(grade)
-        : true;
-
-      return matchSearch && matchSystem && matchSubject && matchGrade;
-    });
-
-    setFilteredTeachers(result);
-    setIsFiltered(true);
-    setIsSorted(false);
-  };
-
-  const showAllTeachers = () => {
-    setSearch("");
-    setSystem("");
-    setGrade("");
-    setSubject("");
-    setFilteredTeachers(data);
-    setIsFiltered(false);
-  };
-
-  const handleSort = () => {
-    if (!isSorted) {
-      const sorted = [...filteredTeachers].sort(
-        (a, b) => Number(b.rating) - Number(a.rating),
-      );
-      setFilteredTeachers(sorted);
-      setIsSorted(true);
-    } else {
-      setFilteredTeachers(teachersData);
-      setIsSorted(false);
-    }
-  };
-
-  const handleGetTeachers = async () => {
+  const handleGetTeachers = useCallback(async () => {
     try {
       setLoading(true);
-
       const {
         data: { data },
       } = await axios.get(`${DOMAIN}users?role=teacher`);
-
-      setFilteredTeachers(data);
+      setAllTeachers(data);
     } catch (err) {
       console.log("");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
   useEffect(() => {
     handleGetTeachers();
-  }, [search]);
+  }, [handleGetTeachers]);
+
+  const filteredTeachers = useMemo(() => {
+    let result = allTeachers.filter((teacher) => {
+      const matchSearch = teacher?.name
+        ?.toLowerCase()
+        .includes(appliedFilters.search.toLowerCase());
+
+      const matchSystem = appliedFilters.system
+        ? teacher?.teacher?.studySystem?.includes(appliedFilters.system)
+        : true;
+
+      const matchSubject = appliedFilters.subject
+        ? teacher?.teacher?.studyMaterial === appliedFilters.subject
+        : true;
+
+      const matchGrade = appliedFilters.grade
+        ? teacher?.teacher?.classRoom?.includes(appliedFilters.grade)
+        : true;
+
+      return matchSearch && matchSystem && matchSubject && matchGrade;
+    });
+
+    if (isSorted) {
+      return [...result].sort((a, b) => {
+        const ratingA = parseFloat(a?.teacher?.star) || 0;
+        const ratingB = parseFloat(b?.teacher?.star) || 0;
+        return ratingB - ratingA;
+      });
+    }
+
+    return result;
+  }, [allTeachers, appliedFilters, isSorted]);
+
+  const handleFilter = useCallback(() => {
+    setAppliedFilters({ search, system, grade, subject });
+    setIsFiltered(true);
+  }, [search, system, grade, subject]);
+
+  const showAllTeachers = useCallback(() => {
+    setSearch("");
+    setSystem("");
+    setGrade("");
+    setSubject("");
+    setAppliedFilters({ search: "", system: "", grade: "", subject: "" });
+    setIsFiltered(false);
+    setIsSorted(false);
+  }, []);
+
+  const handleSort = useCallback(() => {
+    setIsSorted((prev) => !prev);
+  }, []);
 
   return (
     <main className="bg-slate-50 min-h-screen pb-20" dir="rtl">
@@ -99,13 +109,14 @@ export default function TeachersPage() {
         subject={subject}
         setSubject={setSubject}
         onFilter={handleFilter}
+        data={allTeachers} 
       />
-
       <div className="max-w-7xl mx-auto px-6 mt-12">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-xl font-bold text-slate-700">
             النتائج ({filteredTeachers.length} مدرس)
           </h2>
+
           {isFiltered && (
             <button
               onClick={showAllTeachers}
@@ -162,6 +173,7 @@ export default function TeachersPage() {
             <ListFilter size={18} />
           </div>
         </div>
+
         {loading ? (
           <CenterCardSkeleton />
         ) : (

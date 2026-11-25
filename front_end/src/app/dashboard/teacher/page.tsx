@@ -1,10 +1,10 @@
 "use client";
 
-import HeroSectionDashboardTeacherCursers from "@/src/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
-import { formatDate } from "@/src/app/components/helper";
-import { useDashboardTeacherContext } from "@/src/context/DashboardTeacher";
-import { useSocket } from "@/src/context/WsSocket";
-import { DOMAIN } from "@/src/utils/constants";
+import HeroSectionDashboardTeacherCursers from "@/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
+import { formatDate } from "@/app/components/helper";
+import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
+import { useSocket } from "@/context/WsSocket";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { Trash, Pencil } from "lucide-react";
 import Link from "next/link";
@@ -23,7 +23,6 @@ type Course = {
 const minWidthHeaders = "min-w-[100px] text-center";
 const LIMIT_PER_PAGE = 5;
 const classRooms = [
-  // "الكل",
   "الثالث الثانوي",
   "الثاني الثانوي",
   "الاول الثانوي",
@@ -52,13 +51,6 @@ const CoursesPage = () => {
     handleGetTeachers();
   }, [filter]);
 
-  // const filteredCourses = useMemo(() => {
-  //   if (filter === "الكل") return coursesData;
-
-  //   return coursesData.filter((c) =>
-  //     c.grade.toLowerCase().includes(filter.toLowerCase()),
-  //   );
-  // }, [filter]);
 
   const totalPages = Math.ceil(coursesData.length / LIMIT_PER_PAGE);
 

@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import OverviewTab from "@/src/app/components/Teacher/tabs/OverviewTab";
-import { centerData } from "@/src/data/centerProfile";
-import { ProfileFeed } from "@/src/app/components/profile/ProfileFeed";
-import CoursesTab from "@/src/app/components/Teacher/tabs/coursesTab/CoursesTab";
-import ReviewsTab from "@/src/app/components/Teacher/tabs/ReviewsTab";
-import { OverviewSkeleton } from "@/src/app/components/Teacher/tabs/OverviewSkeleton";
-import { DOMAIN } from "@/src/utils/constants";
+import OverviewTab from "@/app/components/Teacher/tabs/OverviewTab";
+import { centerData } from "@/data/centerProfile";
+import { ProfileFeed } from "@/app/components/profile/ProfileFeed";
+import CoursesTab from "@/app/components/Teacher/tabs/coursesTab/CoursesTab";
+import ReviewsTab from "@/app/components/Teacher/tabs/ReviewsTab";
+import { OverviewSkeleton } from "@/app/components/Teacher/tabs/OverviewSkeleton";
+import { DOMAIN } from "@/utils/constants";
 import { useParams } from "next/navigation";
-import { useSocket } from "@/src/context/WsSocket";
+import { useSocket } from "@/context/WsSocket";
 
 export default function TeacherProfile() {
   const [activeTab, setActiveTab] = useState("نظرة عامة");
@@ -85,7 +85,7 @@ export default function TeacherProfile() {
     <>
       <div
         data-aos="fade-up"
-        className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col gap-8 border-t border-[#B0B0B0] py-3 shadow-lg overflow-auto"
+        className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row gap-8 border-t border-[#B0B0B0] py-3 shadow-lg overflow-auto"
       >
         {["نظرة عامة", "المنشورات", "الدورات التعليمية", "التقييمات"].map(
           (tab) => (

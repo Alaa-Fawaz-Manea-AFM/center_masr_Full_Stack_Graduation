@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Search, Plus, MoreVertical } from "lucide-react";
-import AddTeacherModal from "@/src/app/components/dashboard/center/AddTeacherModal";
-import { DOMAIN } from "@/src/utils/constants";
+import AddTeacherModal from "@/app/components/dashboard/center/AddTeacherModal";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 
 const TeachersPage = () => {
@@ -46,7 +46,6 @@ const TeachersPage = () => {
       }
     };
 
-    // debounce علشان نقلل عدد requests
     const delayDebounce = setTimeout(() => {
       fetchTeachers();
     }, 400);
@@ -59,7 +58,6 @@ const TeachersPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto bg-white p-6 rounded-2xl">
-      {/* Header */}
       <div className="mb-10 text-right">
         <h1 className="text-2xl font-bold text-[#134E4A]">المدرسين</h1>
         <p className="text-[#424752] font-normal text-[16px] mt-1">
@@ -67,7 +65,6 @@ const TeachersPage = () => {
         </p>
       </div>
 
-      {/* Controls */}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-8">
         <div className="relative w-full">
           <input
@@ -83,12 +80,12 @@ const TeachersPage = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+        <div className="flex items-center gap-2 pb-2">
           {[
             "الكل",
-            "المرحلة الأبتدائية",
-            "المرحلة الأعدادية",
-            "المرحلة الثانوية",
+            "ابتدائي",
+            "اعدادي",
+            "ثانوي",
           ].map((cat) => (
             <button
               key={cat}
@@ -105,21 +102,19 @@ const TeachersPage = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-[#F97216] text-white px-5 py-2 rounded-lg flex items-center gap-2"
+            className="bg-[#F97216] text-white px-5 py-2 rounded-lg flex items-center whitespace-nowrap gap-2"
           >
             إضافة مدرس <Plus size={18} />
           </button>
         </div>
       </div>
 
-      {/* Loading */}
       {loading && (
         <div className="text-center py-10 text-slate-400">
           جاري تحميل المدرسين...
         </div>
       )}
 
-      {/* Teachers */}
       {!loading && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data.map((teacher) => (
@@ -156,7 +151,6 @@ const TeachersPage = () => {
         </div>
       )}
 
-      {/* Empty */}
       {!loading && data.length === 0 && (
         <div className="text-center py-20 text-slate-400">لا يوجد مدرسين</div>
       )}

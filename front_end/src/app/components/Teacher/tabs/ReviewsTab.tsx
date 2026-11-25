@@ -1,5 +1,5 @@
 "use client";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import { Star, CheckCircle2, ListFilter } from "lucide-react";
 import { useEffect, useState } from "react";
 

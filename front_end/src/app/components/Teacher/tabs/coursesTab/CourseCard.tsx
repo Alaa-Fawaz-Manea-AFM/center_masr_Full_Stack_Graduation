@@ -1,4 +1,4 @@
-import { formatDateTime } from "@/src/app/components/helper";
+import { formatDateTime } from "@/app/components/helper";
 import Cookies from "js-cookie";
 import { Calendar, Clock, Users, BookOpen, Star } from "lucide-react";
 import { useRouter } from "next/navigation";

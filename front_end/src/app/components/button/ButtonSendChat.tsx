@@ -1,6 +1,6 @@
 "use client";
-import { useSocket } from "@/src/context/WsSocket";
-import { DOMAIN } from "@/src/utils/constants";
+import { useSocket } from "@/context/WsSocket";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -53,23 +53,6 @@ const ButtonSendChat = ({ id }: { id: string }) => {
     emitEvent("open_chat");
     router.push("/chat");
   };
-  // useEffect(() => {
-  //   const handleGetContacts = async () => {
-  //     const token = localStorage.getItem("token");
-  //     try {
-  //       const {
-  //         data: { data },
-  //       } = await axios.get(`${DOMAIN}conversations`, {
-  //         withCredentials: true,
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       setConversations(data);
-  //     } catch (error) {
-  //       console.error("Error fetching conversations:", error);
-  //     }
-  //   };
-  //   handleGetContacts();
-  // }, [setConversations]);
 
   return (
     <button

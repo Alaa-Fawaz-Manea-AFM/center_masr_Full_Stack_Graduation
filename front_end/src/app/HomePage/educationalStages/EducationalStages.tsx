@@ -6,7 +6,7 @@ import eduction1 from "../../../assets/Eduction/eduction-1.png";
 import eduction2 from "../../../assets/Eduction/eduction-2.png";
 import eduction3 from "../../../assets/Eduction/eduction-3.png";
 import Link from "next/link";
-import SectionHeader from "@/src/app/components/sectionHeader/SectionHeader";
+import SectionHeader from "@/app/components/sectionHeader/SectionHeader";
 
 interface EducationalStage {
   id: number;
@@ -68,7 +68,6 @@ const StageCard: React.FC<{ stage: EducationalStage }> = ({ stage }) => {
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
           <button className=" rounded-xl bg-[#3770AC] text-white font-medium text-sm w-full sm:w-auto hover:bg-[#306298] transition-colors">
-            {/* Custom SVG combined from Monitor and User Cog for detailed representation */}
             <Link
               href={"/teachers"}
               className="flex items-center justify-center gap-2.5 px-6 py-3"

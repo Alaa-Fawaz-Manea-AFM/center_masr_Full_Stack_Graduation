@@ -1,5 +1,5 @@
 "use client";
-import { DOMAIN } from "../utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -49,7 +49,6 @@ const DashBoardTeacherContext = ({
     setDataProfile(res?.data?.data);
   };
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetProfileData();
   }, []);
 

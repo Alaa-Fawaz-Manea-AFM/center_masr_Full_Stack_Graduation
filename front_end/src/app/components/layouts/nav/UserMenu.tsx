@@ -15,8 +15,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import avatarImage from "../../../../assets/ceterProfile/teacherTap1.jpeg";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import Cookies from "js-cookie";
+import { useSocket } from "@/context/WsSocket";
 
 interface UserMenuProps {
   userName: string;
@@ -25,6 +26,7 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
+  const { setSenderId, setAllOnline } = useSocket();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
@@ -49,6 +51,9 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
       toast.error("حدث خطأ أثناء تسجيل الخروج");
       router.push("/login");
     }
+
+    setSenderId(null);
+    setAllOnline(new Set());
     Cookies.remove("token");
     Cookies.remove("role");
     localStorage.clear();
@@ -70,7 +75,7 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
     setUserRole(role);
     const check = () => setIsMobile(window.innerWidth < 768);
 
-    check(); // أول ما الصفحة تفتح
+    check();
     window.addEventListener("resize", check);
 
     return () => window.removeEventListener("resize", check);
@@ -201,7 +206,6 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
       )}
       {isMobile && (
         <div className="flex flex-col gap-3 mt-3 w-full pt-4">
-          {/* 👤 User Info */}
           <div className="flex items-center gap-3 px-2">
             <div className="relative w-12 h-12 rounded-full overflow-hidden border">
               <Image
@@ -219,7 +223,6 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
             </div>
           </div>
 
-          {/* 📌 Links */}
           <Link
             href="/profile"
             onClick={() => {

@@ -2,7 +2,7 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { profileTeacher } from "./constant/constant";
-import { useDashboardTeacherContext } from "@/src/context/DashboardTeacher";
+import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
 
 const ProfileDashboardTeacher = () => {
   const { dataProfile } = useDashboardTeacherContext();

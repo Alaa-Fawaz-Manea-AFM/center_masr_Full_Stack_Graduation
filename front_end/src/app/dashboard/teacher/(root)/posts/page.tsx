@@ -13,11 +13,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
-import ButtonLikes from "@/src/app/components/button/ButtonLike";
-import { formatDate } from "@/src/app/components/helper";
-import { useDashboardTeacherContext } from "@/src/context/DashboardTeacher";
+import ButtonLikes from "@/app/components/button/ButtonLike";
+import { formatDate } from "@/app/components/helper";
+import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
 
 const postsData = [
   {

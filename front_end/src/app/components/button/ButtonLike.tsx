@@ -1,6 +1,6 @@
 "use client";
 
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";

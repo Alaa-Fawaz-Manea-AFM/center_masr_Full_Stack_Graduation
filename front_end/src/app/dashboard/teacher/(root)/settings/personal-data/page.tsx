@@ -7,17 +7,17 @@ import {
   classRoom,
   educationalStage,
   studyMaterial,
-} from "@/src/app/components/dashboard/teacher/constant/constant";
-import { openCloudinaryWidget } from "@/src/lib/cloudinary/widget";
+} from "@/app/components/dashboard/teacher/constant/constant";
+import { openCloudinaryWidget } from "@/lib/cloudinary/widget";
 import { useEffect, useState } from "react";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 
 import toast from "react-hot-toast";
 import {
   ProfileTeacherFormData,
   profileTeacherSchema,
-} from "@/src/lib/schema/schema";
+} from "@/lib/schema/schema";
 
 const sectionHeaderCss =
   "text-xl pr-3 border-r-4 border-[#003F87] text-[#003F87] font-bold mb-6";
@@ -130,7 +130,7 @@ const PersonalDataPage = () => {
                 type="button"
                 onClick={() =>
                   openCloudinaryWidget((url) => {
-                    // setImageValue(url); // 👈 يحط الصورة في الفورم
+                    setImageValue(url);
                     setValue("imageUrl", url);
                   })
                 }

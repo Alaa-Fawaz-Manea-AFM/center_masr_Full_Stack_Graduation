@@ -5,7 +5,7 @@ import Nav from "./components/layouts/nav/Nav";
 import "./globals.css";
 import "aos/dist/aos.css";
 import AOSProvider from "./AOSProvider";
-import WsSocket from "../context/WsSocket";
+import WsSocket from "@/context/WsSocket";
 import { Toaster } from "react-hot-toast";
 
 const cairo = Cairo({ subsets: ["arabic"] });
@@ -29,8 +29,10 @@ export default function RootLayout({
         ></link>
       </head>
       <body dir="rtl" className={`${cairo.className}`}>
-        <Nav />
-        <WsSocket>{children}</WsSocket>
+        <WsSocket>
+          <Nav />
+          {children}
+        </WsSocket>
         <Footer />
         <AOSProvider />
         <Toaster position="top-center" />

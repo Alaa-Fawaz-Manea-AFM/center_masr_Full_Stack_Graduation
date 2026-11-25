@@ -1,5 +1,5 @@
 "use client";
-import { DOMAIN } from "@/src/utils/constants";
+import { DOMAIN } from "@/utils/constants";
 import { MessageCircle, Clock, Heart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";

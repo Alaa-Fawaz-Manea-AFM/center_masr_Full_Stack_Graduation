@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BookOpen, GraduationCap, ClipboardList } from "lucide-react";
-import MySessions from "@/src/app/components/dashboard/student/tabs/MySessions";
-import MyAssignments from "@/src/app/components/dashboard/student/tabs/MyAssignments";
-import MyLessons from "@/src/app/components/dashboard/student/tabs/MyLessons";
-import { DOMAIN } from "@/src/utils/constants";
+import MySessions from "@/app/components/dashboard/student/tabs/MySessions";
+import MyAssignments from "@/app/components/dashboard/student/tabs/MyAssignments";
+import MyLessons from "@/app/components/dashboard/student/tabs/MyLessons";
+import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
-import { useSocket } from "@/src/context/WsSocket";
+import { useSocket } from "@/context/WsSocket";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("الحصص الحالية");
@@ -89,7 +89,6 @@ export default function DashboardPage() {
           الحصص
         </h1>
 
-        {/* التابات العلوية الثابتة */}
         <div className="flex items-center justify-center lg:justify-start gap-8 md:gap-12 border-b border-slate-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
           {[
             { id: "الحصص الحالية", icon: BookOpen },
@@ -115,7 +114,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* عرض المكون المختار بناءً على التاب */}
       <div className="mt-8">{tabComponents[activeTab]}</div>
     </div>
   );

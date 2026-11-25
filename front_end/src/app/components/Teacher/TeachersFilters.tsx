@@ -6,6 +6,7 @@ import {
   BookOpen,
   ChevronDown,
 } from "lucide-react";
+import { useMemo } from "react";
 
 export default function TeachersFilters({
   search,
@@ -17,10 +18,32 @@ export default function TeachersFilters({
   subject,
   setSubject,
   onFilter,
+  data = [],
 }: any) {
+  const options = useMemo(() => {
+    const systems = new Set<string>();
+    const grades = new Set<string>();
+    const subjects = new Set<string>();
+
+    data.forEach((teacher: any) => {
+      teacher?.teacher?.studySystem?.forEach((s: string) => systems.add(s));
+      teacher?.teacher?.classRoom?.forEach((g: string) => grades.add(g));
+      subjects.add(teacher?.teacher?.studyMaterial);
+    });
+
+    return {
+      systems: Array.from(systems),
+      grades: Array.from(grades),
+      subjects: Array.from(subjects),
+    };
+  }, [data]);
+
   return (
     <div className="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
-      <div data-aos="fade-up" className="bg-white text-[#9CA3AF] rounded-2xl shadow-xl p-4 md:p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div
+        data-aos="fade-up"
+        className="bg-white text-[#9CA3AF] rounded-2xl shadow-xl p-4 md:p-6 grid grid-cols-1 md:grid-cols-5 gap-4"
+      >
         <div className="relative">
           <Search className="absolute right-3 top-3" size={20} />
           <input
@@ -40,8 +63,11 @@ export default function TeachersFilters({
             className="w-full pr-10 text-black pl-4 py-2.5 border border-[#9CA3AF] rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">النظام الدراسي</option>
-            <option value="عربي">عربي</option>
-            <option value="لغات">لغات</option>
+            {options.systems.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
           </select>
           <ChevronDown
             className="absolute left-3 top-3 text-slate-400 pointer-events-none"
@@ -57,9 +83,11 @@ export default function TeachersFilters({
             className="w-full pr-10 pl-4 py-2.5 border border-[#9CA3AF] text-black rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">اختر الصف</option>
-            <option value="الصف الأول الثانوي">الصف الأول الثانوي</option>
-            <option value="الصف الثاني الثانوي">الصف الثاني الثانوي</option>
-            <option value="الصف الثالث الثانوي">الصف الثالث الثانوي</option>
+            {options.grades.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
           </select>
           <ChevronDown
             className="absolute left-3 top-3 text-slate-400 pointer-events-none"
@@ -75,12 +103,11 @@ export default function TeachersFilters({
             className="w-full pr-10 pl-4 py-2.5 border border-[#9CA3AF] text-black rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">اختر المادة</option>
-            <option value="الفيزياء">فيزياء</option>
-            <option value="الكيمياء">كيمياء</option>
-            <option value="الرياضيات">الرياضيات</option>
-            <option value="الأحياء">أحياء</option>
-            <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
-            <option value="اللغة العربية">اللغة العربية</option>
+            {options.subjects.map((sub) => (
+              <option key={sub} value={sub}>
+                {sub}
+              </option>
+            ))}
           </select>
           <ChevronDown
             className="absolute left-3 top-3 text-slate-400 pointer-events-none"
