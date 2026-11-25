@@ -2,10 +2,11 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { profileTeacher } from "./constant/constant";
-import { useDashboardTeacherContext } from "@/context/MyState";
+import { useUserContext } from "@/context/MyState";
+// import { useDashboardTeacherContext } from "@/context/MyState";
 
 const ProfileDashboardTeacher = () => {
-  const { user } = useDashboardTeacherContext();
+  const { user } = useUserContext();
 
   return (
     <div className="flex flex-col items-center px-4">

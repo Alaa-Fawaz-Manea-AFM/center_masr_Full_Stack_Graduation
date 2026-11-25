@@ -17,7 +17,8 @@ import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import ButtonLikes from "@/app/components/button/ButtonLike";
 import { formatDate } from "@/app/components/helper";
-import { useDashboardTeacherContext } from "@/context/MyState";
+import { useUserContext } from "@/context/MyState";
+// import { useDashboardTeacherContext } from "@/context/MyState";
 
 const postsData = [
   {
@@ -52,7 +53,7 @@ type PostType = {
 };
 
 export default function PostsManagement() {
-  const { user } = useDashboardTeacherContext();
+  const { user } = useUserContext();
   const [posts, setPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
