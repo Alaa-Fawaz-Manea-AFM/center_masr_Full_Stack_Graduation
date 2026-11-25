@@ -55,7 +55,7 @@ export const getDataAction = async (
       data: res.data?.data,
       message: res.data.message,
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       data: null,
