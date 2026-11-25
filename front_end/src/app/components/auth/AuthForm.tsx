@@ -40,9 +40,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
     // try {
     const result = await loginAndSignUpAction(endpoint, apiPayload as Iform);
-    // console.log("====================================");
-    // console.log("result", result);
-    // console.log("====================================");
+    console.log("====================================");
+    console.log("result", result);
+    console.log("====================================");
     if (!result.success) {
       toast.error(result?.message);
       setLoading(false);

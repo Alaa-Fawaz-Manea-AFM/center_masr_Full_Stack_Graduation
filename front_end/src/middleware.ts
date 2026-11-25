@@ -85,9 +85,13 @@ export async function middleware(request: NextRequest) {
   const isTeacherProfileRoute = /^\/teachers\/[^/]+(\/.*)?$/.test(pathname);
 
   const isDashboardRoute = pathname.startsWith("/dashboard/");
+  const isChatRoute = pathname.startsWith("/chat");
 
   const requiresAuth =
-    isCenterProfileRoute || isTeacherProfileRoute || isDashboardRoute;
+    isCenterProfileRoute ||
+    isTeacherProfileRoute ||
+    isDashboardRoute ||
+    isChatRoute;
 
   if (!requiresAuth) {
     return NextResponse.next();
@@ -133,5 +137,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/chat"],
 };
