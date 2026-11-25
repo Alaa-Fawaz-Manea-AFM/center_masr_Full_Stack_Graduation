@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { MessageType, useSocket } from "@/context/WsSocket";
-import ChatMessages from "@/app/components/chat/ChatMessages";
-import ChatSidebar from "@/app/components/chat/SideBarChat";
+import { MessageType, useSocket } from "@/src/context/WsSocket";
+import ChatMessages from "@/src/app/components/chat/ChatMessages";
+import ChatSidebar from "@/src/app/components/chat/SideBarChat";
 
 export default function PureWSChat() {
   const {

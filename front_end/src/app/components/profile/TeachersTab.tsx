@@ -11,7 +11,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 const stages = [
   "المراحل التعليمية",

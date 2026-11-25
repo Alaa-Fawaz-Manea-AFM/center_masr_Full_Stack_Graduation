@@ -1,8 +1,8 @@
 "use client";
 import { Plus, SlidersHorizontal } from "lucide-react";
 import centerLogo from "@/assets/ceterProfile/teacherTap1.jpeg";
-import { Post } from "@/app/components/dashboard/center/Post";
-import AddPostModal from "@/app/components/dashboard/center/AddPostModal";
+import { Post } from "@/src/app/components/dashboard/center/Post";
+import AddPostModal from "@/src/app/components/dashboard/center/AddPostModal";
 import { useState } from "react";
 
 const PostsPage = () => {

@@ -1,10 +1,10 @@
 "use client";
 
-import HeroSectionDashboardTeacherCursers from "@/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
-import { formatDate } from "@/app/components/helper";
-import { useDashboardTeacherContext } from "@/context/DashboardTeacher";
-import { useSocket } from "@/context/WsSocket";
-import { DOMAIN } from "@/utils/constants";
+import HeroSectionDashboardTeacherCursers from "@/src/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
+import { formatDate } from "@/src/app/components/helper";
+import { useDashboardTeacherContext } from "@/src/context/DashboardTeacher";
+import { useSocket } from "@/src/context/WsSocket";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 import { Trash, Pencil } from "lucide-react";
 import Link from "next/link";

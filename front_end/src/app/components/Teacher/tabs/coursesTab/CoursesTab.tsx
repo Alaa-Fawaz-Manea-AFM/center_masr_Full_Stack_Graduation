@@ -1,7 +1,7 @@
 import { Search, ListFilter } from "lucide-react";
 import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 
 const CoursesTab = ({
   userId,

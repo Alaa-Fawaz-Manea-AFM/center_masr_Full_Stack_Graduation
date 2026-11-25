@@ -3,9 +3,9 @@
 import { Search, MoreVertical, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { formatDate } from "../helper";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
-import { useSocket } from "@/context/WsSocket";
+import { useSocket } from "@/src/context/WsSocket";
 import Image from "next/image";
 
 export default function ChatSidebar({ isTyping }: any) {

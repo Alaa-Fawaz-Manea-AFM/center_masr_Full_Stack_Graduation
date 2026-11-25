@@ -4,9 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowRight, Search, Settings2, Video, ShieldUser } from "lucide-react";
 import LessonsTab from "./tabs/LessosTab";
 import NotesTab from "./tabs/NotesTab";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
-import { formatDate, formatDateYear } from "@/app/components/helper";
+import { formatDate, formatDateYear } from "@/src/app/components/helper";
 
 const CourseContentContainer = () => {
   const [activeTab, setActiveTab] = useState("الحصص");

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Star, Globe, Clock, Pencil, Tags } from "lucide-react";
 import Badge from "../ui/Badge";
 import Link from "next/link";
-import { Teacher } from "@/types/teacher";
+import { Teacher } from "@/src/types/teacher";
 
 type Props = {
   teacher: Teacher;

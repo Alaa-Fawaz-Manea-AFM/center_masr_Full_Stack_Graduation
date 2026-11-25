@@ -4,10 +4,10 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { changePasswordSchema } from "@/lib/schema/schema";
+import { changePasswordSchema } from "@/src/lib/schema/schema";
 
 type PasswordFields = "oldPassword" | "newPassword" | "confirmPassword";
 export const forgetPassword = [

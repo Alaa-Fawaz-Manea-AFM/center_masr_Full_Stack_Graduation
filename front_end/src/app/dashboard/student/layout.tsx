@@ -1,5 +1,5 @@
 "use client";
-import StudentSidebar from "@/app/components/layouts/sidebar/studentSidebar/StudentSidebar";
+import StudentSidebar from "@/src/app/components/layouts/sidebar/studentSidebar/StudentSidebar";
 import React from "react";
 
 export default function StudentLayout({
@@ -16,7 +16,6 @@ export default function StudentLayout({
             <StudentSidebar />
           </aside>
           <main className="flex-1 mt-6 overflow-hidden">{children}</main>
-
         </div>
       </div>
     </div>

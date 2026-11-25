@@ -1,4 +1,4 @@
-import CenterSidebar from "@/app/components/layouts/sidebar/DashboardSidebar";
+import CenterSidebar from "@/src/app/components/layouts/sidebar/DashboardSidebar";
 
 export default function CenterDashboardLayout({
   children,

@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { Loader2 } from "lucide-react"; // 👈 علشان الزرار
-import avatarImage from "../../../../assets/ceterProfile/teacherTap1.jpeg";
+import avatarImage from "@/assets/ceterProfile/teacherTap1.jpeg";
 import { useForm } from "react-hook-form";
-import { ProfileFormValues } from "@/lib/ProfileSchema";
+import { ProfileFormValues } from "@/src/lib/ProfileSchema";
 
 const EditProfilePage = () => {
   const { register, handleSubmit, formState } = useForm<ProfileFormValues>();

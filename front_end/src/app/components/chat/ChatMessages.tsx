@@ -1,6 +1,6 @@
 "use client";
 
-import { useSocket } from "@/context/WsSocket"; // تغيير السياق هنا
+import { useSocket } from "@/src/context/WsSocket"; // تغيير السياق هنا
 import { Send, X, User } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";

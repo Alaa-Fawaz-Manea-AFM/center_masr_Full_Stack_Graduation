@@ -1,4 +1,4 @@
-import { Teacher } from "@/types/listing";
+import { Teacher } from "../types/listing";
 import teacherCard1 from "../assets/TeacherCard/TeacherCardImg.png";
 export const teachersData: Teacher[] = [
   {

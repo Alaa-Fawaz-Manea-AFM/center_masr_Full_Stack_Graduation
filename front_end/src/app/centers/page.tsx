@@ -6,7 +6,7 @@ import CentersFilters from "../components/Center/CentersFilters";
 import CenterCard from "../components/Center/CenterCard";
 import { ListFilter } from "lucide-react";
 import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import CenterCardSkeleton from "../components/Center/CenterCardSkeleton";
 
 export default function CentersPage() {
@@ -19,7 +19,7 @@ export default function CentersPage() {
   const [isSorted, setIsSorted] = useState(false);
 
   const handleFilter = () => {
-    const result = filteredCenters.filter((center) => {
+    const result = filteredCenters.filter((center: any) => {
       const matchSearch = center?.name
         .toLowerCase()
         .includes(search.toLowerCase());

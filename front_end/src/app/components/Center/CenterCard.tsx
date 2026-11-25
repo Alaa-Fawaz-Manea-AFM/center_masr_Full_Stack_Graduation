@@ -2,8 +2,7 @@ import Image from "next/image";
 import { Star, MapPin, GraduationCap, Globe } from "lucide-react";
 import Badge from "../ui/Badge";
 import Link from "next/link";
-import { Center } from "@/types/listing";
-import { UserData } from "@/types/dashboard";
+import { UserData } from "@/src/types/dashboard";
 type Props = {
   center: {
     id: string;
@@ -15,6 +14,7 @@ type Props = {
     educationalStage: string[];
     systems: string[];
     user: UserData;
+    location: string;
   };
 };
 export default function CenterCard({ center }: Props) {
@@ -39,13 +39,14 @@ export default function CenterCard({ center }: Props) {
           <h3 className="text-lg font-bold text-[#081A28]">{center?.name}</h3>
           <div className="flex items-center gap-1 text-orange-500 font-bold">
             <Star size={16} fill="currentColor" />
-            <span className="text-black">{center?.center?.star}</span>
+            <span className="text-black">{center?.star}</span>
+            {/* <span className="text-black">{center?.center?.star}</span> */}
           </div>
         </div>
 
         <div className="flex items-center gap-1 text-slate-400 text-sm mb-4">
           <MapPin size={14} />
-          <span>{center?.center?.location}</span>
+          <span>{center?.location}</span>
         </div>
 
         <div className="space-y-4 mb-6">
@@ -54,7 +55,7 @@ export default function CenterCard({ center }: Props) {
               <GraduationCap size={16} /> المراحل التعليمية:
             </p>
             <div className="flex flex-wrap gap-2">
-              {center?.center?.educationalStage?.map((s: string) => (
+              {center?.educationalStage?.map((s: string) => (
                 <Badge key={s}>{s}</Badge>
               ))}
             </div>
@@ -64,7 +65,7 @@ export default function CenterCard({ center }: Props) {
               <Globe size={16} /> النظام الدراسي
             </p>
             <div className="flex flex-wrap gap-2">
-              {center?.center?.studySystem?.map((s: string) => (
+              {center?.studySystem?.map((s: string) => (
                 <Badge key={s}>{s}</Badge>
               ))}
             </div>

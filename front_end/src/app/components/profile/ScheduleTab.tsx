@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, GraduationCap } from "lucide-react";
-import { scheduleData } from "@/data/centerProfile";
+import { scheduleData } from "@/src/data/centerProfile";
 import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import Image from "next/image";
 import { formatDate, formatDateTime } from "../helper";
 

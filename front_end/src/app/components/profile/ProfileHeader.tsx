@@ -1,5 +1,5 @@
 "use client";
-import { UserData } from "@/types/dashboard";
+import { UserData } from "@/src/types/dashboard";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ButtonFollow from "../button/ButtonFollow";

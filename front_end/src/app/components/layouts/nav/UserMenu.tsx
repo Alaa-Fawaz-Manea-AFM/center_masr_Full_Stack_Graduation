@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import avatarImage from "../../../../assets/ceterProfile/teacherTap1.jpeg";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import Cookies from "js-cookie";
 
 interface UserMenuProps {
@@ -80,9 +80,9 @@ export const UserMenu = ({ userName, userImage, closeMenu }: UserMenuProps) => {
       <div className="flex items-center gap-4 md:border-l border-slate-200 pl-3 md:pl-6">
         <Link
           href="/chat"
-             onClick={() => {
-              closeMenu();
-            }}
+          onClick={() => {
+            closeMenu();
+          }}
           className="relative p-2.5 bg-orange-50 rounded-full text-orange-500 cursor-pointer hover:bg-orange-100 transition-colors"
         >
           <MessageSquare size={22} />

@@ -7,7 +7,7 @@ import {
   ChevronLeft,
   Users,
 } from "lucide-react";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 
 // بيانات تجريبية موسعة لاختبار الـ Pagination

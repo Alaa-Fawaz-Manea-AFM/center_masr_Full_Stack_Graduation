@@ -67,6 +67,7 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
   const Router = useRouter();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSenderId(localStorage.getItem("userId"));
   }, []);
 
@@ -97,6 +98,7 @@ const WsSocket = ({ children }: { children: React.ReactNode }) => {
     // const ws = new WebSocket(
     //   `ws://localhost:3001/api/v1/ws?userId=${senderId}`,
     // );
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSocket(ws);
 
     ws.onopen = () => {

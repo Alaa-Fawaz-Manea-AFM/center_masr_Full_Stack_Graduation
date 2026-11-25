@@ -6,7 +6,7 @@ import TeachersHeader from "../components/Teacher/TeachersHeader";
 import TeachersFilters from "../components/Teacher/TeachersFilters";
 import TeacherCard from "../components/Teacher/TeacherCard";
 import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import CenterCardSkeleton from "../components/Center/CenterCardSkeleton";
 
 export default function TeachersPage() {

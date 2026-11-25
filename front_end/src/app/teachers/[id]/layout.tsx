@@ -1,13 +1,13 @@
 "use client";
 import { Star } from "lucide-react";
-import ButtonSendChat from "@/app/components/button/ButtonSendChat";
+import ButtonSendChat from "@/src/app/components/button/ButtonSendChat";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import TeacherProfile from "./page";
-import ButtonFollow from "@/app/components/button/ButtonFollow";
-import { DOMAIN } from "@/utils/constants";
-import { useSocket } from "@/context/WsSocket";
-import { OverviewSkeleton } from "@/app/components/Teacher/tabs/OverviewSkeleton";
+import ButtonFollow from "@/src/app/components/button/ButtonFollow";
+import { DOMAIN } from "@/src/utils/constants";
+import { useSocket } from "@/src/context/WsSocket";
+import { OverviewSkeleton } from "@/src/app/components/Teacher/tabs/OverviewSkeleton";
 import Image from "next/image";
 
 export default function RootLayout({

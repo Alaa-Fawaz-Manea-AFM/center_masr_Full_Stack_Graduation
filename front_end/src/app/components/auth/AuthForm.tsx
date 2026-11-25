@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { User, Mail, Lock, Loader2 } from "lucide-react";
-import { DOMAIN } from "@/utils/constants";
-import { authSchema, AuthFormData } from "@/lib/validation";
+import { DOMAIN } from "@/src/utils/constants";
+import { authSchema, AuthFormData } from "@/src/lib/validation";
 import { AuthInput } from "./AuthInput";
-import { AuthResponse } from "@/types/auth";
+import { AuthResponse } from "@/src/types/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 interface AuthFormProps {

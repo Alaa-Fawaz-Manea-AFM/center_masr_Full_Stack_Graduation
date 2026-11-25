@@ -6,7 +6,7 @@ import eduction1 from "../../../assets/Eduction/eduction-1.png";
 import eduction2 from "../../../assets/Eduction/eduction-2.png";
 import eduction3 from "../../../assets/Eduction/eduction-3.png";
 import Link from "next/link";
-import SectionHeader from "@/app/components/sectionHeader/SectionHeader";
+import SectionHeader from "@/src/app/components/sectionHeader/SectionHeader";
 
 interface EducationalStage {
   id: number;

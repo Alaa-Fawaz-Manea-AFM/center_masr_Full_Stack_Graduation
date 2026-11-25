@@ -1,11 +1,14 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import CenterCard from "@/app/components/Center/CenterCard";
-import TeacherCard from "@/app/components/Teacher/TeacherCard";
-import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Teacher } from "@/src/types/teacher";
+import { DOMAIN } from "@/src/utils/constants";
+import CenterCard from "../../components/Center/CenterCard";
+import TeacherCard from "../../components/Teacher/TeacherCard";
+// import CenterCard from "../../components/Center/CenterCard";
+// import TeacherCard from "../../components/Teacher/TeacherCard";
 
 const SectionHeader = ({ title }: { title: string }) => (
   <div className="bg-white rounded-2xl shadow-sm p-5 mb-8 flex items-center justify-between border border-slate-100">
@@ -33,6 +36,7 @@ export default function DirectorySection() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleDataHomePage();
   }, []);
   return (
@@ -43,7 +47,7 @@ export default function DirectorySection() {
             <section className="mb-20">
               <SectionHeader title="اكتشف أفضل السناتر التعليمية فى مصر" />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {data?.centers?.map((center: any) => (
+                {data?.center?.map((center: any) => (
                   <CenterCard key={center.id} center={center} />
                 ))}
               </div>
@@ -54,7 +58,7 @@ export default function DirectorySection() {
               <SectionHeader title="تعلم أونلاين مع نخبة من افضل المدرسين في مصر" />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Example Teacher */}
-                {data?.teachers?.map((teacher: any) => (
+                {data?.teacher?.map((teacher: Teacher) => (
                   <TeacherCard key={teacher.id} teacher={teacher} />
                 ))}
               </div>

@@ -1,31 +1,32 @@
 "use client";
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
+// import { DOMAIN } from "../../../../../utils/constants";
 import axios from "axios";
 import { Video, Lock } from "lucide-react";
 import { useEffect } from "react";
-const lessons = [
-  {
-    id: 1,
-    title: "الأعداد المركبة",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: false,
-  },
-  {
-    id: 2,
-    title: "الأعداد المركبة - خواص الوحدة التخيلية",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: false,
-  },
-  {
-    id: 3,
-    title: "تطبيقات علي خواص الوحدة التخيلية",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: true,
-  },
-];
+// const lessons = [
+//   {
+//     id: 1,
+//     title: "الأعداد المركبة",
+//     duration: "45 دقيقة",
+//     date: "01 - 03 - 2025",
+//     isLocked: false,
+//   },
+//   {
+//     id: 2,
+//     title: "الأعداد المركبة - خواص الوحدة التخيلية",
+//     duration: "45 دقيقة",
+//     date: "01 - 03 - 2025",
+//     isLocked: false,
+//   },
+//   {
+//     id: 3,
+//     title: "تطبيقات علي خواص الوحدة التخيلية",
+//     duration: "45 دقيقة",
+//     date: "01 - 03 - 2025",
+//     isLocked: true,
+//   },
+// ];
 
 const LessonsTab = ({ searchQuery, setCache, cache, courseId }: any) => {
   const handleGetLessons = async () => {

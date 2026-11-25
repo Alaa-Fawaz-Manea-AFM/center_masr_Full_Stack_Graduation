@@ -73,7 +73,7 @@ const students = [
     time: "01:20 م",
   },
 ];
-import { DOMAIN } from "@/utils/constants";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 import { Search, MoreVertical, Users } from "lucide-react";
 import Image from "next/image";

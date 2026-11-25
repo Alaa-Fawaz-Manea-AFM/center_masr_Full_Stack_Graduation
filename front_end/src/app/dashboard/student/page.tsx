@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BookOpen, GraduationCap, ClipboardList } from "lucide-react";
-import MySessions from "@/app/components/dashboard/student/tabs/MySessions";
-import MyAssignments from "@/app/components/dashboard/student/tabs/MyAssignments";
-import MyLessons from "@/app/components/dashboard/student/tabs/MyLessons";
-import { DOMAIN } from "@/utils/constants";
+import MySessions from "@/src/app/components/dashboard/student/tabs/MySessions";
+import MyAssignments from "@/src/app/components/dashboard/student/tabs/MyAssignments";
+import MyLessons from "@/src/app/components/dashboard/student/tabs/MyLessons";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
-import { useSocket } from "@/context/WsSocket";
+import { useSocket } from "@/src/context/WsSocket";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("الحصص الحالية");

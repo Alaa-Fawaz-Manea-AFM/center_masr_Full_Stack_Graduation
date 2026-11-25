@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Search, Plus, MoreVertical } from "lucide-react";
-import AddTeacherModal from "@/app/components/dashboard/center/AddTeacherModal";
-import { DOMAIN } from "@/utils/constants";
+import AddTeacherModal from "@/src/app/components/dashboard/center/AddTeacherModal";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 
 const TeachersPage = () => {

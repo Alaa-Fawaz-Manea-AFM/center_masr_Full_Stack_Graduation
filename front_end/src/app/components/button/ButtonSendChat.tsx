@@ -1,6 +1,6 @@
 "use client";
-import { useSocket } from "@/context/WsSocket";
-import { DOMAIN } from "@/utils/constants";
+import { useSocket } from "@/src/context/WsSocket";
+import { DOMAIN } from "@/src/utils/constants";
 import axios from "axios";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
