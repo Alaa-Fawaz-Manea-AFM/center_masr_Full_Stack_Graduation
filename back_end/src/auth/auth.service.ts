@@ -42,7 +42,7 @@ export class AuthService {
       secure: this.config.nodeEnv === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: this.config.COOKIE_MAX_AGE1,
+      maxAge: +this.config.COOKIE_MAX_AGE1,
     };
   };
 

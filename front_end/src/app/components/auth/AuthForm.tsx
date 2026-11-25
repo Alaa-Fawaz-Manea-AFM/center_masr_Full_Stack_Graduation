@@ -66,7 +66,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
     // Cookies.set("role", role, { expires: 1 });
     setUser(result.data);
     toast.success(result.message);
-    window.dispatchEvent(new Event("storage"));
+    // window.dispatchEvent(new Event("storage"));
 
     setTimeout(() => {
       router.push("/");
