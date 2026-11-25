@@ -7,6 +7,7 @@ import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { useSocket } from "@/context/WsSocket";
 import Image from "next/image";
+import { getDataAction } from "@/actions/users";
 
 export default function ChatSidebar({ isTyping }: any) {
   const {
@@ -21,25 +22,29 @@ export default function ChatSidebar({ isTyping }: any) {
 
   useEffect(() => {
     const handleGetContacts = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const {
-          data: { data },
-        } = await axios.get(`${DOMAIN}conversations`, {
-          withCredentials: true,
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setConversations(data);
-      } catch (error) {
-        console.error("Error fetching conversations:", error);
+      // const token = localStorage.getItem("token");
+      // try {
+      // const {
+      //   data: { data },
+      // } = await axios.get(`${DOMAIN}conversations`, {
+      //   withCredentials: true,
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+      const result = await getDataAction("get", "conversations");
+      if (!result.success) {
+        return;
       }
+      setConversations(result.data);
+      // } catch (error) {
+      //   console.error("Error fetching conversations:", error);
+      // }
     };
     handleGetContacts();
   }, [setConversations]);
 
   return (
     <div
-      className="w-full md:w-[320px] h-full bg-white border-l border-gray-100 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
+      className="w-full h-full bg-white border-l border-gray-100 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
       dir="rtl"
     >
       <div className="p-5 pb-3">
@@ -223,8 +228,8 @@ export default function ChatSidebar({ isTyping }: any) {
             })
         ) : (
           <div className="flex flex-col items-center justify-center pt-20 opacity-20">
-            <MessageCircle size={48} />
-            <p className="text-sm font-bold mt-2">لا توجد محادثات</p>
+            <MessageCircle size={48} color="black" />
+            <p className="text-sm font-bold mt-2 text-black">لا توجد محادثات</p>
           </div>
         )}
       </div>
