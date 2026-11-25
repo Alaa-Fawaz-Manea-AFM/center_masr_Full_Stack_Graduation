@@ -68,9 +68,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
     toast.success(result.message);
     window.dispatchEvent(new Event("storage"));
 
-    setTimeout(() => {
-      router.push("/");
-    }, 500);
+    // setTimeout(() => {
+    //   router.push("/");
+    // }, 500);
     setLoading(false);
     // } catch (error: any) {
     //   const apiErrors = error.response?.data?.errors;
