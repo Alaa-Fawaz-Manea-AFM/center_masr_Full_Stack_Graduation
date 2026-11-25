@@ -1,52 +1,65 @@
 "use client";
 
+import { getDataAction } from "@/actions/users";
+import { useUserContext } from "@/context/MyState";
 import { DOMAIN } from "@/utils/constants";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const ButtonLikes = ({ isLiked: liked, likesCount, id }: any) => {
+  const { user } = useUserContext();
   const [loading, setLoading] = useState(false);
   const [likesCounts, setLikesCounts] = useState(likesCount);
   const [isLiked, setIsLiked] = useState(liked);
 
   const handleLike = async () => {
     if (loading) return;
+    if (user === null) return toast.error("يرجى تسجيل الدخول أولاً");
 
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-      return toast.error("يرجى تسجيل الدخول أولاً");
-    }
+    // if (!token) {
+    //   return toast.error("يرجى تسجيل الدخول أولاً");
+    // }
 
     setLoading(true);
-
-    try {
-      const res = await fetch(`${DOMAIN}likes/${id}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const dataRes = await res.json();
-
-      if (res.ok && dataRes.status !== "fail") {
-        const isNowLiked = dataRes.data.isLiked;
-
-        setIsLiked(isNowLiked);
-
-        setLikesCounts((prev: number) => (isNowLiked ? prev + 1 : prev - 1));
-
-        toast.success(isNowLiked ? "تم تسجيل الإعجاب" : "تم إزالة الإعجاب");
-      } else {
-        toast.error(dataRes.message || "حدث خطأ ما");
-      }
-    } catch (error) {
-      toast.error("مشكلة في الاتصال بالخادم");
-    } finally {
+    // try {
+    // const res = await fetch(`${DOMAIN}likes/${id}`, {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    const result = await getDataAction("post", `likes/${id}`);
+    console.log("====================================");
+    console.log("result 777", result);
+    console.log("====================================");
+    if (!result.success) {
+      toast.error("حدث خطأ ما");
       setLoading(false);
+      return;
     }
+
+    // const dataRes = await res.json();
+
+    // if (res.ok && dataRes.status !== "fail") {
+    const isNowLiked = result.data.isLiked;
+
+    setIsLiked(isNowLiked);
+
+    setLikesCounts((prev: number) => (isNowLiked ? prev + 1 : prev - 1));
+
+    toast.success(isNowLiked ? "تم تسجيل الإعجاب" : "تم إزالة الإعجاب");
+    setLoading(false);
+    //   } else {
+    //     toast.error(dataRes.message || "حدث خطأ ما");
+    //   }
+    // } catch (error) {
+    //   toast.error("مشكلة في الاتصال بالخادم");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

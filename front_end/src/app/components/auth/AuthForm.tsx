@@ -12,7 +12,7 @@ import { AuthResponse, Iform } from "@/types/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useSocket } from "@/context/WsSocket";
-import { loginAction, loginAndSignUpAction } from "@/actions/auth";
+import { loginAndSignUpAction } from "@/actions/auth";
 import { useUserContext } from "@/context/MyState";
 interface AuthFormProps {
   mode: "login" | "signup";

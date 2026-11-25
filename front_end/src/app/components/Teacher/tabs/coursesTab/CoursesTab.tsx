@@ -2,6 +2,8 @@ import { Search, ListFilter } from "lucide-react";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import CourseCard from "./CourseCard";
 import { DOMAIN } from "@/utils/constants";
+import { getDataAction } from "@/actions/users";
+import toast from "react-hot-toast";
 
 const CoursesTab = ({
   userId,
@@ -13,29 +15,34 @@ const CoursesTab = ({
   const [activeGrade, setActiveGrade] = useState("الثالث الثانوي");
 
   const getData = useCallback(async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${DOMAIN}courses?id=${teacherId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // try {
+    // const token = localStorage.getItem("token");
+    // const res = await fetch(`${DOMAIN}courses?id=${teacherId}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
 
-      const json = await res.json();
-      setCacheCourse(json.data);
-    } catch (error) {
-      console.error("Error fetching courses:", error);
-    }
+    // const json = await res.json();
+    const result = await getDataAction("get", `courses?id=${teacherId}`);
+    if (!result.success) return;
+    console.log("====================================");
+    console.log("result 666", result);
+    console.log("====================================");
+    setCacheCourse(result.data);
+    // } catch (error) {
+    //   console.error("Error fetching courses:", error);
+    // }
   }, [teacherId, setCacheCourse]);
 
   useEffect(() => {
     getData();
   }, [getData]);
 
-const filteredCourses = useMemo(() => {
-    const allCourses = Array.isArray(cashCourses) 
-      ? cashCourses 
-      : (cashCourses?.courses || []);
+  const filteredCourses = useMemo(() => {
+    const allCourses = Array.isArray(cashCourses)
+      ? cashCourses
+      : cashCourses?.courses || [];
 
     return allCourses.filter((course: any) => {
       const search = searchQuery.trim().toLowerCase();
@@ -46,18 +53,16 @@ const filteredCourses = useMemo(() => {
       const serverGrade = (course?.classRoom || "").trim();
       const UIActiveGrade = activeGrade.trim();
 
-     
-      const matchesGrade = 
-        !UIActiveGrade || 
-        serverGrade.includes(UIActiveGrade) || 
+      const matchesGrade =
+        !UIActiveGrade ||
+        serverGrade.includes(UIActiveGrade) ||
         UIActiveGrade.includes(serverGrade);
 
       return matchesGrade && matchesSearch;
     });
   }, [cashCourses, activeGrade, searchQuery]);
 
-
-  const studeMaterial = ["الثالث الثانوي", "الثاني الثانوي", "الأول الثانوي"];
+  const studeMaterial = ["الثالث الثانوي", "الثاني الثانوي", "الاول الثانوي"];
 
   return (
     <div className="max-w-6xl mx-auto p-4 bg-white rounded-lg">

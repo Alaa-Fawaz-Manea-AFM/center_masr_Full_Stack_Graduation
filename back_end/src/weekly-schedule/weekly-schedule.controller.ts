@@ -29,12 +29,12 @@ export class WeeklyScheduleController {
     @Query() getWeeklyScheduleDto: GetWeeklyScheduleDto,
     @Req() req,
   ) {
-    // const { profileId, role } = req?.user;
+    // const { profileId, role } = req.user;
     return this.service.getWeeklySchedule(
       centerId,
       getWeeklyScheduleDto.classRoom,
-      req?.user?.profileId,
-      req?.user?.role,
+      req.user?.profileId,
+      req.user?.role,
     );
   }
 

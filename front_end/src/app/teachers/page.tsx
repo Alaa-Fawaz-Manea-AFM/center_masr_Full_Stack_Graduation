@@ -34,8 +34,8 @@ export default function TeachersPage() {
         data: { data },
       } = await axios.get(`${DOMAIN}users?role=teacher`);
       setAllTeachers(data);
-    } catch (err) {
-      console.log("");
+    } catch {
+      // console.log("");
     } finally {
       setLoading(false);
     }
@@ -109,7 +109,7 @@ export default function TeachersPage() {
         subject={subject}
         setSubject={setSubject}
         onFilter={handleFilter}
-        data={allTeachers} 
+        data={allTeachers}
       />
       <div className="max-w-7xl mx-auto px-6 mt-12">
         <div className="flex items-center justify-between mb-8">

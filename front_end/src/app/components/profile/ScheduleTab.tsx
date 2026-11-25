@@ -70,7 +70,14 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
     console.log("result 444", result);
     console.log("====================================");
 
-    if (!result.success) return toast.error("لا يوجد جدول حصص ");
+    if (!result.success) {
+      toast.error("لا يوجد جدول حصص ");
+      setCache((pre: any) => ({
+        ...pre,
+        weeks: [],
+      }));
+      return;
+    }
 
     setCache((pre: any) => ({
       ...pre,

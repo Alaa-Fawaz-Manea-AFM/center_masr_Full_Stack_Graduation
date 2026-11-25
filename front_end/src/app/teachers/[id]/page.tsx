@@ -46,14 +46,14 @@ export default function TeacherProfile() {
             cashCourses={cashCourses || []}
           />
         );
-      case "التقييمات":
-        return (
-          <ReviewsTab
-            teacherId={data?.id}
-            setCacheReviews={setCacheReviews}
-            cacheReviews={cacheReviews || []}
-          />
-        );
+      // case "التقييمات":
+      //   return (
+      //     <ReviewsTab
+      //       teacherId={data?.id}
+      //       setCacheReviews={setCacheReviews}
+      //       cacheReviews={cacheReviews || []}
+      //     />
+      //   );
       default:
         return <OverviewTab data={data} />;
     }
@@ -87,24 +87,22 @@ export default function TeacherProfile() {
         data-aos="fade-up"
         className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row gap-8 border-t border-[#B0B0B0] py-3 shadow-lg overflow-auto"
       >
-        {["نظرة عامة", "المنشورات", "الدورات التعليمية", "التقييمات"].map(
-          (tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-4 px-2 font-bold transition-all relative whitespace-nowrap cursor-pointer ${
-                activeTab === tab
-                  ? "text-orange-500"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-orange-500 rounded-full" />
-              )}
-            </button>
-          ),
-        )}
+        {["نظرة عامة", "المنشورات", "الدورات التعليمية"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`pb-4 px-2 font-bold transition-all relative whitespace-nowrap cursor-pointer ${
+              activeTab === tab
+                ? "text-orange-500"
+                : "text-slate-400 hover:text-slate-600"
+            }`}
+          >
+            {tab}
+            {activeTab === tab && (
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-orange-500 rounded-full" />
+            )}
+          </button>
+        ))}
       </div>
 
       <main className="max-w-6xl mx-auto px-4 md:px-8 py-8">

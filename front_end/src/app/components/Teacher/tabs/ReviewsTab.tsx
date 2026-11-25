@@ -31,26 +31,26 @@ const reviews = [
 ];
 
 const ReviewsTab = ({ teacherId, setCacheReviews, cacheReviews }): any => {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (cacheReviews.length > 0) return setCacheReviews(cacheReviews);
+  // useEffect(() => {
+  // const token = localStorage.getItem("token");
+  // if (cacheReviews.length > 0) return setCacheReviews(cacheReviews);
 
-    const getData = async () => {
-      const res = await fetch(
-        `${DOMAIN}reviews?id=${teacherId}&role=teacher&page=${page}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const json = await res.json();
-      setCacheReviews(json?.data);
-    };
-    getData();
-  }, [teacherId]);
+  // const getData = async () => {
+  // const res = await fetch(
+  //   `${DOMAIN}reviews?id=${teacherId}&role=teacher&page=${page}`,
+  //   {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   },
+  // );
+  // const json = await res.json();
+  // setCacheReviews(json?.data);
+  // };
+  //   getData();
+  // }, [teacherId]);
 
   return (
     <>

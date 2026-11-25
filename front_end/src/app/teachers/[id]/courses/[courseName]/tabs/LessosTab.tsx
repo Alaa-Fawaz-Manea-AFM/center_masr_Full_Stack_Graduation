@@ -1,4 +1,5 @@
 "use client";
+import { getDataAction } from "@/actions/users";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { Video, Lock } from "lucide-react";
@@ -31,17 +32,25 @@ const LessonsTab = ({ searchQuery, setCache, cache, courseId }: any) => {
   const handleGetLessons = async () => {
     if (cache?.length > 0) return;
 
-    const token = localStorage.getItem("token");
-    const res = await axios.get(`${DOMAIN}courses/lessons?id=${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // const token = localStorage.getItem("token");
+    // const res = await axios.get(`${DOMAIN}courses/lessons?id=${courseId}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
 
+    const result = await getDataAction("get", `courses/lessons?id=${courseId}`);
+
+    console.log("====================================");
+    console.log("result 777", result);
+    console.log("====================================");
+    if (!result.success) {
+      return;
+    }
     setCache((pre) => {
       return {
         ...pre,
-        lessons: res.data?.data?.data || [],
+        lessons: result.data?.data || [],
       };
     });
   };

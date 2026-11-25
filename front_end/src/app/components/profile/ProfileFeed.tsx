@@ -39,7 +39,7 @@ export const ProfileFeed = ({
 
       const result = await getUserPostsAction(userId, role, page);
       console.log("====================================");
-      console.log("result222", result);
+      console.log("result22200", result);
       console.log("====================================");
 
       setCachePosts({

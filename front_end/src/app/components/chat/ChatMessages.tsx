@@ -1,3 +1,252 @@
+// "use client";
+
+// import { useSocket } from "@/context/WsSocket";
+// import { Send, X, User } from "lucide-react";
+// import Image from "next/image";
+// import { useCallback, useEffect, useRef, useState } from "react";
+// import { formatDateTime } from "../helper";
+// import { useUserContext } from "@/context/MyState";
+
+// const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
+//   const scrollRef = useRef<HTMLDivElement>(null);
+//   const inputRef = useRef<HTMLInputElement>(null);
+//   const [inputValue, setInputValue] = useState("");
+
+//   const { user } = useUserContext();
+//   const { dataHeader, setDataHeader, AllOnline, socket } = useSocket();
+//   const [refresh, setRefresh] = useState(0);
+//   const receiverId =
+//     dataHeader?.receiverId === user?.id
+//       ? dataHeader?.senderId
+//       : dataHeader?.receiverId;
+
+//   const messages = AllMessages[dataHeader?.id] || [];
+
+//   const openChat = async () => {
+//     if (!dataHeader?.id || !user?.id) return;
+//     try {
+//       const res = await fetch(
+//         `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user?.id}&receiverId=${receiverId}`,
+//       );
+//       const data = await res.json();
+//       setAllMessages((prev: any) => ({
+//         ...prev,
+//         [dataHeader.id]: data.data,
+//       }));
+//       setRefresh((prev) => prev + 1);
+//     } catch (err) {
+//       console.error("Error loading messages:", err);
+//     }
+//   };
+
+//   useEffect(() => {
+//     setInputValue("");
+//     if (!dataHeader?.id) return;
+//     inputRef.current?.focus();
+//     if (!AllMessages[dataHeader.id]) {
+//       openChat();
+//     }
+//   }, [dataHeader?.id]);
+
+//   useEffect(() => {
+//     if (scrollRef.current) {
+//       scrollRef.current.scrollTo({
+//         top: scrollRef.current.scrollHeight,
+//         behavior: "smooth",
+//       });
+//     }
+//   }, [messages]);
+
+//   const userOnline = AllOnline?.has(receiverId!);
+//   const typing = isTyping[receiverId!] || false;
+
+//   const sendMessage = useCallback(() => {
+//     if (!inputValue.trim() || !dataHeader || !socket) return;
+
+//     const messagePayload = {
+//       type: "send_message",
+//       payload: {
+//         conversationId: dataHeader.id,
+//         senderId: user?.id,
+//         receiverId: dataHeader.receiverId,
+//         content: inputValue,
+//       },
+//     };
+
+//     socket?.send(JSON.stringify(messagePayload));
+//     setInputValue("");
+//   }, [inputValue, dataHeader, socket, user?.id]);
+
+//   if (!dataHeader) {
+//     return (
+//       <div className="flex-1 flex flex-col items-center justify-center bg-[#F5F7F9] text-gray-400">
+//         <div className="p-8 rounded-full bg-white mb-4 shadow-sm">
+//           <User size={48} className="opacity-20" />
+//         </div>
+//         <p className="font-bold text-lg">اختر محادثة للبدء</p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div
+//       className="flex-1 flex flex-col bg-[#F5F7F9] h-full overflow-hidden"
+//       dir="rtl"
+//     >
+//       <header className="p-4 bg-white border-b flex items-center justify-between shadow-sm z-10">
+//         <div className="flex items-center gap-3">
+//           <div className="relative">
+//             <div className="size-11 rounded-full overflow-hidden border border-gray-200 bg-gradient-to-tr from-gray-50 to-gray-200 flex items-center justify-center">
+//               {dataHeader?.imageUrl ? (
+//                 <Image
+//                   src={dataHeader?.imageUrl || ""}
+//                   alt={dataHeader?.name}
+//                   width={80}
+//                   height={80}
+//                   className="object-cover size-full"
+//                   unoptimized
+//                 />
+//               ) : (
+//                 <User className="text-gray-400" size={24} />
+//               )}
+//             </div>
+//             <div
+//               className={`absolute bottom-0 left-0 size-3 border-2 border-white rounded-full transition-colors duration-500 ${
+//                 userOnline
+//                   ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+//                   : "bg-gray-300"
+//               }`}
+//             />
+//           </div>
+//           <div className="text-right">
+//             <h3 className="font-bold text-[#204658] text-[15px]">
+//               {dataHeader?.name}
+//             </h3>
+//             <span
+//               className={`text-[11px] font-medium ${userOnline ? "text-green-600" : "text-gray-400"}`}
+//             >
+//               {userOnline ? "متصل الآن" : "غير متصل"}
+//             </span>
+//           </div>
+//         </div>
+//         <button
+//           onClick={() => setDataHeader(null)}
+//           className="p-2 text-gray-400 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
+//         >
+//           <X size={20} />
+//         </button>
+//       </header>
+
+//       <div
+//         ref={scrollRef}
+//         className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F8F9FA] custom-scrollbar"
+//       >
+//         {messages.map((msg: any, index: number) => {
+//           const isMe = msg.senderId === user?.id;
+//           return (
+//             <div
+//               key={msg.id || index}
+//               className={`flex ${isMe ? "justify-start" : "justify-end"}`}
+//             >
+//               <div
+//                 className={`group relative p-3 px-4 rounded-[18px] max-w-[80%] shadow-sm transition-all ${
+//                   isMe
+//                     ? "bg-[#204658] text-white rounded-tr-none hover:bg-[#28556b]"
+//                     : "bg-white text-[#204658] rounded-tl-none border border-gray-100 hover:border-gray-200"
+//                 }`}
+//               >
+//                 <p className="text-[14px] leading-relaxed break-words whitespace-pre-wrap">
+//                   {msg.content}
+//                 </p>
+//                 <span
+//                   className={`text-[9px] mt-1 block opacity-50 ${isMe ? "text-left" : "text-right"}`}
+//                 >
+//                   {formatDateTime(msg.createdAt)}
+//                 </span>
+//               </div>
+//             </div>
+//           );
+//         })}
+//       </div>
+
+//       <footer className="relative p-4 bg-white border-t border-gray-100">
+//         <div className="flex items-center gap-2 max-w-4xl mx-auto bg-[#F8F9FA] p-1.5 rounded-[24px] border border-gray-200 focus-within:bg-white focus-within:border-[#204658] focus-within:ring-4 focus-within:ring-[#204658]/5 transition-all duration-300">
+//           {typing && (
+//             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 transition-all duration-500 ease-in-out z-20">
+//               <div className="bg-white/95 backdrop-blur-md border border-gray-200 p-2 px-5 rounded-full flex items-center gap-3 shadow-xl ring-1 ring-black/5">
+//                 <div className="flex gap-1.5">
+//                   <span
+//                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
+//                     style={{ animationDelay: "0ms" }}
+//                   ></span>
+//                   <span
+//                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
+//                     style={{ animationDelay: "150ms" }}
+//                   ></span>
+//                   <span
+//                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
+//                     style={{ animationDelay: "300ms" }}
+//                   ></span>
+//                 </div>
+//                 <span className="text-[13px] text-[#204658] font-medium tracking-tight border-r pr-3 border-gray-200">
+//                   {dataHeader?.name} يكتب الآن...
+//                 </span>
+//               </div>
+//             </div>
+//           )}
+//           <input
+//             ref={inputRef}
+//             value={inputValue}
+//             onChange={(e) => {
+//               setInputValue(e.target.value);
+//               socket?.send(
+//                 JSON.stringify({
+//                   type: "typing",
+//                   payload: {
+//                     receiverId: dataHeader.receiverId,
+//                     conversationId: dataHeader.id,
+//                     isTyping: true,
+//                   },
+//                 }),
+//               );
+//             }}
+//             onKeyUp={() => {
+//               socket?.send(
+//                 JSON.stringify({
+//                   type: "typing",
+//                   payload: {
+//                     receiverId: dataHeader.receiverId,
+//                     conversationId: dataHeader.id,
+//                     isTyping: false,
+//                   },
+//                 }),
+//               );
+//             }}
+//             onKeyDown={(e) => {
+//               if (e.key === "Enter" && inputValue.trim()) {
+//                 e.preventDefault();
+//                 sendMessage();
+//                 setRefresh((p) => p + 1);
+//               }
+//             }}
+//             placeholder="اكتب رسالتك هنا..."
+//             className="flex-1 bg-transparent py-2.5 px-4 outline-none text-[14.5px] text-gray-800 placeholder:text-gray-400"
+//           />
+//           <button
+//             onClick={sendMessage}
+//             disabled={!inputValue.trim()}
+//             className="bg-[#204658] text-white p-3 rounded-full hover:bg-[#2c5b72] active:scale-90 disabled:opacity-20 disabled:grayscale transition-all shadow-md flex-shrink-0"
+//           >
+//             <Send size={18} className="rotate-180" />
+//           </button>
+//         </div>
+//       </footer>
+//     </div>
+//   );
+// };
+
+// export default ChatMessages;
+
 "use client";
 
 import { useSocket } from "@/context/WsSocket";
@@ -7,14 +256,35 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { formatDateTime } from "../helper";
 import { useUserContext } from "@/context/MyState";
 
-const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
+type TypingSession = {
+  conversationId: string;
+  receiverId: string;
+};
+
+type ChatMessagesProps = {
+  setAllMessages: React.Dispatch<React.SetStateAction<Record<string, any[]>>>;
+  AllMessages: Record<string, any[]>;
+  isTyping: Record<string, boolean>;
+};
+
+const ChatMessages = ({
+  setAllMessages,
+  AllMessages,
+  isTyping,
+}: ChatMessagesProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const typingSessionRef = useRef<TypingSession | null>(null);
+
   const [inputValue, setInputValue] = useState("");
 
   const { user } = useUserContext();
+
   const { dataHeader, setDataHeader, AllOnline, socket } = useSocket();
-  const [refresh, setRefresh] = useState(0);
+
   const receiverId =
     dataHeader?.receiverId === user?.id
       ? dataHeader?.senderId
@@ -22,32 +292,123 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
 
   const messages = AllMessages[dataHeader?.id] || [];
 
-  const openChat = async () => {
-    if (!dataHeader?.id || !user?.id) return;
+  // إرسال حالة الكتابة
+  const sendTypingStatus = useCallback(
+    (isTyping: boolean, session: TypingSession) => {
+      if (!socket || socket.readyState !== WebSocket.OPEN) return;
+
+      socket.send(
+        JSON.stringify({
+          type: "typing",
+          payload: {
+            receiverId: session.receiverId,
+            conversationId: session.conversationId,
+            isTyping,
+          },
+        }),
+      );
+    },
+    [socket],
+  );
+
+  // إيقاف حالة الكتابة
+  const stopTyping = useCallback(() => {
+    if (typingTimerRef.current) {
+      clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+
+    const session = typingSessionRef.current;
+
+    if (!session) return;
+
+    sendTypingStatus(false, session);
+
+    typingSessionRef.current = null;
+  }, [sendTypingStatus]);
+
+  // بداية الكتابة وإعادة ضبط المؤقت
+  const handleTyping = useCallback(() => {
+    if (!dataHeader?.id || !receiverId || !user?.id) return;
+
+    const session: TypingSession = {
+      conversationId: dataHeader.id,
+      receiverId,
+    };
+
+    // إرسال true مرة واحدة عند بداية الكتابة
+    if (!typingSessionRef.current) {
+      typingSessionRef.current = session;
+      sendTypingStatus(true, session);
+    }
+
+    // إعادة ضبط المؤقت مع كل ضغطة
+    if (typingTimerRef.current) {
+      clearTimeout(typingTimerRef.current);
+    }
+
+    // بعد 1500ms من عدم الكتابة نرسل false
+    typingTimerRef.current = setTimeout(() => {
+      stopTyping();
+    }, 1500);
+  }, [dataHeader?.id, receiverId, user?.id, sendTypingStatus, stopTyping]);
+
+  // تحميل الرسائل
+  const openChat = useCallback(async () => {
+    if (!dataHeader?.id || !user?.id || !receiverId) return;
+
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user?.id}&receiverId=${receiverId}`,
+        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user.id}&receiverId=${receiverId}`,
       );
+
+      if (!res.ok) {
+        throw new Error("Failed to load messages");
+      }
+
       const data = await res.json();
-      setAllMessages((prev: any) => ({
+
+      setAllMessages((prev) => ({
         ...prev,
         [dataHeader.id]: data.data,
       }));
-      setRefresh((prev) => prev + 1);
     } catch (err) {
       console.error("Error loading messages:", err);
     }
-  };
+  }, [dataHeader?.id, user?.id, receiverId, setAllMessages]);
 
+  // عند تغيير المحادثة
   useEffect(() => {
     setInputValue("");
+
+    stopTyping();
+
     if (!dataHeader?.id) return;
+
     inputRef.current?.focus();
+
     if (!AllMessages[dataHeader.id]) {
       openChat();
     }
   }, [dataHeader?.id]);
 
+  // تنظيف حالة الكتابة عند تغيير المحادثة أو الخروج منها
+  useEffect(() => {
+    return () => {
+      stopTyping();
+    };
+  }, [dataHeader?.id, stopTyping]);
+
+  // تنظيف المؤقت عند إغلاق المكون
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearTimeout(typingTimerRef.current);
+      }
+    };
+  }, []);
+
+  // النزول لآخر رسالة
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({
@@ -58,24 +419,37 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
   }, [messages]);
 
   const userOnline = AllOnline?.has(receiverId!);
+
   const typing = isTyping[receiverId!] || false;
 
+  // إرسال الرسالة
   const sendMessage = useCallback(() => {
-    if (!inputValue.trim() || !dataHeader || !socket) return;
+    if (!inputValue.trim() || !dataHeader || !socket || !user?.id) {
+      return;
+    }
+
+    if (socket.readyState !== WebSocket.OPEN) {
+      console.error("WebSocket is not connected");
+      return;
+    }
+
+    // إيقاف مؤشر الكتابة أولًا
+    stopTyping();
 
     const messagePayload = {
       type: "send_message",
       payload: {
         conversationId: dataHeader.id,
-        senderId: user?.id,
-        receiverId: dataHeader.receiverId,
-        content: inputValue,
+        senderId: user.id,
+        receiverId,
+        content: inputValue.trim(),
       },
     };
 
-    socket?.send(JSON.stringify(messagePayload));
+    socket.send(JSON.stringify(messagePayload));
+
     setInputValue("");
-  }, [inputValue, dataHeader, socket, user?.id]);
+  }, [inputValue, dataHeader, socket, user?.id, receiverId, stopTyping]);
 
   if (!dataHeader) {
     return (
@@ -83,6 +457,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
         <div className="p-8 rounded-full bg-white mb-4 shadow-sm">
           <User size={48} className="opacity-20" />
         </div>
+
         <p className="font-bold text-lg">اختر محادثة للبدء</p>
       </div>
     );
@@ -99,8 +474,8 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
             <div className="size-11 rounded-full overflow-hidden border border-gray-200 bg-gradient-to-tr from-gray-50 to-gray-200 flex items-center justify-center">
               {dataHeader?.imageUrl ? (
                 <Image
-                  src={dataHeader?.imageUrl || ""}
-                  alt={dataHeader?.name}
+                  src={dataHeader.imageUrl}
+                  alt={dataHeader?.name || "User"}
                   width={80}
                   height={80}
                   className="object-cover size-full"
@@ -110,6 +485,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
                 <User className="text-gray-400" size={24} />
               )}
             </div>
+
             <div
               className={`absolute bottom-0 left-0 size-3 border-2 border-white rounded-full transition-colors duration-500 ${
                 userOnline
@@ -118,19 +494,27 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
               }`}
             />
           </div>
+
           <div className="text-right">
             <h3 className="font-bold text-[#204658] text-[15px]">
               {dataHeader?.name}
             </h3>
+
             <span
-              className={`text-[11px] font-medium ${userOnline ? "text-green-600" : "text-gray-400"}`}
+              className={`text-[11px] font-medium ${
+                userOnline ? "text-green-600" : "text-gray-400"
+              }`}
             >
               {userOnline ? "متصل الآن" : "غير متصل"}
             </span>
           </div>
         </div>
+
         <button
-          onClick={() => setDataHeader(null)}
+          onClick={() => {
+            stopTyping();
+            setDataHeader(null);
+          }}
           className="p-2 text-gray-400 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
         >
           <X size={20} />
@@ -143,6 +527,7 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
       >
         {messages.map((msg: any, index: number) => {
           const isMe = msg.senderId === user?.id;
+
           return (
             <div
               key={msg.id || index}
@@ -158,8 +543,11 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
                 <p className="text-[14px] leading-relaxed break-words whitespace-pre-wrap">
                   {msg.content}
                 </p>
+
                 <span
-                  className={`text-[9px] mt-1 block opacity-50 ${isMe ? "text-left" : "text-right"}`}
+                  className={`text-[9px] mt-1 block opacity-50 ${
+                    isMe ? "text-left" : "text-right"
+                  }`}
                 >
                   {formatDateTime(msg.createdAt)}
                 </span>
@@ -178,60 +566,51 @@ const ChatMessages = ({ setAllMessages, AllMessages, isTyping }) => {
                   <span
                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
                     style={{ animationDelay: "0ms" }}
-                  ></span>
+                  />
+
                   <span
                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
                     style={{ animationDelay: "150ms" }}
-                  ></span>
+                  />
+
                   <span
                     className="size-1.5 bg-[#204658] rounded-full animate-bounce"
                     style={{ animationDelay: "300ms" }}
-                  ></span>
+                  />
                 </div>
+
                 <span className="text-[13px] text-[#204658] font-medium tracking-tight border-r pr-3 border-gray-200">
                   {dataHeader?.name} يكتب الآن...
                 </span>
               </div>
             </div>
           )}
+
           <input
             ref={inputRef}
             value={inputValue}
             onChange={(e) => {
-              setInputValue(e.target.value);
-              socket?.send(
-                JSON.stringify({
-                  type: "typing",
-                  payload: {
-                    receiverId: dataHeader.receiverId,
-                    conversationId: dataHeader.id,
-                    isTyping: true,
-                  },
-                }),
-              );
-            }}
-            onKeyUp={() => {
-              socket?.send(
-                JSON.stringify({
-                  type: "typing",
-                  payload: {
-                    receiverId: dataHeader.receiverId,
-                    conversationId: dataHeader.id,
-                    isTyping: false,
-                  },
-                }),
-              );
+              const value = e.target.value;
+
+              setInputValue(value);
+
+              if (!value.trim()) {
+                stopTyping();
+                return;
+              }
+
+              handleTyping();
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && inputValue.trim()) {
+              if (e.key === "Enter" && !e.shiftKey && inputValue.trim()) {
                 e.preventDefault();
                 sendMessage();
-                setRefresh((p) => p + 1);
               }
             }}
             placeholder="اكتب رسالتك هنا..."
             className="flex-1 bg-transparent py-2.5 px-4 outline-none text-[14.5px] text-gray-800 placeholder:text-gray-400"
           />
+
           <button
             onClick={sendMessage}
             disabled={!inputValue.trim()}

@@ -85,30 +85,30 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     });
   }
 
-  initConversations(userId: string, conversations: any[]) {
-    if (!Array.isArray(conversations)) return;
+  // initConversations(userId: string, conversations: any[]) {
+  //   if (!Array.isArray(conversations)) return;
 
-    conversations.forEach(({ receiverId }) => {
-      if (!receiverId) return;
+  //   conversations.forEach(({ receiverId }) => {
+  //     if (!receiverId) return;
 
-      if (!this.userContacts.has(userId)) {
-        this.userContacts.set(userId, new Set());
-      }
+  //     if (!this.userContacts.has(userId)) {
+  //       this.userContacts.set(userId, new Set());
+  //     }
 
-      this.userContacts.get(userId)!.add(receiverId);
+  //     this.userContacts.get(userId)!.add(receiverId);
 
-      if (this.users.has(receiverId)) {
-        this.sendToUser(userId, {
-          type: 'AllPresence',
-          payload: {
-            senderId: userId,
-            receiverId,
-            isOnline: true,
-          },
-        });
-      }
-    });
-  }
+  //     if (this.users.has(receiverId)) {
+  //       this.sendToUser(userId, {
+  //         type: 'AllPresence',
+  //         payload: {
+  //           senderId: userId,
+  //           receiverId,
+  //           isOnline: true,
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
   // ================= PRESENCE =================
   broadcastPresence(userId: string, isOnline: boolean) {
     const contacts = this.userContacts.get(userId);
@@ -148,9 +148,82 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     });
   }
 
-  isInConversation(userId: string, conversationId: string) {
-    return this.conversations.get(conversationId)?.has(userId);
+  initConversations(userId: string, conversations: any[]) {
+    if (!Array.isArray(conversations)) return;
+
+    conversations.forEach(({ receiverId, conversationId }) => {
+      if (!receiverId || !conversationId) return;
+
+      // إضافة جهة الاتصال
+      if (!this.userContacts.has(userId)) {
+        this.userContacts.set(userId, new Set());
+      }
+
+      this.userContacts.get(userId)!.add(receiverId);
+
+      // تسجيل المحادثة
+      if (!this.conversations.has(conversationId)) {
+        this.conversations.set(conversationId, new Set());
+      }
+
+      const members = this.conversations.get(conversationId)!;
+
+      members.add(userId);
+      members.add(receiverId);
+
+      // إرسال حالة الاتصال
+      if (this.users.has(receiverId)) {
+        this.sendToUser(userId, {
+          type: 'AllPresence',
+          payload: {
+            senderId: userId,
+            receiverId,
+            isOnline: true,
+          },
+        });
+      }
+    });
   }
+  // isInConversation(userId: string, conversationId: any[]) {
+  //   if (!Array.isArray(conversationId)) return;
+
+  //   conversationId.forEach(({ receiverId, conversationId }) => {
+  //     if (!receiverId || !conversationId) return;
+
+  //     // إضافة جهة الاتصال
+  //     if (!this.userContacts.has(userId)) {
+  //       this.userContacts.set(userId, new Set());
+  //     }
+
+  //     this.userContacts.get(userId)!.add(receiverId);
+
+  //     // تسجيل طرفي المحادثة
+  //     if (!this.conversations.has(conversationId)) {
+  //       this.conversations.set(conversationId, new Set());
+  //     }
+
+  //     this.conversations.get(conversationId)!.add(userId);
+  //     this.conversations.get(conversationId)!.add(receiverId);
+
+  //     // إرسال حالة الاتصال
+  //     if (this.users.has(receiverId)) {
+  //       this.sendToUser(userId, {
+  //         type: 'AllPresence',
+  //         payload: {
+  //           senderId: userId,
+  //           receiverId,
+  //           isOnline: true,
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
+  isInConversation(userId: string, conversationId: string): boolean {
+    return this.conversations.get(conversationId)?.has(userId) ?? false;
+  }
+  // isInConversation(userId: string, conversationId: string) {
+  //   return this.conversations.get(conversationId)?.has(userId);
+  // }
 
   async handleChat(userId: string, payload: any) {
     const { receiverId, conversationId, content } = payload;
@@ -191,19 +264,74 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     }
   }
   // ================= TYPING =================
+
   handleTyping(userId: string, payload: any) {
     const { receiverId, conversationId, isTyping } = payload;
 
-    if (!this.isInConversation(userId, conversationId)) return;
+    if (!receiverId || !conversationId) return;
+
+    if (typeof isTyping !== 'boolean') return;
+
+    // التأكد من عضوية الطرفين
+    const members = this.conversations.get(conversationId);
+
+    if (!members?.has(userId) || !members?.has(receiverId)) {
+      console.log('Typing rejected: users are not conversation members');
+      return;
+    }
+
+    // console.log('Typing received:', {
+    //   senderId: userId,
+    //   receiverId,
+    //   conversationId,
+    //   isTyping,
+    // });
 
     this.sendToUser(receiverId, {
       type: 'typing',
       payload: {
         receiverId: userId,
+        conversationId,
         isTyping,
       },
     });
   }
+  // handleTyping(userId: string, payload: any) {
+  //   const { receiverId, conversationId, isTyping } = payload;
+
+  //   if (!receiverId || !conversationId) return;
+
+  //   if (typeof isTyping !== 'boolean') return;
+
+  //   const members = this.conversations.get(conversationId);
+
+  //   // التأكد أن الطرفين أعضاء في المحادثة
+  //   if (!members?.has(userId) || !members?.has(receiverId)) {
+  //     return;
+  //   }
+
+  //   this.sendToUser(receiverId, {
+  //     type: 'typing',
+  //     payload: {
+  //       receiverId: userId,
+  //       conversationId,
+  //       isTyping,
+  //     },
+  //   });
+  // }
+  // handleTyping(userId: string, payload: any) {
+  //   const { receiverId, conversationId, isTyping } = payload;
+
+  //   if (!this.isInConversation(userId, conversationId)) return;
+
+  //   this.sendToUser(receiverId, {
+  //     type: 'typing',
+  //     payload: {
+  //       receiverId: userId,
+  //       isTyping,
+  //     },
+  //   });
+  // }
   // ================= ROUTER =================
   handleMessage(userId: string, data: any) {
     let msg;

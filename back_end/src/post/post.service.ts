@@ -64,6 +64,9 @@ export class PostService {
 
   async getAllPosts(filters: GetAllPostsDto, userId: string, page = 1) {
     const limit = 6;
+    console.log('====================================');
+    console.log('userId 00', userId);
+    console.log('====================================');
 
     const posts = await this.prisma.post.findMany({
       where: filters,

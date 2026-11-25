@@ -41,7 +41,7 @@ export class UsersController {
     role: string,
     @Req() req: any,
   ) {
-    return this.usersService.getUserById(targetUserId, role, req?.user?.userId);
+    return this.usersService.getUserById(targetUserId, role, req.user?.userId);
   }
 
   @Patch(':userId')

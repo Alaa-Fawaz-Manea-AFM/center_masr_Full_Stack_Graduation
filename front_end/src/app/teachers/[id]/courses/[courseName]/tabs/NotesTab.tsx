@@ -1,4 +1,5 @@
 "use client";
+import { getDataAction } from "@/actions/users";
 import { formatDate } from "@/app/components/helper";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
@@ -79,17 +80,24 @@ const NotesTab = ({ cache, setCache, courseId, searchQuery, mode }: any) => {
   const handleGetLessons = async () => {
     if (cache[mode]?.length > 0) return;
 
-    const token = localStorage.getItem("token");
-    const res = await axios.get(`${DOMAIN}${mode}?id=${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // const token = localStorage.getItem("token");
+    // const res = await axios.get(`${DOMAIN}${mode}?id=${courseId}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    const result = await getDataAction("get", `${mode}?id=${courseId}`);
 
+    console.log("====================================");
+    console.log("result 888", result);
+    console.log("====================================");
+    if (!result.success) {
+      return;
+    }
     setCache((pre) => {
       return {
         ...pre,
-        [mode]: res.data?.data || [],
+        [mode]: result.data || [],
       };
     });
   };

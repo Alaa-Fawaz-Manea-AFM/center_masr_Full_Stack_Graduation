@@ -32,13 +32,17 @@ export class PostController {
     @Query() getAllPostsDto: GetAllPostsDto,
     @Req() req,
   ) {
-    return this.postService.getAllPosts(getAllPostsDto, req?.user, page.page);
+    return this.postService.getAllPosts(
+      getAllPostsDto,
+      req.user?.userId,
+      page.page,
+    );
   }
 
   @AuthDecorator()
   @Get(':postId')
   getPost(@Param('postId', ParseUUIDPipe) postId: string, @Req() req: any) {
-    return this.postService.getPost(postId, req?.user?.userId);
+    return this.postService.getPost(postId, req.user?.userId);
   }
 
   @RolesDecorator(TEACHER, CENTER)

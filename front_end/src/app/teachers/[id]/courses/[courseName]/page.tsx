@@ -7,6 +7,7 @@ import NotesTab from "./tabs/NotesTab";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { formatDate, formatDateYear } from "@/app/components/helper";
+import { getDataAction } from "@/actions/users";
 
 const CourseContentContainer = () => {
   const [activeTab, setActiveTab] = useState("الحصص");
@@ -24,14 +25,25 @@ const CourseContentContainer = () => {
   const [course, setCourse] = useState({});
 
   const handleGetCourse = async () => {
-    const token = localStorage.getItem("token");
-    const res = await axios.get(`${DOMAIN}courses/${courseId}?id=${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // const token = localStorage.getItem("token");
+    // const res = await axios.get(`${DOMAIN}courses/${courseId}?id=${courseId}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
 
-    setCourse(res.data.data);
+    const result = await getDataAction(
+      "get",
+      `courses/${courseId}?id=${courseId}`,
+    );
+    console.log("====================================");
+    console.log("result 999", result);
+    console.log("====================================");
+    if (!result.success) {
+      return;
+    }
+
+    setCourse(result.data);
   };
   useEffect(() => {
     handleGetCourse();
