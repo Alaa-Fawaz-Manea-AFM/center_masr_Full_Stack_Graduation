@@ -56,7 +56,7 @@ const saveAuthCookies = async (response: AxiosResponse) => {
     if (["accessToken"].includes(name)) {
       cookieStore.set(name, value.join("="), {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
         path: "/",
       });
