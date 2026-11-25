@@ -8,6 +8,10 @@ export default class AppConfig {
     return process.env;
   }
 
+  get COOKIE_MAX_AGE1(): number {
+    return Number(this.validatedEnv.COOKIE_MAX_AGE1);
+  }
+
   get nodeEnv() {
     return this.validatedEnv.NODE_ENV as 'development' | 'production';
   }

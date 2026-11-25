@@ -13,17 +13,19 @@ import { PrismaService } from '../prisma.service';
 import AppConfig from '../config/app.config';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { ChangePasswordDto } from '../validators/changePassword.dto';
 
-const secureCookieOptions = (type = 'accessToken') => {
-  if (process.env.NODE_ENV === 'development') return {};
-  return {
-    httpOnly: true,
-    secure: true,
-    maxAge: type === 'refresh' ? 7 * 24 * 60 * 60 : 1 * 24 * 60 * 60,
-  };
-};
+// const secureCookieOptions = (type = 'accessToken') => {
+//   if (process.env.NODE_ENV === 'development') return {};
+//   return {
+//     httpOnly: true,
+//     secure: true,
+//     sameSite: 'strict',
+//     path: '/',
+//     maxAge: type === 'refresh' ? 7 * 24 * 60 * 60 : 1 * 24 * 60 * 60,
+//   };
+// };
 
 @Injectable()
 export class AuthService {
@@ -32,6 +34,17 @@ export class AuthService {
     private prisma: PrismaService,
     private config: AppConfig,
   ) {}
+
+  secureCookieOptions = (type = 'accessToken'): CookieOptions => {
+    if (process.env.NODE_ENV === 'development') return {};
+    return {
+      httpOnly: true,
+      secure: this.config.nodeEnv === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: this.config.COOKIE_MAX_AGE1,
+    };
+  };
 
   toUpperCase(str: string) {
     const data = str.slice(0, 1).toUpperCase() + str.slice(1);
@@ -76,8 +89,12 @@ export class AuthService {
         create: { userId, token: hashRefreshToken },
       });
 
-      res.cookie('accessToken', accessToken, secureCookieOptions());
-      res.cookie('refreshToken', refreshToken, secureCookieOptions('refresh'));
+      res.cookie('accessToken', accessToken, this.secureCookieOptions());
+      res.cookie(
+        'refreshToken',
+        refreshToken,
+        this.secureCookieOptions('refresh'),
+      );
 
       return sendResponsive(
         {
@@ -152,8 +169,12 @@ export class AuthService {
       create: { userId, token: hashRefreshToken },
     });
 
-    res.cookie('accessToken', accessToken, secureCookieOptions());
-    res.cookie('refreshToken', refreshToken, secureCookieOptions('refresh'));
+    res.cookie('accessToken', accessToken, this.secureCookieOptions());
+    res.cookie(
+      'refreshToken',
+      refreshToken,
+      this.secureCookieOptions('refresh'),
+    );
 
     return sendResponsive(
       {
@@ -236,7 +257,7 @@ export class AuthService {
       role: payload.role,
     });
 
-    res.cookie('accessToken', newAccessToken, secureCookieOptions());
+    res.cookie('accessToken', newAccessToken, this.secureCookieOptions());
 
     return sendResponsive(null, 'refresh token successfully');
   }
