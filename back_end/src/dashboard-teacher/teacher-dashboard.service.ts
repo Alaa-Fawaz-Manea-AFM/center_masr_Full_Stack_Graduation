@@ -47,7 +47,7 @@ export class TeacherDashboardService {
       }),
     ]);
 
-    console.log(bookings, studentCounts);
+    // console.log(bookings, studentCounts);
     return sendResponsive(
       { studentCounts: studentCounts?.studentCounts, bookings },
       bookings.length ? 'Bookings retrieved successfully' : 'No bookings found',

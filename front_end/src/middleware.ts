@@ -74,11 +74,11 @@ export async function middleware(request: NextRequest) {
 
   const token = request.cookies.get("accessToken")?.value;
 
-  const isCentersList = pathname === "/centers";
+  // const isCentersList = pathname === "/centers";
 
-  if (isCentersList) {
-    return NextResponse.next();
-  }
+  // if (isCentersList) {
+  //   return NextResponse.next();
+  // }
 
   const isCenterProfileRoute = /^\/centers\/[^/]+(\/.*)?$/.test(pathname);
 
@@ -133,5 +133,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/centers/:id*", "/teachers/:id*", "/dashboard/:path*"],
+  matcher: ["/dashboard/:path*"],
 };

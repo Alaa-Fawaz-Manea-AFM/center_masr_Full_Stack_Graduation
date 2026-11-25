@@ -8,6 +8,21 @@ import { sendResponsive, STUDENT, weekDays } from '../utils';
 import { CreateWeeklyDto } from './dto/create-weekly-schedule.dto';
 import { TeacherDayDto } from './dto/TeacherDayDto';
 
+export const optionbookedWeekly = (role?: string, currentUserId?: string) => {
+  return currentUserId && role
+    ? {
+        bookedWeekly:
+          role === STUDENT
+            ? {
+                where: { studentId: currentUserId },
+                select: { id: true },
+                take: 1,
+              }
+            : false,
+      }
+    : {};
+};
+
 @Injectable()
 export class WeeklyScheduleService {
   constructor(private prisma: PrismaService) {}
@@ -15,8 +30,8 @@ export class WeeklyScheduleService {
   async getWeeklySchedule(
     centerId: string,
     classRoom: string,
-    currentUserId: string,
-    role: string,
+    currentUserId?: string,
+    role?: string,
   ) {
     const weeklySchedule = await this.prisma.weeklySchedule.findUnique({
       where: {
@@ -44,14 +59,7 @@ export class WeeklyScheduleService {
                 classRoom: true,
               },
             },
-            bookedWeekly:
-              role === STUDENT
-                ? {
-                    where: { studentId: currentUserId },
-                    select: { id: true },
-                    take: 1,
-                  }
-                : false,
+            ...optionbookedWeekly(role, currentUserId),
           },
         },
       },

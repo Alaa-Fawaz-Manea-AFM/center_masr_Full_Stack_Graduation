@@ -16,23 +16,25 @@ import { CreateWeeklyDto } from './dto/create-weekly-schedule.dto';
 import RolesDecorator from '../decorator/roles.decorator';
 import { CENTER } from '../utils';
 import { TeacherDayDto } from './dto/TeacherDayDto';
+import AuthDecorator from 'src/decorator/auth.decorator';
 
 @Controller('weekly-schedule')
 export class WeeklyScheduleController {
   constructor(private readonly service: WeeklyScheduleService) {}
 
+  @AuthDecorator()
   @Get(':centerId')
   getWeeklySchedule(
     @Param('centerId', ParseUUIDPipe) centerId: string,
     @Query() getWeeklyScheduleDto: GetWeeklyScheduleDto,
     @Req() req,
   ) {
-    const { profileId, role } = req.user;
+    // const { profileId, role } = req?.user;
     return this.service.getWeeklySchedule(
       centerId,
       getWeeklyScheduleDto.classRoom,
-      profileId,
-      role,
+      req?.user?.profileId,
+      req?.user?.role,
     );
   }
 

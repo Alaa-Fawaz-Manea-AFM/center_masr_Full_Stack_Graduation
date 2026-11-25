@@ -14,6 +14,7 @@ import { CENTER } from '../utils';
 import RolesDecorator from '../decorator/roles.decorator';
 import { GetAllDashboardCenterTeacherDto } from './dto/getAllTeacherDto';
 import { CreateTeachersDto } from './dto/CreateTeachersDto';
+import AuthDecorator from 'src/decorator/auth.decorator';
 
 @Controller('center-dashboard')
 export class CenterDashboardController {
@@ -30,6 +31,7 @@ export class CenterDashboardController {
     );
   }
 
+  @AuthDecorator()
   @Get('teachers/:centerId')
   findAllTeachers(
     @Query('limit', ParseIntPipe) limit: number,

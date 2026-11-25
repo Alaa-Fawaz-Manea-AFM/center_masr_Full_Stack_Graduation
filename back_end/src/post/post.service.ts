@@ -10,6 +10,22 @@ import { RoleEnumDto } from '../validators/roles.dto';
 import GetAllPostsDto from './dto/getAllPosts.dto';
 import { roleTeacherAndCenterSet, sendResponsive } from '../utils';
 
+export const optionLike = (currentUserId?: string) => {
+  return currentUserId
+    ? {
+        likes: {
+          where: {
+            userId: currentUserId,
+          },
+          select: {
+            id: true,
+          },
+          take: 1,
+        },
+      }
+    : {};
+};
+
 @Injectable()
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
@@ -24,13 +40,7 @@ export class PostService {
         likeCounts: true,
         commentCounts: true,
         createdAt: true,
-        likes: {
-          where: { userId },
-          select: {
-            id: true,
-          },
-          take: 1,
-        },
+        ...optionLike(userId),
         user: {
           select: {
             id: true,
@@ -42,11 +52,11 @@ export class PostService {
     });
 
     if (!post) throw new NotFoundException('Post not found');
-    const { likes, ...reset } = post;
+    const { likes = [], ...reset } = post;
     return sendResponsive(
       {
         ...reset,
-        isLiked: post.likes.length > 0,
+        isLiked: likes.length > 0,
       },
       'Post retrieved successfully',
     );
@@ -68,16 +78,13 @@ export class PostService {
         likeCounts: true,
         commentCounts: true,
         createdAt: true,
-        likes: {
-          where: { userId },
-          select: {
-            id: true,
-          },
-          take: 1,
-        },
+        ...optionLike(userId),
       },
     });
 
+    // console.log('====================================');
+    // console.log(posts);
+    // console.log('====================================');
     return sendResponsive(
       {
         meta: {
@@ -85,10 +92,10 @@ export class PostService {
           page,
         },
         data: posts.map((post) => {
-          const { likes, ...reset } = post;
+          const { likes = [], ...reset } = post;
           return {
             ...reset,
-            isLiked: post.likes.length > 0,
+            isLiked: likes.length > 0,
           };
         }),
       },

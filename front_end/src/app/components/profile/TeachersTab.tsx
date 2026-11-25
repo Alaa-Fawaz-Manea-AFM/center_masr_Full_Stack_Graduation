@@ -11,6 +11,8 @@ import {
 import Image from "next/image";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
+import { getTeacherAction } from "@/actions/users";
+import toast from "react-hot-toast";
 
 const stages = [
   "المراحل التعليمية",
@@ -40,7 +42,7 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
       selectedStage === "المراحل التعليمية" &&
       selectedSubject === "المادة التعليمية"
     ) {
-      return data; 
+      return data;
     }
 
     return data.filter((teacher: any) => {
@@ -57,27 +59,32 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
   }, [cache, selectedStage, selectedSubject]);
 
   const handleGetTeachers = useCallback(async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(
-        `${DOMAIN}center-dashboard/teachers/${centerId}?limit=9`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      setsetCache((pre: any) => {
-        if (Array.isArray(pre)) return res.data.data;
-        return {
-          ...pre,
-          students: res.data.data,
-        };
-      });
-    } catch (error) {
-      console.error("Fetch error:", error);
+    // try {
+    // const token = localStorage.getItem("token");
+    // const res = await axios.get(
+    //   `${DOMAIN}center-dashboard/teachers/${centerId}?limit=9`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   },
+    // );
+    const result = await getTeacherAction(centerId);
+    if (!result.success) {
+      toast.error(result.message!);
+      return;
     }
+
+    setsetCache((pre: any) => {
+      if (Array.isArray(pre)) return result.data;
+      return {
+        ...pre,
+        students: result.data,
+      };
+    });
+    // } catch (error) {
+    //   console.error("Fetch error:", error);
+    // }
   }, [centerId, setsetCache]);
 
   useEffect(() => {

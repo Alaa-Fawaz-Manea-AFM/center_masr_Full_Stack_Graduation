@@ -11,9 +11,9 @@ import { cookies } from "next/headers";
 export const loginAndSignUpAction = async (endpoint: string, form: Iform) => {
   try {
     const response = await AxiosServer("post", endpoint, undefined, form);
-    console.log("====================================");
-    console.log("response", response);
-    console.log("====================================");
+    // console.log("====================================");
+    // console.log("response", response);
+    // console.log("====================================");
     await saveAuthCookies(response);
 
     return {

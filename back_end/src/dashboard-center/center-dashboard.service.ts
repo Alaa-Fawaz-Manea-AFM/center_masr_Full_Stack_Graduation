@@ -42,6 +42,10 @@ export class CenterDashboardService {
       },
       take,
     });
+
+    console.log('====================================');
+    console.log('teachers', teachers);
+    console.log('====================================');
     return sendResponsive(teachers || [], 'Get All Teachers successfully');
   }
 

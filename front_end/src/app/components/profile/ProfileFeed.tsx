@@ -1,10 +1,12 @@
 "use client";
+// "use server";
 import { DOMAIN } from "@/utils/constants";
 import { MessageCircle, Clock, Heart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ButtonLikes from "../button/ButtonLike";
 import { formatDate } from "../helper";
+import { getUserPostsAction } from "@/actions/users";
 export const ProfileFeed = ({
   userName,
   userImage,
@@ -16,7 +18,7 @@ export const ProfileFeed = ({
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     if (cachePosts?.length > 0)
       return setCachePosts((pre) => ({
         ...pre,
@@ -25,23 +27,56 @@ export const ProfileFeed = ({
 
     const getData = async () => {
       if (!userId) return;
-      const res = await fetch(
-        `${DOMAIN}posts?userId=${userId}&role=${role}&page=${page}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const json = await res.json();
+      // const res = await fetch(
+      //   `${DOMAIN}posts?userId=${userId}&role=${role}&page=${page}`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   },
+      // );
+      // const json = await res.json();
+
+      const result = await getUserPostsAction(userId, role, page);
+      console.log("====================================");
+      console.log("result222", result);
+      console.log("====================================");
 
       setCachePosts({
-        meta: json?.data?.meta,
-        data: json?.data?.data,
+        meta: result?.data?.meta,
+        data: result?.data?.data,
       });
     };
     getData();
   }, [userId]);
+
+  // useEffect(() => {
+  //   // const token = localStorage.getItem("token");
+  //   if (cachePosts?.length > 0)
+  //     return setCachePosts((pre) => ({
+  //       ...pre,
+  //       posts: cachePosts,
+  //     }));
+
+  //   const getData = async () => {
+  //     if (!userId) return;
+  //     const res = await fetch(
+  //       `${DOMAIN}posts?userId=${userId}&role=${role}&page=${page}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       },
+  //     );
+  //     const json = await res.json();
+
+  //     setCachePosts({
+  //       meta: json?.data?.meta,
+  //       data: json?.data?.data,
+  //     });
+  //   };
+  //   getData();
+  // }, [userId]);
 
   return (
     <>

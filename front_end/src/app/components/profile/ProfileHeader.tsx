@@ -7,9 +7,9 @@ import ButtonSendChat from "../button/ButtonSendChat";
 
 export const ProfileHeader = ({ data }: any) => {
   const [dataHeader, setDataHeader] = useState<UserData>(data);
-  useEffect(() => {
-    setDataHeader(data);
-  }, [data]);
+  // useEffect(() => {
+  //   setDataHeader(data);
+  // }, [data]);
 
   return (
     <div className="relative bg-white shadow-sm pb-6">

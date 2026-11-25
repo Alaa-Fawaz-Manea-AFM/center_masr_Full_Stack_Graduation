@@ -6,6 +6,7 @@ import axios from "axios";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const ButtonSendChat = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -58,9 +59,11 @@ const ButtonSendChat = ({ id }: { id: string }) => {
 
   return (
     <button
-      onClick={() => {
-        createConversation();
-      }}
+      onClick={() =>
+        user === null
+          ? toast.error("يرجى تسجيل الدخول أولاً")
+          : createConversation()
+      }
       className="flex items-center gap-2 border border-[#818181] text-[#343A40] text-sm px-6 py-2.5 rounded-xl font-bold cursor-pointer hover:bg-[#343A40] hover:text-white transition-all"
     >
       <MessageSquare size={18} /> مراسلة

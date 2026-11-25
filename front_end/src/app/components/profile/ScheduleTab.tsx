@@ -6,6 +6,8 @@ import axios from "axios";
 import { DOMAIN } from "@/utils/constants";
 import Image from "next/image";
 import { formatDateTime } from "../helper";
+import { getDataAction } from "@/actions/users";
+import toast from "react-hot-toast";
 
 const stageConfig: Record<string, string[]> = {
   "المرحلة الثانوية": [
@@ -43,31 +45,40 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
 
   const handleStageSelect = (stage: string) => {
     setSelectedStage(stage);
-    setSelectedGrade("الصف التعليمي"); 
+    setSelectedGrade("الصف التعليمي");
     setIsStageOpen(false);
   };
 
   const handleGetWeeks = useCallback(async () => {
     if (selectedGrade === "الصف التعليمي") return;
-    
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(
-        `${DOMAIN}weekly-schedule/${centerId}?classRoom=${selectedGrade}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
 
-      setCache((pre: any) => ({
-        ...pre,
-        weeks: res?.data?.data?.schedule || {},
-      }));
-    } catch (error) {
-      console.error("Error fetching schedule:", error);
-    }
+    // try {
+    // const token = localStorage.getItem("token");
+    // const res = await axios.get(
+    //   `${DOMAIN}weekly-schedule/${centerId}?classRoom=${selectedGrade}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // );
+    const result = await getDataAction(
+      "get",
+      `weekly-schedule/${centerId}?classRoom=${selectedGrade}`,
+    );
+    console.log("====================================");
+    console.log("result 444", result);
+    console.log("====================================");
+
+    if (!result.success) return toast.error("لا يوجد جدول حصص ");
+
+    setCache((pre: any) => ({
+      ...pre,
+      weeks: result?.data?.schedule || {},
+    }));
+    // } catch (error) {
+    //   console.error("Error fetching schedule:", error);
+    // }
   }, [centerId, selectedGrade, setCache]);
 
   useEffect(() => {
@@ -165,7 +176,7 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-px p-3 border-t overflow-hidden">
             {days.map((day) => {
-              const dayLessons = currentSchedule[day] || []; 
+              const dayLessons = currentSchedule[day] || [];
 
               return (
                 <div key={day} className="flex flex-col min-h-[400px]">

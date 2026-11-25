@@ -33,6 +33,7 @@ export class UsersController {
     return this.usersService.getAllUsersHomePage();
   }
 
+  @AuthDecorator()
   @Get(':id')
   getUser(
     @Param('id', ParseUUIDPipe) targetUserId: string,

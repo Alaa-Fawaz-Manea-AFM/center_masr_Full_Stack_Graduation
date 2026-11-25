@@ -19,24 +19,26 @@ import { CENTER, TEACHER } from '../utils';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import RolesDecorator from '../decorator/roles.decorator';
 import QueryPageDto from '../validators/queryPageDto';
+import AuthDecorator from 'src/decorator/auth.decorator';
 
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
+  @AuthDecorator()
   @Get()
   getAllPosts(
     @Query('page') page: QueryPageDto,
     @Query() getAllPostsDto: GetAllPostsDto,
     @Req() req,
   ) {
-    const { userId } = req.user as RequestType;
-    return this.postService.getAllPosts(getAllPostsDto, userId, page.page);
+    return this.postService.getAllPosts(getAllPostsDto, req?.user, page.page);
   }
 
+  @AuthDecorator()
   @Get(':postId')
   getPost(@Param('postId', ParseUUIDPipe) postId: string, @Req() req: any) {
-    return this.postService.getPost(postId, req.user.userId);
+    return this.postService.getPost(postId, req?.user?.userId);
   }
 
   @RolesDecorator(TEACHER, CENTER)
