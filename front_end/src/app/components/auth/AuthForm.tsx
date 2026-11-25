@@ -36,10 +36,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const onSubmit = async (values: AuthFormData) => {
     setLoading(true);
     const { terms, ...apiPayload } = values;
-    const endpoint = mode === "signup" ? "auth/signup" : "auth/login";
+    // const endpoint = mode === "signup" ? "auth/signup" : "auth/login";
 
     // try {
-    const result = await loginAndSignUpAction(endpoint, apiPayload as Iform);
+    const result = await loginAndSignUpAction(
+      "auth/login",
+      apiPayload as Iform,
+    );
     console.log("====================================");
     console.log("result", result);
     console.log("====================================");
