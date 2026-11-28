@@ -44,7 +44,7 @@ const MyState = ({ children }: { children: React.ReactNode }) => {
     const fetchUser = async () => {
       const result = await DataActions("get", "auth/me");
       if (result.success) {
-        setUser(result.data.user);
+        setUser(result.data);
       } else {
         setUser(null);
       }

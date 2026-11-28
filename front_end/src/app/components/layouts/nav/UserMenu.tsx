@@ -98,15 +98,13 @@ export const UserMenu = ({
         >
           <div className="flex items-center gap-2 md:gap-3 cursor-pointer group py-2">
             <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-slate-100 shadow-sm">
-              {avatarImage && (
-                <Image
-                  src={avatarImage}
-                  alt={userName}
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
-              )}
+              <Image
+                src={avatarImage}
+                alt={userName}
+                fill
+                className="object-contain"
+                unoptimized
+              />
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[#64748B] font-bold text-lg hidden md:block">

@@ -3,10 +3,9 @@
 import { Search, MoreVertical, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { formatDate } from "../helper";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
 import { useSocket } from "@/context/WsSocket";
 import Image from "next/image";
+import { DataActions } from "@/actions/users";
 
 export default function ChatSidebar({ isTyping }: any) {
   const {
@@ -21,25 +20,16 @@ export default function ChatSidebar({ isTyping }: any) {
 
   useEffect(() => {
     const handleGetContacts = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const {
-          data: { data },
-        } = await axios.get(`${DOMAIN}conversations`, {
-          withCredentials: true,
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setConversations(data);
-      } catch (error) {
-        console.error("Error fetching conversations:", error);
-      }
+      const result = await DataActions("get", "conversations");
+      if (!result.success) return;
+      setConversations(result.data);
     };
     handleGetContacts();
   }, [setConversations]);
 
   return (
     <div
-      className="w-full md:w-[320px] h-full bg-white border-l border-gray-100 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
+      className="w-full h-full bg-white border-l border-gray-100 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
       dir="rtl"
     >
       <div className="p-5 pb-3">
@@ -76,18 +66,18 @@ export default function ChatSidebar({ isTyping }: any) {
         {conversations?.length > 0 ? (
           conversations
             .filter((user: any) =>
-              user.name.toLowerCase().includes(search.toLowerCase()),
+              user?.name?.toLowerCase().includes(search?.toLowerCase()),
             )
             .map((user: any) => {
               const active = user?.id === dataHeader?.id;
 
-              const targetId = user?.receiverId || user?.senderId;
+              const targetId = user.receiverId || user.senderId;
               const userOnline = AllOnline?.has(targetId);
               const typing = isTyping[targetId] || false;
 
               return (
                 <div
-                  key={user.id}
+                  key={user?.id}
                   className={`relative flex items-center gap-3 p-3.5 rounded-[20px] cursor-pointer transition-all duration-300 group ${
                     active
                       ? "bg-[#D9E3E3] shadow-sm transform scale-[1.02]"
@@ -101,7 +91,7 @@ export default function ChatSidebar({ isTyping }: any) {
                           type,
                           payload: {
                             receiverId: targetId,
-                            conversationId: user.id,
+                            conversationId: user?.id,
                           },
                         }),
                       );
@@ -119,8 +109,8 @@ export default function ChatSidebar({ isTyping }: any) {
                       <div className="w-full h-full rounded-full overflow-hidden border-2 border-white bg-white shadow-sm">
                         {user?.imageUrl ? (
                           <Image
-                            src={user.imageUrl}
-                            alt={user.name}
+                            src={user?.imageUrl}
+                            alt={user?.name}
                             width={80}
                             height={80}
                             className="w-full h-full object-cover"
@@ -129,7 +119,7 @@ export default function ChatSidebar({ isTyping }: any) {
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-[#204658] to-[#3a6d85] flex items-center justify-center">
                             <span className="text-white font-bold text-lg">
-                              {user.name?.charAt(0)}
+                              {user?.name?.charAt(0)}
                             </span>
                           </div>
                         )}
@@ -150,11 +140,11 @@ export default function ChatSidebar({ isTyping }: any) {
                           active ? "text-[#204658]" : "text-gray-800"
                         } line-clamp-1`}
                       >
-                        {user.name}
+                        {user?.name}
                       </h3>
 
                       <span className="text-[10px] font-medium text-gray-400 shrink-0 whitespace-nowrap">
-                        {formatDate(user.lastMessageAt)}
+                        {formatDate(user?.lastMessageAt)}
                       </span>
                     </div>
 
@@ -176,44 +166,11 @@ export default function ChatSidebar({ isTyping }: any) {
                             active ? "text-[#204658]/70" : "text-gray-400"
                           }`}
                         >
-                          {user.lastMessage || "انقر للبدء المحادثة"}
+                          {user?.lastMessage || "انقر للبدء المحادثة"}
                         </p>
                       )}
                     </div>
                   </div>
-                  {/* <div className="flex-1 min-w-0 text-right">
-                    <div className="flex justify-between items-center gap-1 mb-1">
-                      <h3
-                        className={`font-bold text-[14.5px] truncate ${active ? "text-[#204658]" : "text-gray-800"} line-clamp-1`}
-                      >
-                        {user.name}
-                      </h3>
-                      <span className="text-[10px] font-medium text-gray-400">
-                        {formatDate(user.lastMessageAt)}
-                      </span>
-                    </div>
-
-                    <div className="h-5 flex items-center overflow-hidden">
-                      {typing ? (
-                        <div className="flex items-center gap-1.5 text-[#204658] animate-pulse">
-                          <div className="flex gap-0.5">
-                            <span className="size-1 bg-[#204658] rounded-full animate-bounce"></span>
-                            <span className="size-1 bg-[#204658] rounded-full animate-bounce [animation-delay:0.2s]"></span>
-                            <span className="size-1 bg-[#204658] rounded-full animate-bounce [animation-delay:0.4s]"></span>
-                          </div>
-                          <span className="text-[11px] font-bold italic">
-                            يكتب الآن...
-                          </span>
-                        </div>
-                      ) : (
-                        <p
-                          className={`text-[12.5px] truncate transition-colors ${active ? "text-[#204658]/70" : "text-gray-400"}`}
-                        >
-                          {user.lastMessage || "انفر للبدء المحادثة"}
-                        </p>
-                      )}
-                    </div>
-                  </div> */}
 
                   {active && (
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#204658] rounded-l-full"></div>
@@ -223,8 +180,8 @@ export default function ChatSidebar({ isTyping }: any) {
             })
         ) : (
           <div className="flex flex-col items-center justify-center pt-20 opacity-20">
-            <MessageCircle size={48} />
-            <p className="text-sm font-bold mt-2">لا توجد محادثات</p>
+            <MessageCircle size={48} color="black" />
+            <p className="text-sm font-bold mt-2 text-black">لا توجد محادثات</p>
           </div>
         )}
       </div>

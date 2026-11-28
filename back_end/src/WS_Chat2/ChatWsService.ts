@@ -52,7 +52,6 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     this.wss?.close();
   }
 
-  // ================= USERS =================
   addUser(userId: string, socket: WebSocket) {
     if (!this.users.has(userId)) {
       this.users.set(userId, new Set());
@@ -70,7 +69,6 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  // ================= CONTACTS =================
   setUserContacts(userId: string, contacts: string[]) {
     this.userContacts.set(userId, new Set(contacts));
 
@@ -85,31 +83,6 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     });
   }
 
-  initConversations(userId: string, conversations: any[]) {
-    if (!Array.isArray(conversations)) return;
-
-    conversations.forEach(({ receiverId }) => {
-      if (!receiverId) return;
-
-      if (!this.userContacts.has(userId)) {
-        this.userContacts.set(userId, new Set());
-      }
-
-      this.userContacts.get(userId)!.add(receiverId);
-
-      if (this.users.has(receiverId)) {
-        this.sendToUser(userId, {
-          type: 'AllPresence',
-          payload: {
-            senderId: userId,
-            receiverId,
-            isOnline: true,
-          },
-        });
-      }
-    });
-  }
-  // ================= PRESENCE =================
   broadcastPresence(userId: string, isOnline: boolean) {
     const contacts = this.userContacts.get(userId);
     if (!contacts) return;
@@ -130,8 +103,6 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     this.broadcastPresence(userId, false);
   }
 
-  // ================= CONVERSATION =================
-
   joinConversation(userId: string, receiverId: string, conversationId: string) {
     if (!this.conversations.has(conversationId)) {
       this.conversations.set(conversationId, new Set());
@@ -148,8 +119,40 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
     });
   }
 
-  isInConversation(userId: string, conversationId: string) {
-    return this.conversations.get(conversationId)?.has(userId);
+  initConversations(userId: string, conversations: any[]) {
+    if (!Array.isArray(conversations)) return;
+
+    conversations.forEach(({ receiverId, conversationId }) => {
+      if (!receiverId || !conversationId) return;
+      if (!this.userContacts.has(userId)) {
+        this.userContacts.set(userId, new Set());
+      }
+
+      this.userContacts.get(userId)!.add(receiverId);
+
+      if (!this.conversations.has(conversationId)) {
+        this.conversations.set(conversationId, new Set());
+      }
+
+      const members = this.conversations.get(conversationId)!;
+
+      members.add(userId);
+      members.add(receiverId);
+
+      if (this.users.has(receiverId)) {
+        this.sendToUser(userId, {
+          type: 'AllPresence',
+          payload: {
+            senderId: userId,
+            receiverId,
+            isOnline: true,
+          },
+        });
+      }
+    });
+  }
+  isInConversation(userId: string, conversationId: string): boolean {
+    return this.conversations.get(conversationId)?.has(userId) ?? false;
   }
 
   async handleChat(userId: string, payload: any) {
@@ -190,21 +193,28 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
       });
     }
   }
-  // ================= TYPING =================
+
   handleTyping(userId: string, payload: any) {
     const { receiverId, conversationId, isTyping } = payload;
 
-    if (!this.isInConversation(userId, conversationId)) return;
+    if (!receiverId || !conversationId) return;
+
+    if (typeof isTyping !== 'boolean') return;
+
+    const members = this.conversations.get(conversationId);
+
+    if (!members?.has(userId) || !members?.has(receiverId)) return;
 
     this.sendToUser(receiverId, {
       type: 'typing',
       payload: {
         receiverId: userId,
+        conversationId,
         isTyping,
       },
     });
   }
-  // ================= ROUTER =================
+
   handleMessage(userId: string, data: any) {
     let msg;
 
@@ -273,7 +283,6 @@ export class ChatWsService implements OnModuleInit, OnModuleDestroy {
       });
     });
   }
-  // ================= SEND =================
   sendToUser(userId: string, data: any) {
     const sockets = this.users.get(userId);
     if (!sockets) return;

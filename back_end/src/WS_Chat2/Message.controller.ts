@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import AuthDecorator from 'src/decorator/auth.decorator';
+import AuthDecorator from '../decorator/auth.decorator';
 import { GetAllChatIdDto } from './dato/get.message.dto';
 import { MessageService } from './Message.service';
 
