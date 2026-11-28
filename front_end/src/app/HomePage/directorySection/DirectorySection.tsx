@@ -22,9 +22,9 @@ const SectionHeader = ({ title, type }: { title: string; type: string }) => (
 );
 
 export default async function DirectorySection() {
-  const {
-    data: { centers = [], teachers = [] },
-  } = await DataActions("get", "users/home-page");
+  const result = await DataActions("get", "users/home-page");
+  if (!result.success) return;
+  const [centers = [], teachers = []] = result.data.data;
   return (
     <>
       {centers || teachers ? (
