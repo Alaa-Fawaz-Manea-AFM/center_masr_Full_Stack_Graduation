@@ -1,6 +1,6 @@
 # 🎓 CENTER MASR – Full-Stack Educational Platform
 
-A modern and comprehensive Full-Stack Educational Platform designed to connect students, teachers, and educational centers through an integrated digital learning ecosystem. Built with Next.js and NestJS, the platform provides secure authentication, role-based access control, real-time communication, and efficient educational management.
+A modern and comprehensive Full-Stack Educational Platform built with **Next.js** and **NestJS**, designed to connect students, teachers, and educational centers through an integrated digital learning ecosystem. The platform provides secure authentication, role-based access control, real-time communication, and efficient educational management.
 
 ## 🌐 Live Demo & Project Links
 
@@ -63,7 +63,7 @@ A modern and comprehensive Full-Stack Educational Platform designed to connect s
 - Designed relational database schemas using Prisma and PostgreSQL.
 - Implemented secure JWT authentication and role-based authorization.
 - Integrated WebSocket communication for real-time messaging, online presence, and instant updates.
-- Separated frontend and backend applications for independent development and deployment.
+- Separated frontend and backend applications to support independent development and deployment.
 - Integrated Cloudinary for cloud-based media management.
 
 ## 📁 Project Structure
@@ -98,18 +98,18 @@ Create a `.env.local` file inside the `front_end` directory.
 ```env
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
-
 NEXT_PUBLIC_WS_URL=
 NEXT_PUBLIC_BACK_URL=
-
 NODE_ENV=development
 ```
 
 **Environment Variables:**
+
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name.
 - `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`: Cloudinary upload preset.
 - `NEXT_PUBLIC_WS_URL`: Backend WebSocket server URL.
 - `NEXT_PUBLIC_BACK_URL`: Backend API base URL.
+- `NODE_ENV`: Frontend application environment.
 
 ### 2. Backend Environment
 
@@ -118,36 +118,34 @@ Create a `.env` file inside the `back_end` directory.
 ```env
 PORT=3001
 NODE_ENV=development
-
 FRONT_END_URL=
-
 DATABASE_URL=
-
 JWT_SECRET_KEY=
 JWT_EXPIRES_IN=1d
-
 COOKIE_MAX_AGE1=86400000
 COOKIE_DOMAIN=
-
 JWT_REFRESH_SECRET_KEY=
 JWT_REFRESH_EXPIRES_IN=7d
-
 JWT_ISSUER=
 ```
 
 **Environment Variables:**
+
 - `PORT`: Backend server port.
+- `NODE_ENV`: Application environment.
 - `FRONT_END_URL`: Frontend application URL for CORS configuration.
 - `DATABASE_URL`: PostgreSQL database connection string.
-- `JWT_SECRET_KEY`: Secret key for access token signing.
+- `JWT_SECRET_KEY`: Secret key used for access token signing.
 - `JWT_EXPIRES_IN`: Access token expiration duration.
 - `COOKIE_MAX_AGE1`: Cookie lifetime in milliseconds.
 - `COOKIE_DOMAIN`: Cookie domain configuration.
-- `JWT_REFRESH_SECRET_KEY`: Secret key for refresh token signing.
+- `JWT_REFRESH_SECRET_KEY`: Secret key used for refresh token signing.
 - `JWT_REFRESH_EXPIRES_IN`: Refresh token expiration duration.
 - `JWT_ISSUER`: JWT issuer identifier.
 
 ## 💻 Getting Started
+
+Follow these steps to run the project locally.
 
 ### 1. Clone the Repository
 
@@ -157,15 +155,25 @@ git clone https://github.com/Alaa-Fawaz-Manea-AFM/center_masr_Full_Stack_Graduat
 
 ### 2. Backend Setup
 
+Navigate to the backend directory:
+
 ```bash
 cd back_end
 npm install
 ```
 
-Configure the backend `.env` file, then run Prisma migrations:
+Configure your backend `.env` file.
+
+Run Prisma migrations:
 
 ```bash
 npx prisma migrate dev
+```
+
+Generate Prisma Client:
+
+```bash
+npx prisma generate
 ```
 
 Start the backend development server:
@@ -176,14 +184,16 @@ npm run start:dev
 
 ### 3. Frontend Setup
 
-Open another terminal:
+Open another terminal and navigate to the frontend directory:
 
 ```bash
 cd front_end
 npm install
 ```
 
-Configure the frontend `.env.local` file, then start the development server:
+Configure your frontend `.env.local` file.
+
+Start the frontend development server:
 
 ```bash
 npm run dev
@@ -191,7 +201,7 @@ npm run dev
 
 ### 4. Access the Application
 
-Open the frontend application in your browser:
+Open the frontend application:
 
 ```text
 http://localhost:3000
@@ -205,11 +215,30 @@ http://localhost:3001
 
 ## 🔒 Security
 
-- Sensitive environment variables are stored separately in backend and frontend configuration files.
-- JWT secrets and database credentials must never be exposed to the client.
-- Environment files must not be committed to public repositories.
-- Public environment variables should only contain non-sensitive configuration.
+- Implemented JWT-based authentication for secure user access.
+- Applied Role-Based Access Control (RBAC) to manage permissions across different user roles.
+- Stored sensitive environment variables separately from frontend configuration.
+- Kept JWT secrets and database credentials exclusively on the backend.
+- Used environment variables to manage application configuration.
+- Protected private credentials from exposure in public repositories.
+- Configured frontend and backend communication through appropriate CORS settings.
+
+## 🚀 Deployment
+
+The project uses Vercel for deployment.
+
+- **Frontend:** Deployed on Vercel.
+- **Backend:** Deployed on Vercel.
+
+Make sure to configure the required environment variables in the deployment settings for both applications.
+
+## 👨‍💻 Author
+
+**Alaa Fawaz Manea**
+
+- **GitHub:** [Alaa-Fawaz-Manea-AFM](https://github.com/Alaa-Fawaz-Manea-AFM)
+- **LinkedIn:** [Alaa Fawaz Manea](https://linkedin.com/in/alaa-fawaz-manea/)
 
 ---
 
-**Developed as a Full-Stack Educational Platform using Next.js, NestJS, PostgreSQL, Prisma, and WebSockets.**
+**CENTER MASR – A Full-Stack Educational Platform built with Next.js, NestJS, PostgreSQL, Prisma, and WebSockets.**
