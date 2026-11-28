@@ -24,10 +24,10 @@ const SectionHeader = ({ title, type }: { title: string; type: string }) => (
 export default async function DirectorySection() {
   const result = await DataActions("get", "users/home-page");
   if (!result.success) return;
-  const [centers = [], teachers = []] = result.data.data;
+  const data = result?.data;
   return (
     <>
-      {centers || teachers ? (
+      {data?.centers || data?.teachers ? (
         <main className="bg-slate-50 min-h-screen py-12 px-4 md:px-16">
           <div className="max-w-7xl mx-auto">
             <section className="mb-20">
@@ -36,7 +36,7 @@ export default async function DirectorySection() {
                 type="centers"
               />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {centers?.map((center: any) => (
+                {data?.centers?.map((center: any) => (
                   <CenterCard key={center.id} center={center} />
                 ))}
               </div>
@@ -48,7 +48,7 @@ export default async function DirectorySection() {
                 type="teachers"
               />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {teachers?.map((teacher: any) => (
+                {data?.teachers?.map((teacher: any) => (
                   <TeacherCard key={teacher.id} teacher={teacher} />
                 ))}
               </div>
