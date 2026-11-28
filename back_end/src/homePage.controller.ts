@@ -214,7 +214,7 @@ export class HomeController {
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo"><h1><i class="fas fa-graduation-cap"></i> EduPlatform API</h1></div>
+            <div class="logo"><h1><i class="fas fa-graduation-cap"></i> CENTER MASR API</h1></div>
             <div class="status"><span class="status-badge"></span><span>Server: ${serverStatus.status}</span><span>Uptime: ${serverStatus.uptime}</span></div>
             <div class="base-url"><i class="fas fa-link"></i> Base URL: <code>/api/v1</code></div>
         </div>
