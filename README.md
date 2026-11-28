@@ -1,30 +1,46 @@
-# 💬 VIBE - Real-Time Social Media & Networking Platform
+# 🎓 CENTER MASR – Full-Stack Educational Platform
 
-A modern, features-heavy Social Network designed for high engagement and live interactivity. The application features user feeds, complex follow/unfollow socio-graphs, media attachments, and a fully functional real-time chat application with instant notifications.
+A modern full-stack educational platform designed to connect students, teachers, and educational centers through an integrated digital learning ecosystem. Built with Next.js and NestJS, the platform combines secure role-based access control, real-time communication, and efficient data management to deliver a seamless educational experience.
+
+## 🌐 Live Demo 
+
+- **Frontend:** [Visit Center Masr](https://center-masr-full-stack-graduation-n.vercel.app/)
+- **Backend API:** [API Base URL](https://center-masr-full-stack-graduation.vercel.app/)
+- **API Documentation:** [Swagger Docs](https://center-masr-full-stack-graduation.vercel.app/)
 
 ## ✨ Key Features
-* **🌐 Dynamic Activity Feed:** Chronological posts feed featuring likes, nested comment threads, and user mentions.
-* **⚡ Real-Time Chat Engine:** Instant messaging engine built on top of **WebSockets (WS/Socket.io)** with typing indicators and unread message counters.
-* **🔔 Live Notification System:** Dynamic in-app push alerts triggered immediately when users get likes, comments, or follow requests.
-* **📱 Responsive WhatsApp-like Layout:** A fluid messaging interface featuring smooth transitions between modern navigation sidebars and dedicated chat views on mobile.
-* **🖼️ Media Uploads:** Compressed image posting architecture handled securely through backend pipelines.
+
+- **🔐 Authentication & Authorization:** Secure JWT-based authentication and role-based access control (RBAC) for Admins, Teachers, Students, and Educational Centers.
+- **👨‍🎓 Student Management:** Dedicated student accounts and personalized educational experiences.
+- **👨‍🏫 Teacher Management:** Teacher profiles and educational service management.
+- **🏫 Educational Center Management:** Dedicated center accounts and management capabilities.
+- **⚡ Real-Time Communication:** WebSocket-based communication for instant updates and real-time interactions.
+- **💬 Real-Time Chat:** Live messaging and instant communication between users.
+- **🟢 Online Presence:** Real-time user connection and online status tracking.
+- **📊 Admin Dashboard:** Centralized platform administration and user management.
+- **📱 Responsive Design:** Modern and responsive interfaces optimized for different screen sizes.
 
 ## 🛠️ Technical Stack
-* **Frontend:** `Next.js 14/15` • `TypeScript` • `TailwindCSS` • `Zustand` • `Framer Motion`
-* **Backend:** `NestJS` • `WebSockets (@nestjs/websockets)` • `EventEmitter2`
-* **Database & ORM:** `PostgreSQL` • `Prisma ORM`
-* **Deployment:** `Railway`
 
-## 📐 Socio-Graph & WS Optimization
-* Modeled an advanced Self-Referential structure in **Prisma & PostgreSQL** to efficiently index user connections (Followers/Following) and optimize feeds.
-* Structured event-driven WebSocket gateways in **NestJS** to handle simultaneous incoming real-time traffic, **cutting down polling overhead and reducing query latency by 15%**.
+- **Frontend:** `Next.js` • `React` • `TypeScript` • `Tailwind CSS`
+- **Backend:** `NestJS` • `Node.js` • `TypeScript` • `RESTful APIs` • `Class-Validator`
+- **Real-Time Communication:** `WebSockets` • `Real-Time Events`
+- **Database & ORM:** `PostgreSQL` • `Prisma ORM`
+- **Authentication & Security:** `JWT` • `Role-Based Access Control (RBAC)`
+- **Deployment:** `Vercel`
 
----
+## 🏗️ Architecture & Engineering
+
+- Designed a modular backend architecture using NestJS.
+- Developed relational database schemas using Prisma and PostgreSQL.
+- Implemented role-based authorization to manage permissions across different user roles.
+- Integrated WebSocket communication for real-time messaging, online presence, and instant updates.
+- Separated frontend and backend applications to support independent development and deployment.
 
 ## 💻 Getting Started
 
-1. **Clone the repo:** `git clone https://github.com/YOUR_USERNAME/vibe-social-network-websockets.git`
+1. **Clone the repo:** `git clone https://github.com/Alaa-Fawaz-Manea-AFM/center_masr_Full_Stack_Graduation`
 2. **Install deps:** `npm install`
-3. **Setup environment:** Create a `.env` file with `DATABASE_URL`, `JWT_SECRET`, and API endpoints.
+3. **Setup environment:** Create a `.env` file with `DATABASE_URL`, `CLOUDINARY_URL`, and `JWT_SECRET`.
 4. **Run migrations:** `npx prisma migrate dev`
-5. **Start dev server:** `npm run dev`
+5. **Start dev server:** `npm run start:dev`
