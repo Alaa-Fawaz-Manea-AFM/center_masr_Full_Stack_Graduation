@@ -4,6 +4,7 @@ import centerLogo from "@/assets/ceterProfile/teacherTap1.jpeg";
 import { Post } from "@/app/components/dashboard/center/Post";
 import AddPostModal from "@/app/components/dashboard/center/AddPostModal";
 import { useState } from "react";
+import Image from "next/image";
 
 const PostsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,11 +24,15 @@ const PostsPage = () => {
       <div className="bg-white rounded-2xl p-4 mb-8 border border-slate-100 shadow-sm flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 flex-1">
           <div className="w-10 h-10 rounded-full overflow-hidden border border-slate-100 shrink-0 relative">
-            <img
-              src={centerLogo.src}
-              alt="Center Logo"
-              className="w-full h-full object-cover"
-            />
+            {centerLogo?.src ? (
+              <Image
+                src={centerLogo.src}
+                alt="Center Logo"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              ""
+            )}
           </div>
 
           <button
@@ -44,7 +49,6 @@ const PostsPage = () => {
         </button>
       </div>
 
-     
       <Post centerId={centerId} />
       <AddPostModal
         isOpen={isModalOpen}

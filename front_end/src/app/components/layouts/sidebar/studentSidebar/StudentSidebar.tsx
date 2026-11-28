@@ -52,14 +52,14 @@ const StudentSidebar = () => {
             key={item.href}
             href={item.href}
             className={`w-full flex items-center justify-between py-3 px-2 rounded-md font-normal text-[16px] transition-all ${
-              item.active
+              item?.active
                 ? "bg-[#0D2D2A] text-white border-r-4 border-[#F59E0B]"
                 : "text-slate-500 hover:bg-slate-50"
             }`}
           >
             <div className="flex items-center gap-3">
               <item.icon size={22} />
-              <span className="hidden md:flex">{item.name}</span>
+              <span className="hidden md:flex">{item?.name}</span>
             </div>
           </Link>
         ))}

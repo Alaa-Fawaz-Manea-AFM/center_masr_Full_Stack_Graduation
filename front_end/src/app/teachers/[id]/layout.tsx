@@ -19,7 +19,10 @@ export default function RootLayout({
 
   useEffect(() => {
     const getData = async () => {
-      const result = await DataActions("get", `users/${param.id}?role=teacher`);
+      const result = await DataActions(
+        "get",
+        `users/${param?.id}?role=teacher`,
+      );
       if (!result.success) {
         router.back();
         return;
@@ -45,7 +48,7 @@ export default function RootLayout({
                     src={data.imageUrl}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    alt={data.name}
+                    alt={data?.name}
                     unoptimized
                   />
                 )}
@@ -79,8 +82,8 @@ export default function RootLayout({
             </div>
 
             <div className="flex gap-3 mb-2 justify-center md:justify-start">
-              <ButtonFollow id={data.id} data={data} setData={setData} />
-              <ButtonSendChat id={data.id} />
+              <ButtonFollow id={data?.id} data={data} setData={setData} />
+              <ButtonSendChat id={data?.id} />
             </div>
           </div>
         </div>

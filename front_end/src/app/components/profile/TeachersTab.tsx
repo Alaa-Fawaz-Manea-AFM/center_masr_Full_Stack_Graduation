@@ -98,7 +98,7 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
 
           {isStageOpen && (
             <div className="absolute top-full right-0 mt-2 w-full bg-white border border-slate-100 shadow-xl rounded-2xl z-50 overflow-hidden py-2 animate-in slide-in-from-top-2 duration-200">
-              {stages.map((s) => (
+              {stages?.map((s) => (
                 <button
                   key={s}
                   onClick={() => {
@@ -134,7 +134,7 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
 
           {isSubjectOpen && (
             <div className="absolute top-full left-0 mt-2 w-40 bg-white border border-slate-100 shadow-xl rounded-2xl z-50 overflow-hidden py-2 animate-in slide-in-from-top-2 duration-200">
-              {subjects.map((sub) => (
+              {subjects?.map((sub) => (
                 <button
                   key={sub}
                   onClick={() => {
@@ -163,7 +163,7 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
               {teacher?.imageUrl && (
                 <Image
                   src={teacher.imageUrl}
-                  alt={teacher.name}
+                  alt={teacher?.name}
                   width={80}
                   height={80}
                   className="w-full h-full rounded-full object-cover relative z-10 border-2 border-[#E7F2EF] shadow-sm"
@@ -173,18 +173,18 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
 
             <div className="text-center w-full">
               <h4 className="text-xl font-black text-[#204658] mb-1">
-                {teacher.name}
+                {teacher?.name}
               </h4>
               <p className="text-black text-[16px] mb-4">
-                {teacher.studyMaterial}
+                {teacher?.studyMaterial}
               </p>
               <p className="text-[#A9363D] text-xs font-bold mb-4">
-                {teacher.studyMaterial}
+                {teacher?.studyMaterial}
               </p>
 
               <div className="flex items-center justify-center gap-4 text-[15px] text-[#5F5F60] mb-4">
                 <span className="flex items-center gap-1">
-                  <Clock size={15} /> {teacher.classRoom?.[0]}
+                  <Clock size={15} /> {teacher?.classRoom?.[0]}
                 </span>
               </div>
 

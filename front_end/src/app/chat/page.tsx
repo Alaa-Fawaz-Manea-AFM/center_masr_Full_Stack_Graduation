@@ -38,8 +38,8 @@ export default function PureWSChat() {
       JSON.stringify({
         type: "init_conversations",
         payload: conversations.map((c: any) => ({
-          conversationId: c.id,
-          receiverId: user.id === c.senderId ? c.receiverId : c.senderId,
+          conversationId: c?.id,
+          receiverId: user?.id === c?.senderId ? c?.receiverId : c?.senderId,
         })),
       }),
     );
@@ -50,18 +50,18 @@ export default function PureWSChat() {
 
     const handleMessage = (event: MessageEvent) => {
       try {
-        const data = JSON.parse(event.data);
+        const data = JSON.parse(event?.data);
 
         switch (data.type) {
           case "AllPresence": {
-            const targetId = data.payload.receiverId;
-            const isOnline = data.payload.isOnline;
+            const targetId = data?.payload?.receiverId;
+            const isOnline = data?.payload?.isOnline;
 
-            if (data.payload.senderId === user?.id) {
+            if (data?.payload?.senderId === user?.id) {
               setAllOnline((prevSet: Set<string>) => {
                 const newSet = new Set(prevSet);
 
-                isOnline ? newSet.add(targetId) : newSet.delete(targetId);
+                isOnline ? newSet?.add(targetId) : newSet?.delete(targetId);
 
                 return newSet;
               });
@@ -71,14 +71,14 @@ export default function PureWSChat() {
           }
 
           case "presence": {
-            const targetId = data.payload.senderId;
-            const isOnline = data.payload.isOnline;
+            const targetId = data?.payload?.senderId;
+            const isOnline = data?.payload?.isOnline;
 
-            if (data.payload.receiverId === user?.id) {
+            if (data?.payload?.receiverId === user?.id) {
               setAllOnline((prevSet: Set<string>) => {
                 const newSet = new Set(prevSet);
 
-                isOnline ? newSet.add(targetId) : newSet.delete(targetId);
+                isOnline ? newSet?.add(targetId) : newSet?.delete(targetId);
 
                 return newSet;
               });
@@ -96,20 +96,20 @@ export default function PureWSChat() {
             }));
 
             setConversations((prev: any[]) => {
-              const updated = prev.map((conv) => {
-                if (conv.id !== conversationId) return conv;
+              const updated = prev?.map((conv) => {
+                if (conv?.id !== conversationId) return conv;
 
                 return {
                   ...conv,
-                  lastMessage: data.payload.content,
+                  lastMessage: data?.payload?.content,
                   lastMessageAt: new Date().toISOString(),
                 };
               });
 
               return updated.sort(
                 (a, b) =>
-                  new Date(b.lastMessageAt).getTime() -
-                  new Date(a.lastMessageAt).getTime(),
+                  new Date(b?.lastMessageAt)?.getTime() -
+                  new Date(a?.lastMessageAt)?.getTime(),
               );
             });
 

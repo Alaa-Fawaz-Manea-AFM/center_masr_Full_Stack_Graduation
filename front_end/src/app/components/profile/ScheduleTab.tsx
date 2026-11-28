@@ -95,7 +95,7 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
 
           {isStageOpen && (
             <div className="absolute top-full right-0 mt-3 w-56 bg-white border border-slate-100 shadow-xl rounded-2xl z-50 overflow-hidden py-2 animate-in slide-in-from-top-2">
-              {Object.keys(stageConfig).map((s) => (
+              {Object?.keys(stageConfig)?.map((s) => (
                 <button
                   key={s}
                   className="w-full text-right px-6 py-3 text-sm font-bold text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
@@ -161,7 +161,7 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-px p-3 border-t overflow-hidden">
-            {days.map((day) => {
+            {days?.map((day) => {
               const dayLessons = currentSchedule[day] || [];
 
               return (
@@ -176,8 +176,8 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
 
                   <div className="flex-1">
                     {isFilterSelected &&
-                      dayLessons.map((lesson: any, index: number) => {
-                        const isLastLesson = index === dayLessons.length - 1;
+                      dayLessons?.map((lesson: any, index: number) => {
+                        const isLastLesson = index === dayLessons?.length - 1;
                         return (
                           <div
                             key={lesson?.id}

@@ -30,16 +30,16 @@ const CoursesTab = ({
     return allCourses.filter((course: any) => {
       const search = searchQuery.trim().toLowerCase();
       const matchesSearch = (course?.title || "")
-        .toLowerCase()
-        .includes(search);
+        ?.toLowerCase()
+        ?.includes(search);
 
       const serverGrade = (course?.classRoom || "").trim();
       const UIActiveGrade = activeGrade.trim();
 
       const matchesGrade =
         !UIActiveGrade ||
-        serverGrade.includes(UIActiveGrade) ||
-        UIActiveGrade.includes(serverGrade);
+        serverGrade?.includes(UIActiveGrade) ||
+        UIActiveGrade?.includes(serverGrade);
 
       return matchesGrade && matchesSearch;
     });

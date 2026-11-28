@@ -51,8 +51,8 @@ const ChatMessages = ({
         JSON.stringify({
           type: "typing",
           payload: {
-            receiverId: session.receiverId,
-            conversationId: session.conversationId,
+            receiverId: session?.receiverId,
+            conversationId: session?.conversationId,
             isTyping,
           },
         }),
@@ -80,7 +80,7 @@ const ChatMessages = ({
     if (!dataHeader?.id || !receiverId || !user?.id) return;
 
     const session: TypingSession = {
-      conversationId: dataHeader.id,
+      conversationId: dataHeader?.id,
       receiverId,
     };
 
@@ -103,7 +103,7 @@ const ChatMessages = ({
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user.id}&receiverId=${receiverId}`,
+        `${process.env.NEXT_PUBLIC_BACK_URL}messages?senderId=${user?.id}&receiverId=${receiverId}`,
       );
 
       if (!res.ok) {
@@ -114,7 +114,7 @@ const ChatMessages = ({
 
       setAllMessages((prev) => ({
         ...prev,
-        [dataHeader.id]: data.data,
+        [dataHeader?.id]: data?.data,
       }));
     } catch (err) {
       console.error("Error loading messages:", err);
@@ -130,7 +130,7 @@ const ChatMessages = ({
 
     inputRef.current?.focus();
 
-    if (!AllMessages[dataHeader.id]) {
+    if (!AllMessages[dataHeader?.id]) {
       openChat();
     }
   }, [dataHeader?.id]);
@@ -167,7 +167,7 @@ const ChatMessages = ({
       return;
     }
 
-    if (socket.readyState !== WebSocket.OPEN) {
+    if (socket?.readyState !== WebSocket.OPEN) {
       console.error("WebSocket is not connected");
       return;
     }
@@ -177,10 +177,10 @@ const ChatMessages = ({
     const messagePayload = {
       type: "send_message",
       payload: {
-        conversationId: dataHeader.id,
+        conversationId: dataHeader?.id,
         senderId: user.id,
         receiverId,
-        content: inputValue.trim(),
+        content: inputValue?.trim(),
       },
     };
 
@@ -264,11 +264,11 @@ const ChatMessages = ({
         className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F8F9FA] custom-scrollbar"
       >
         {messages.map((msg: any, index: number) => {
-          const isMe = msg.senderId === user?.id;
+          const isMe = msg?.senderId === user?.id;
 
           return (
             <div
-              key={msg.id || index}
+              key={msg?.id || index}
               className={`flex ${isMe ? "justify-start" : "justify-end"}`}
             >
               <div
@@ -279,7 +279,7 @@ const ChatMessages = ({
                 }`}
               >
                 <p className="text-[14px] leading-relaxed break-words whitespace-pre-wrap">
-                  {msg.content}
+                  {msg?.content}
                 </p>
 
                 <span
@@ -287,7 +287,7 @@ const ChatMessages = ({
                     isMe ? "text-left" : "text-right"
                   }`}
                 >
-                  {formatDateTime(msg.createdAt)}
+                  {formatDateTime(msg?.createdAt)}
                 </span>
               </div>
             </div>

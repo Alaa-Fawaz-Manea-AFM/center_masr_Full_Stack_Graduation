@@ -64,8 +64,8 @@ const Nav = () => {
           <div className="hidden lg:flex items-center gap-4">
             {isLoggedIn ? (
               <UserMenu
-                userName={user.name}
-                role={user.role}
+                userName={user?.name}
+                role={user?.role}
                 closeMenu={closeMenu}
               />
             ) : (
@@ -144,8 +144,8 @@ const Nav = () => {
           <div className="flex flex-col gap-4 pt-4">
             {isLoggedIn ? (
               <UserMenu
-                userName={user.name}
-                role={user.role}
+                userName={user?.name}
+                role={user?.role}
                 closeMenu={closeMenu}
               />
             ) : (

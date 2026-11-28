@@ -27,15 +27,12 @@ const OverviewTab = ({ data }: any) => {
           <h2 className="text-xl font-black text-slate-800">نبذة تعريفية</h2>
         </div>
         <p className="text-slate-600 leading-relaxed font-medium">
-          {data.teacher?.bio}
+          {data?.teacher?.bio}
         </p>
       </div>
 
       <div className="max-w-6xl flex flex-col md:flex-row gap-6">
-        <div
-          data-aos="fade-up"
-          className="flex flex-col gap-6 w-full md:w-2/5"
-        >
+        <div data-aos="fade-up" className="flex flex-col gap-6 w-full md:w-2/5">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-50 text-[#191C1D]">
             <div className="flex items-center gap-2 mb-4">
               <div className="p-2 bg-[#CBE7F5] text-[#48626E] rounded">
@@ -44,7 +41,7 @@ const OverviewTab = ({ data }: any) => {
               <h3 className="text-2xl font-semibold ">المؤهلات العلمية</h3>
             </div>
             <p className="font-semibold text-[16px]">
-              {data.teacher.educationalQualification}
+              {data?.teacher?.educationalQualification}
             </p>
           </div>
 
@@ -58,7 +55,7 @@ const OverviewTab = ({ data }: any) => {
 
             <div className="flex flex-wrap gap-4 mb-6">
               <span className="px-3 py-1 bg-white text-[#003F87] rounded-md text-[16px] font-semibold border border-[#003F870D]">
-                {data.teacher.educationalStage}
+                {data?.teacher?.educationalStage}
               </span>
             </div>
 
@@ -66,7 +63,7 @@ const OverviewTab = ({ data }: any) => {
               <BookOpen size={16} /> المراحل الدراسية:
             </h4>
             <div className="flex gap-2">
-              {data.teacher.classRoom.map((grade) => (
+              {data?.teacher?.classRoom?.map((grade) => (
                 <span
                   key={grade}
                   className="px-2 py-1 bg-blue-50 text-slate-500 rounded text-[10px] font-bold"
@@ -77,21 +74,18 @@ const OverviewTab = ({ data }: any) => {
             </div>
           </div>
         </div>
-        <div
-          data-aos="fade-up"
-          className="flex flex-col gap-3 w-full md:w-3/5"
-        >
+        <div data-aos="fade-up" className="flex flex-col gap-3 w-full md:w-3/5">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-50 text-[#191C1D]">
             <h3 className="text-2xl font-semibold mb-6 pb-2">إحصائيات سريعة</h3>
             <div className="space-y-4 text-[16px] font-semibold">
-              <StatItem label="الخبرة" value={data.teacher.experienceYear} />
+              <StatItem label="الخبرة" value={data?.teacher?.experienceYear} />
               <StatItem
                 label="تاريخ الانضمام للمنصة"
-                value={formatDate(data.createdAt)}
+                value={formatDate(data?.createdAt)}
               />
               <StatItem
                 label="سعر الحصة الواحدة"
-                value={data.teacher.sharePrice}
+                value={data?.teacher?.sharePrice}
               />
             </div>
           </div>
@@ -104,25 +98,25 @@ const OverviewTab = ({ data }: any) => {
               <ContentItem
                 icon={<MessageCircle size={20} />}
                 label="الدروس المسجلة"
-                count={data.teacher.lessonCounts}
+                count={data?.teacher?.lessonCounts}
                 color="text-blue-600"
               />
               <ContentItem
                 icon={<FileText size={20} />}
                 label="المذكرات والملخصات"
-                count={data.teacher.noteCounts}
+                count={data?.teacher?.noteCounts}
                 color="text-cyan-600"
               />
               <ContentItem
                 icon={<CheckCircle2 size={20} />}
                 label="الواجبات المنزلية"
-                count={data.teacher.homeworkCounts}
+                count={data?.teacher?.homeworkCounts}
                 color="text-indigo-600"
               />
               <ContentItem
                 icon={<BookOpen size={20} />}
                 label="الاختبارات الدورية"
-                count={data.teacher.courseCounts}
+                count={data?.teacher?.courseCounts}
                 color="text-blue-900"
               />
             </div>
@@ -205,7 +199,9 @@ const ReviewItem = ({ name, role, text, initials }: any) => (
           {initials}
         </div>
         <div>
-          <h4 className="font-black text-slate-800 whitespace-nowrap">{name}</h4>
+          <h4 className="font-black text-slate-800 whitespace-nowrap">
+            {name}
+          </h4>
           <p className="text-xs text-slate-400 font-bold">{role}</p>
         </div>
       </div>
@@ -216,7 +212,7 @@ const ReviewItem = ({ name, role, text, initials }: any) => (
       </div>
     </div>
     <p className="text-slate-600 text-sm leading-relaxed font-medium">
-      "{text}"
+      &quot;{text}&quot;
     </p>
   </div>
 );

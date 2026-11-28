@@ -2,11 +2,6 @@ import Image from "next/image";
 import { Star, Globe, Clock, Pencil, Tags } from "lucide-react";
 import Badge from "../ui/Badge";
 import Link from "next/link";
-import { Teacher } from "@/types/teacher";
-
-type Props = {
-  teacher: Teacher;
-};
 
 export default function TeacherCard({ teacher }: any) {
   return (

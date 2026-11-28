@@ -14,16 +14,18 @@ export const ProfileTabs = ({ activeTab, setActiveTab }: ProfileTabsProps) => {
   ];
 
   return (
-    <div data-aos="fade-up" className="bg-white border-b md:sticky top-0 z-40 shadow-sm">
+    <div
+      data-aos="fade-up"
+      className="bg-white border-b md:sticky top-0 z-40 shadow-sm"
+    >
       <div className="max-w-7xl mx-auto px-6">
-    
         <div className="grid sm:grid-cols-4 gap-8 overflow-x-auto no-scrollbar scroll-smooth">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.name;
+          {tabs?.map((tab) => {
+            const isActive = activeTab === tab?.name;
             return (
               <button
-                key={tab.name}
-                onClick={() => setActiveTab(tab.name)}
+                key={tab?.name}
+                onClick={() => setActiveTab(tab?.name)}
                 className={`py-4 text-sm font-bold transition-all whitespace-nowrap cursor-pointer relative group flex items-center justify-center gap-2 ${
                   isActive
                     ? "text-orange-500"
@@ -35,14 +37,13 @@ export const ProfileTabs = ({ activeTab, setActiveTab }: ProfileTabsProps) => {
                     isActive ? "scale-110" : "group-hover:scale-105"
                   }`}
                 >
-                  {tab.icon}
+                  {tab?.icon}
                 </span>
-                {tab.name}
+                {tab?.name}
 
-            
                 <div
                   className={`absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500 rounded-full transition-all duration-300 ${
-                    activeTab === tab.name
+                    activeTab === tab?.name
                       ? "opacity-100 scale-x-100"
                       : "opacity-0 scale-x-0 group-hover:opacity-50 group-hover:scale-x-50"
                   }`}

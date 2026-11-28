@@ -26,9 +26,9 @@ export default function TeachersFilters({
     const subjects = new Set<string>();
 
     data.forEach((teacher: any) => {
-      teacher?.teacher?.studySystem?.forEach((s: string) => systems.add(s));
-      teacher?.teacher?.classRoom?.forEach((g: string) => grades.add(g));
-      subjects.add(teacher?.teacher?.studyMaterial);
+      teacher?.teacher?.studySystem?.forEach((s: string) => systems?.add(s));
+      teacher?.teacher?.classRoom?.forEach((g: string) => grades?.add(g));
+      subjects?.add(teacher?.teacher?.studyMaterial);
     });
 
     return {
@@ -63,7 +63,7 @@ export default function TeachersFilters({
             className="w-full pr-10 text-black pl-4 py-2.5 border border-[#9CA3AF] rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">النظام الدراسي</option>
-            {options.systems.map((s) => (
+            {options?.systems.map((s) => (
               <option key={s} value={s}>
                 {s}
               </option>
@@ -83,7 +83,7 @@ export default function TeachersFilters({
             className="w-full pr-10 pl-4 py-2.5 border border-[#9CA3AF] text-black rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">اختر الصف</option>
-            {options.grades.map((g) => (
+            {options?.grades?.map((g) => (
               <option key={g} value={g}>
                 {g}
               </option>
@@ -103,7 +103,7 @@ export default function TeachersFilters({
             className="w-full pr-10 pl-4 py-2.5 border border-[#9CA3AF] text-black rounded-xl appearance-none focus:outline-none cursor-pointer"
           >
             <option value="">اختر المادة</option>
-            {options.subjects.map((sub) => (
+            {options?.subjects?.map((sub) => (
               <option key={sub} value={sub}>
                 {sub}
               </option>

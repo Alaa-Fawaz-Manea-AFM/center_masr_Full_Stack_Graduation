@@ -1,7 +1,7 @@
 "use client";
 import { UserData } from "@/types/dashboard";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ButtonFollow from "../button/ButtonFollow";
 import ButtonSendChat from "../button/ButtonSendChat";
 

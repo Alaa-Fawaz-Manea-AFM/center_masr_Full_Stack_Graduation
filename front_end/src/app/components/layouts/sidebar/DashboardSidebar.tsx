@@ -75,13 +75,13 @@ const DashboardSidebar = () => {
       </div>
 
       <nav className="space-y-3">
-        {menuItems.map((item) => {
-          const isActive = pathname === item.href;
+        {menuItems?.map((item) => {
+          const isActive = pathname === item?.href;
 
           return (
             <Link
-              key={item.href}
-              href={item.href}
+              key={item?.href}
+              href={item?.href}
               className={`w-full flex items-center justify-between py-3 px-2 rounded-md font-normal text-[16px] transition-all ${
                 isActive
                   ? "bg-[#0D2D2A] text-white border-r-4 border-[#F59E0B]"
@@ -93,7 +93,7 @@ const DashboardSidebar = () => {
                   size={22}
                   className={isActive ? "text-white" : "text-slate-400"}
                 />
-                <span className="hidden md:flex">{item.name}</span>
+                <span className="hidden md:flex">{item?.name}</span>
               </div>
             </Link>
           );

@@ -182,7 +182,7 @@ const PersonalDataPage = () => {
                     </option>
                   ))}
                 </select>
-                {errors.classRoom && (
+                {errors?.classRoom && (
                   <span className="text-red-500 text-xs pr-1">
                     {errors.classRoom.message}
                   </span>

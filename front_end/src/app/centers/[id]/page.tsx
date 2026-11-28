@@ -53,7 +53,7 @@ export default function CenterProfilePage() {
           <ScheduleTab
             centerId={centerData?.center?.id}
             setCache={setCache}
-            cashWeeks={cache.weeks || []}
+            cashWeeks={cache?.weeks || []}
           />
         );
       case "الموقع الجغرافي":
@@ -71,7 +71,7 @@ export default function CenterProfilePage() {
             role="center"
             userId={centerData?.id}
             setCash={setCash}
-            cashPosts={cash.posts || []}
+            cashPosts={cash?.posts || []}
           />
         );
     }

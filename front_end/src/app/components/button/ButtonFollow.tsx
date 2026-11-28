@@ -27,13 +27,13 @@ const ButtonFollow = ({
       setLoading(false);
       return;
     }
-    const isNowFollowed = result.data.isFollowed;
+    const isNowFollowed = result?.data?.isFollowed || false;
     setData((prev: any) => ({
       ...prev,
       isFollowed: isNowFollowed,
       followerCounts: isNowFollowed
-        ? prev.followerCounts + 1
-        : prev.followerCounts - 1,
+        ? prev?.followerCounts + 1
+        : prev?.followerCounts - 1,
     }));
 
     toast.success(isNowFollowed ? "تمت المتابعة" : "تم إلغاء المتابعة");
@@ -45,12 +45,12 @@ const ButtonFollow = ({
       onClick={handleFollow}
       disabled={loading}
       className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold shadow-lg transition-all active:scale-95 ${
-        data?.isFollowed
+        data.isFollowed
           ? "bg-white text-[#2E637C] border border-[#2E637C]"
           : "bg-[#2E637C] text-white hover:bg-[#215167]"
       } ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
     >
-      {data?.isFollowed ? (
+      {data.isFollowed ? (
         <>
           <UserCheck size={18} />
           <span>Following</span>

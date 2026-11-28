@@ -98,16 +98,16 @@ const TeachersPage = () => {
 
       {!loading && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.map((teacher) => (
+          {data?.map((teacher) => (
             <div
-              key={teacher.id}
+              key={teacher?.id}
               className="bg-white rounded-[2.5rem] border p-6 shadow-sm"
             >
               <div className="flex justify-between mb-6">
                 <div className="text-right">
-                  <h4 className="font-medium text-lg">{teacher.name}</h4>
+                  <h4 className="font-medium text-lg">{teacher?.name}</h4>
                   <p className="text-[#DD5A00] font-semibold">
-                    {teacher.studyMaterial}
+                    {teacher?.studyMaterial}
                   </p>
                 </div>
                 <MoreVertical />
@@ -116,15 +116,15 @@ const TeachersPage = () => {
               <div className="grid grid-cols-3 text-center text-xs gap-3">
                 <div>
                   <p>الصف</p>
-                  <p>{teacher.level}</p>
+                  <p>{teacher?.level}</p>
                 </div>
                 <div>
                   <p>النظام</p>
-                  <p>{teacher.system}</p>
+                  <p>{teacher?.system}</p>
                 </div>
                 <div>
                   <p>السعر</p>
-                  <p>{teacher.price}</p>
+                  <p>{teacher?.price}</p>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ const TeachersPage = () => {
         </div>
       )}
 
-      {!loading && data.length === 0 && (
+      {!loading && data?.length === 0 && (
         <div className="text-center py-20 text-slate-400">لا يوجد مدرسين</div>
       )}
 

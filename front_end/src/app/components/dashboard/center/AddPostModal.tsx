@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef } from "react";
-import { X, Image as ImageIcon, Send, Paperclip } from "lucide-react";
+import { X, Image as ImageIcon, Send } from "lucide-react";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface AddPostModalProps {
   isOpen: boolean;
@@ -40,14 +41,13 @@ const AddPostModal = ({ isOpen, onClose, onSuccess }: AddPostModalProps) => {
       formData.append("content", content);
       if (image) formData.append("image", image);
 
-
       toast.success("تم نشر المنشور بنجاح");
       onSuccess();
       onClose();
       setContent("");
       setImage(null);
       setImagePreview(null);
-    } catch (error) {
+    } catch {
       toast.error("حدث خطأ أثناء النشر");
     } finally {
       setLoading(false);
@@ -82,7 +82,7 @@ const AddPostModal = ({ isOpen, onClose, onSuccess }: AddPostModalProps) => {
 
           {imagePreview && (
             <div className="relative w-full h-48 rounded-2xl overflow-hidden border border-slate-100 group">
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
                 className="w-full h-full object-cover"

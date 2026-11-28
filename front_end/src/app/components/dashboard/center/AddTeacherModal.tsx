@@ -1,17 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import {
-  X,
-  User,
-  BookOpen,
-  Layers,
-  Globe,
-  DollarSign,
-  Calendar,
-  Clock,
-} from "lucide-react";
+import { X } from "lucide-react";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 interface AddTeacherModalProps {
   isOpen: boolean;
@@ -37,18 +27,6 @@ const AddTeacherModal = ({ isOpen, onClose }: AddTeacherModalProps) => {
     setLoading(true);
 
     try {
-      const token =
-        typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
-      const response = await axios.post(
-        `YOUR_BACKEND_API_URL/teachers`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
       setLoading(true);
     } catch {
       setLoading(false);
@@ -61,7 +39,6 @@ const AddTeacherModal = ({ isOpen, onClose }: AddTeacherModalProps) => {
       dir="rtl"
     >
       <div className="bg-white rounded-[2.5rem] w-full max-w-[500px] max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in duration-300 border border-slate-100 scrollbar-hide">
-
         <div className="p-6 border-b border-slate-50 flex items-center justify-between sticky top-0 bg-white z-10">
           <div className="text-right">
             <h2 className="text-lg font-black text-slate-800">

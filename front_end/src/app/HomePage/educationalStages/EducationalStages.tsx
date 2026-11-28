@@ -49,8 +49,8 @@ const StageCard: React.FC<{ stage: EducationalStage }> = ({ stage }) => {
     >
       <div className="relative aspect-video w-full">
         <Image
-          src={stage.imageSrc}
-          alt={stage.imageAlt}
+          src={stage?.imageSrc}
+          alt={stage?.imageAlt}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -60,10 +60,10 @@ const StageCard: React.FC<{ stage: EducationalStage }> = ({ stage }) => {
 
       <div className="p-6 md:p-8 flex flex-col gap-5">
         <h3 className="text-xl md:text-2xl font-semibold text-slate-800 text-right">
-          {stage.title}
+          {stage?.title}
         </h3>
         <p className="text-base text-slate-600 leading-relaxed text-right min-h-[60px]">
-          {stage.description}
+          {stage?.description}
         </p>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
@@ -106,8 +106,8 @@ const EducationalStagesSection: React.FC = () => {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
-          {educationalStages.map((stage) => (
-            <StageCard key={stage.id} stage={stage} />
+          {educationalStages?.map((stage) => (
+            <StageCard key={stage?.id} stage={stage} />
           ))}
         </div>
       </div>

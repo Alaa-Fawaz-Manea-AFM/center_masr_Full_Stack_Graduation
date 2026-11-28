@@ -61,8 +61,8 @@ const ChangePasswordPage = () => {
       "auth/change-password",
       undefined,
       {
-        oldPassword: data.oldPassword,
-        newPassword: data.newPassword,
+        oldPassword: data?.oldPassword,
+        newPassword: data?.newPassword,
       },
     );
 

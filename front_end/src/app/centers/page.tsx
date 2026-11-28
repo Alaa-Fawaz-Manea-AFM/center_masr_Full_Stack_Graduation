@@ -49,14 +49,14 @@ export default function CentersPage() {
     let result = allCenters.filter((center) => {
       const matchSearch = center?.name
         ?.toLowerCase()
-        .includes(appliedFilters.search.toLowerCase());
+        .includes(appliedFilters?.search?.toLowerCase());
 
-      const matchLocation = appliedFilters.location
-        ? center.location === appliedFilters.location
+      const matchLocation = appliedFilters?.location
+        ? center?.location === appliedFilters?.location
         : true;
 
       const matchStage = appliedFilters.stage
-        ? center?.center?.educationalStage?.includes(appliedFilters.stage)
+        ? center?.center?.educationalStage?.includes(appliedFilters?.stage)
         : true;
 
       return matchSearch && matchLocation && matchStage;
@@ -164,7 +164,7 @@ export default function CentersPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCenters.map((center) => (
-              <CenterCard key={center.id} center={center} />
+              <CenterCard key={center?.id} center={center} />
             ))}
           </div>
         )}

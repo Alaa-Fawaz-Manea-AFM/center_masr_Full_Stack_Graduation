@@ -35,7 +35,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       apiPayload as Iform,
     );
     if (!result.success) {
-      toast.error(result?.message);
+      toast.error(result.message);
       setLoading(false);
       return;
     }
@@ -115,7 +115,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               type="password"
               placeholder="**********"
               register={register("password")}
-              error={errors.password?.message}
+              error={errors?.password?.message}
             />
             {mode === "signup" && (
               <div className="flex flex-col gap-1">
@@ -142,9 +142,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                   </label>
                 </div>
 
-                {errors.terms && (
+                {errors?.terms && (
                   <p className="text-red-500 text-xs text-right font-bold -mt-3 mb-4">
-                    {errors.terms.message as string}
+                    {errors?.terms?.message as string}
                   </p>
                 )}
               </div>

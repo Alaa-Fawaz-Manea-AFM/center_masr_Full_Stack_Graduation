@@ -96,17 +96,17 @@ export default function DashboardPage() {
             { id: "الواجبات والامتحانات", icon: ClipboardList },
           ].map((tab) => (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              key={tab?.id}
+              onClick={() => setActiveTab(tab?.id)}
               className={`pb-4 text-lg font-bold transition-all relative flex items-center gap-2 cursor-pointer group ${
-                activeTab === tab.id
+                activeTab === tab?.id
                   ? "text-slate-900"
                   : "text-slate-400 hover:text-slate-600"
               }`}
             >
               <tab.icon size={20} />
-              <span className="hidden md:flex">{tab.id}</span>
-              {activeTab === tab.id && (
+              <span className="hidden md:flex">{tab?.id}</span>
+              {activeTab === tab?.id && (
                 <div className="absolute bottom-0 right-0 left-0 h-1 bg-slate-800 rounded-full" />
               )}
             </button>

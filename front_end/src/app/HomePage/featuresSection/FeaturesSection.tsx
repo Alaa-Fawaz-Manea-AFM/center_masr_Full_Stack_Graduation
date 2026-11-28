@@ -24,7 +24,10 @@ const FeatureCard = ({
   iconBg,
   iconColor,
 }: FeatureProps) => (
-  <div  data-aos="flip-left" className="bg-white p-8 rounded-[2rem] shadow-md hover:shadow-xl transition-shadow flex flex-col items-center text-center border border-slate-50">
+  <div
+    data-aos="flip-left"
+    className="bg-white p-8 rounded-[2rem] shadow-md hover:shadow-xl transition-shadow flex flex-col items-center text-center border border-slate-50"
+  >
     <div
       className={`w-14 h-14 ${iconBg} ${iconColor} rounded-2xl flex items-center justify-center mb-6`}
     >
@@ -95,9 +98,8 @@ const FeaturesSection = () => {
           description="نوفر لك أفضل تجربة من خلال مجموعة من المميزات الفريدة"
         />
 
-  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {features?.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}
         </div>

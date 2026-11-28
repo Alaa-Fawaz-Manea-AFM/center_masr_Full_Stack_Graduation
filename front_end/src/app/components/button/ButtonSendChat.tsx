@@ -27,20 +27,20 @@ const ButtonSendChat = ({ id }: { id: string }) => {
     const data = await res.json();
 
     if (
-      !conversations.some((item) => item.id === data.data.id) &&
-      user?.id !== data.data.senderId
+      !conversations.some((item) => item.id === data?.data?.id) &&
+      user?.id !== data?.data?.senderId
     ) {
-      setConversations((prev) => [...prev, data.data]);
+      setConversations((prev) => [...prev, data?.data]);
     }
-    setDataHeader(data.data);
+    setDataHeader(data?.data);
 
     const emitEvent = (type: string) => {
       socket?.send(
         JSON.stringify({
           type,
           payload: {
-            receiverId: data.data.receiverId,
-            conversationId: data.data.id,
+            receiverId: data?.data?.receiverId,
+            conversationId: data?.data?.id,
           },
         }),
       );

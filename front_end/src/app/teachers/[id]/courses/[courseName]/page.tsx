@@ -81,7 +81,7 @@ const CourseContentContainer = () => {
           data-aos="fade-up"
           className="flex flex-col md:flex-row border-b border-[#F8FAFC]"
         >
-          {tabs.map((tab) => (
+          {tabs?.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -118,7 +118,7 @@ const CourseContentContainer = () => {
         <div className="bg-white">
           {activeTab === "الحصص" && (
             <LessonsTab
-              cache={cache.lessons || []}
+              cache={cache?.lessons || []}
               setCache={setCache}
               searchQuery={searchQuery}
               courseId={courseId}

@@ -79,7 +79,7 @@ export default function PostsManagement() {
             {posts?.map((post: any) => (
               <div
                 data-aos="fade-up"
-                key={post.id}
+                key={post?.id}
                 className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
               >
                 <div className="p-4 flex items-center justify-between">
@@ -101,7 +101,7 @@ export default function PostsManagement() {
                         {user?.name}
                       </h4>
                       <div className="flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
-                        <Clock size={12} /> {formatDate(post.createdAt)}
+                        <Clock size={12} /> {formatDate(post?.createdAt)}
                       </div>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ export default function PostsManagement() {
 
                 <div className="px-4 pb-4">
                   <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-line">
-                    {post.title}
+                    {post?.title}
                   </p>
                 </div>
 
@@ -129,14 +129,14 @@ export default function PostsManagement() {
                 <div className="px-4 py-3 border-t flex justify-between">
                   <div className=" flex items-center gap-6">
                     <ButtonLikes
-                      isLiked={post.isLiked}
-                      likesCount={post.likeCounts}
-                      id={post.id}
+                      isLiked={post?.isLiked}
+                      likesCount={post?.likeCounts}
+                      id={post?.id}
                     />
 
                     <button className="flex items-center gap-2 text-slate-500 text-sm font-bold hover:text-orange-500 transition cursor-pointer">
                       <MessageCircle size={18} />
-                      <span>{post.commentCounts}</span>
+                      <span>{post?.commentCounts}</span>
                     </button>
                   </div>
                   <button className="py-2 px-4 bg-[#E2F5FE] text-sm rounded-xl text-[#0F3D2E] hover:bg-[#c1e1f0] cursor-pointer">

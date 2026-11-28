@@ -65,33 +65,33 @@ const CoursesPage = () => {
             </thead>
 
             <tbody className="divide-y divide-gray-50">
-              {coursesData.map((course) => (
+              {coursesData?.map((course) => (
                 <tr
-                  key={course.id}
+                  key={course?.id}
                   className="hover:bg-gray-50 transition-colors group"
                 >
                   <td className="p-3 flex flex-col gap-1">
-                    <span className="font-semibold">{course.title}</span>
+                    <span className="font-semibold">{course?.title}</span>
                     <span className="text-gray-400 text-xs font-medium">
-                      {formatDate(course.time)}
+                      {formatDate(course?.time)}
                     </span>
                   </td>
 
                   <td className="text-center font-semibold">
-                    {course.classRoom}
+                    {course?.classRoom}
                   </td>
 
                   <td className="text-center font-bold">
-                    {course.studentCounts}
+                    {course?.studentCounts}
                   </td>
 
                   <td className="text-center text-black font-bold">
-                    {course.studentCounts}
+                    {course?.studentCounts}
                   </td>
 
                   <td className="flex gap-2 p-3 justify-center">
                     <Link
-                      href={`/dashboard/teacher/edit/${course.id}`}
+                      href={`/dashboard/teacher/edit/${course?.id}`}
                       className="bg-gray-100 p-2 rounded-lg hover:bg-gray-200"
                     >
                       <Pencil size={16} />
@@ -104,7 +104,7 @@ const CoursesPage = () => {
                 </tr>
               ))}
 
-              {coursesData.length === 0 && (
+              {coursesData?.length === 0 && (
                 <tr>
                   <td colSpan={7} className="text-center py-10 text-gray-400">
                     لا توجد بيانات

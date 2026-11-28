@@ -22,7 +22,7 @@ const ButtonLikes = ({ isLiked: liked, likesCount, id }: any) => {
       setLoading(false);
       return;
     }
-    const isNowLiked = result.data.isLiked;
+    const isNowLiked = result.data?.isLiked || false;
     setIsLiked(isNowLiked);
     setLikesCounts((prev: number) => (isNowLiked ? prev + 1 : prev - 1));
     toast.success(isNowLiked ? "تم تسجيل الإعجاب" : "تم إزالة الإعجاب");

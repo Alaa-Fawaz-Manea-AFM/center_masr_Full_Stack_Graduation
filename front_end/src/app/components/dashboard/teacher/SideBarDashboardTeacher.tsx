@@ -20,7 +20,7 @@ const SideBarDashboardTeacher = ({
 }) => {
   const pathname = usePathname();
 
-  const isSettingRoute = settingSideBar.include.includes(pathname);
+  const isSettingRoute = settingSideBar?.include?.includes(pathname);
 
   const [manualOpenSetting, setManualOpenSetting] = useState(false);
 
@@ -53,13 +53,13 @@ const SideBarDashboardTeacher = ({
         </div>
 
         <ul className="mt-6 flex flex-col gap-1 px-2">
-          {sidebarDaashboardTeacher.map((item) => (
+          {sidebarDaashboardTeacher?.map((item) => (
             <li
-              key={item.name}
+              key={item?.name}
               className={`
                   list-none rounded-lg cursor-pointer
                   ${
-                    pathname === item.path
+                    pathname === item?.path
                       ? hoverAndActiveColor
                       : "text-black hover:bg-[#0D2D2A] hover:text-white hover:border-r-4 hover:border-[#F59E0B]"
                   }
@@ -73,8 +73,8 @@ const SideBarDashboardTeacher = ({
                 href={item.path}
                 className="flex py-2 px-3 items-center gap-2"
               >
-                <span className="group-hover:text-white">{item.icon}</span>
-                <span className="text-lg font-bold">{item.name}</span>
+                <span className="group-hover:text-white">{item?.icon}</span>
+                <span className="text-lg font-bold">{item?.name}</span>
               </Link>
             </li>
           ))}
@@ -82,7 +82,7 @@ const SideBarDashboardTeacher = ({
             className={`
               list-none rounded-lg cursor-pointer
               ${
-                openSetting || settingSideBar.include.includes(pathname)
+                openSetting || settingSideBar?.include?.includes(pathname)
                   ? "text-white bg-[#0D2D2A]"
                   : "text-black hover:bg-[#0D2D2A] hover:text-white"
               }`}
@@ -93,9 +93,11 @@ const SideBarDashboardTeacher = ({
             >
               <div className="flex items-center gap-2">
                 <span className="group-hover:text-white">
-                  {settingSideBar.icon}
+                  {settingSideBar?.icon}
                 </span>
-                <span className="text-lg font-bold">{settingSideBar.name}</span>
+                <span className="text-lg font-bold">
+                  {settingSideBar?.name}
+                </span>
               </div>
               <span
                 className={`transition-transform ${
@@ -109,12 +111,12 @@ const SideBarDashboardTeacher = ({
 
           <ul className="rounded-xl overflow-hidden space-y-2 bg-[#0a2e2a]">
             {openSetting
-              ? settingSideBar.list.map((settingItem) => {
-                  const active = pathname === settingItem.path;
+              ? settingSideBar?.list?.map((settingItem) => {
+                  const active = pathname === settingItem?.path;
                   return (
-                    <li key={settingItem.path}>
+                    <li key={settingItem?.path}>
                       <Link
-                        href={settingItem.path}
+                        href={settingItem?.path}
                         onClick={() => setOpenSidebar(false)}
                         className={`${baseItem} text-sm ${
                           active
@@ -122,8 +124,8 @@ const SideBarDashboardTeacher = ({
                             : "text-white"
                         } w-full flex items-center gap-3 p-3 hover:bg-[#0a2e2a] transition-colors bg-[#0a2e2a] `}
                       >
-                        {settingItem.icon}
-                        <span>{settingItem.name}</span>
+                        {settingItem?.icon}
+                        <span>{settingItem?.name}</span>
                       </Link>
                     </li>
                   );
