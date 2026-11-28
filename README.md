@@ -53,7 +53,6 @@ A modern and comprehensive Full-Stack Educational Platform designed to connect s
 
 ### Deployment & Tools
 - Vercel
-- Railway
 - Git & GitHub
 - Postman
 
