@@ -6,7 +6,6 @@ A modern and comprehensive Full-Stack Educational Platform built with **Next.js*
 
 - **Frontend Application:** [Visit Center Masr](https://center-masr-full-stack-graduation-n.vercel.app/)
 - **Backend API:** [Backend Server](https://center-masr-full-stack-graduation.vercel.app/)
-- **API Documentation:** [Swagger Documentation](https://center-masr-full-stack-graduation.vercel.app/)
 
 ## ✨ Key Features
 
@@ -56,15 +55,34 @@ A modern and comprehensive Full-Stack Educational Platform built with **Next.js*
 - Git & GitHub
 - Postman
 
-## 🏗️ Architecture & Engineering
+## 📐 Database Architecture
 
-- Developed a modular backend architecture using NestJS.
-- Built a responsive frontend application using Next.js and TypeScript.
-- Designed relational database schemas using Prisma and PostgreSQL.
-- Implemented secure JWT authentication and role-based authorization.
-- Integrated WebSocket communication for real-time messaging, online presence, and instant updates.
-- Separated frontend and backend applications to support independent development and deployment.
-- Integrated Cloudinary for cloud-based media management.
+- Designed relational database schemas using PostgreSQL and Prisma ORM.
+- Structured database models to support students, teachers, educational centers, administrators, and their relationships.
+- Implemented database relationships to manage educational platform data and user interactions.
+- Organized data to support conversations, messages, and user online presence.
+
+## 🏗️ Project Architecture
+
+The project follows a full-stack architecture, separating the frontend application from the backend API.
+
+### Frontend
+- Built with Next.js and TypeScript.
+- Uses Context API for application state management.
+- Uses Axios for communication with backend RESTful APIs.
+- Styled with Tailwind CSS.
+- Provides responsive interfaces for different user roles.
+- Integrates WebSocket connections for real-time communication and online presence.
+
+### Backend
+- Built with NestJS and Node.js.
+- Uses a modular backend architecture.
+- Provides RESTful APIs for educational platform functionality.
+- Uses Prisma ORM to interact with PostgreSQL.
+- Implements JWT authentication and role-based authorization.
+- Uses Class Validator for request validation.
+- Integrates Cloudinary for cloud-based media management.
+- Supports WebSocket communication for real-time messaging, online presence, and instant updates.
 
 ## 📁 Project Structure
 
@@ -93,7 +111,7 @@ The project consists of two independent applications, each requiring its own env
 
 ### 1. Frontend Environment
 
-Create a `.env.local` file inside the `front_end` directory.
+Create a `.env.local` file inside the `front_end` directory:
 
 ```env
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
@@ -105,15 +123,17 @@ NODE_ENV=development
 
 **Environment Variables:**
 
-- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name.
-- `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`: Cloudinary upload preset.
-- `NEXT_PUBLIC_WS_URL`: Backend WebSocket server URL.
-- `NEXT_PUBLIC_BACK_URL`: Backend API base URL.
-- `NODE_ENV`: Frontend application environment.
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` | Cloudinary upload preset |
+| `NEXT_PUBLIC_WS_URL` | Backend WebSocket server URL |
+| `NEXT_PUBLIC_BACK_URL` | Backend API base URL |
+| `NODE_ENV` | Frontend application environment |
 
 ### 2. Backend Environment
 
-Create a `.env` file inside the `back_end` directory.
+Create a `.env` file inside the `back_end` directory:
 
 ```env
 PORT=3001
@@ -131,17 +151,27 @@ JWT_ISSUER=
 
 **Environment Variables:**
 
-- `PORT`: Backend server port.
-- `NODE_ENV`: Application environment.
-- `FRONT_END_URL`: Frontend application URL for CORS configuration.
-- `DATABASE_URL`: PostgreSQL database connection string.
-- `JWT_SECRET_KEY`: Secret key used for access token signing.
-- `JWT_EXPIRES_IN`: Access token expiration duration.
-- `COOKIE_MAX_AGE1`: Cookie lifetime in milliseconds.
-- `COOKIE_DOMAIN`: Cookie domain configuration.
-- `JWT_REFRESH_SECRET_KEY`: Secret key used for refresh token signing.
-- `JWT_REFRESH_EXPIRES_IN`: Refresh token expiration duration.
-- `JWT_ISSUER`: JWT issuer identifier.
+| Variable | Description |
+|---|---|
+| `PORT` | Backend server port |
+| `NODE_ENV` | Application environment |
+| `FRONT_END_URL` | Frontend application URL for CORS configuration |
+| `DATABASE_URL` | PostgreSQL database connection string |
+| `JWT_SECRET_KEY` | Secret key used for access token signing |
+| `JWT_EXPIRES_IN` | Access token expiration duration |
+| `COOKIE_MAX_AGE1` | Cookie lifetime in milliseconds |
+| `COOKIE_DOMAIN` | Cookie domain configuration |
+| `JWT_REFRESH_SECRET_KEY` | Secret key used for refresh token signing |
+| `JWT_REFRESH_EXPIRES_IN` | Refresh token expiration duration |
+| `JWT_ISSUER` | JWT issuer identifier |
+
+**Important Security Notes:**
+
+- Never expose `JWT_SECRET_KEY` or `JWT_REFRESH_SECRET_KEY` in frontend environment variables.
+- Variables prefixed with `NEXT_PUBLIC_` are exposed to the browser and should never contain private credentials.
+- Keep database credentials and JWT secrets exclusively on the backend.
+- Configure CORS to allow requests from the intended frontend domain.
+- Never commit real `.env` or `.env.local` files to GitHub.
 
 ## 💻 Getting Started
 
@@ -222,13 +252,14 @@ http://localhost:3001
 - Used environment variables to manage application configuration.
 - Protected private credentials from exposure in public repositories.
 - Configured frontend and backend communication through appropriate CORS settings.
+- Used secure cookie configuration for authentication.
 
 ## 🚀 Deployment
 
-The project uses Vercel for deployment.
+The project uses **Vercel** for deployment.
 
-- **Frontend:** Deployed on Vercel.
-- **Backend:** Deployed on Vercel.
+- **Frontend Application:** Deployed on Vercel.
+- **Backend API:** Deployed on Vercel.
 
 Make sure to configure the required environment variables in the deployment settings for both applications.
 
