@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { sendResponsive } from '../utils';
+import { PrismaService } from 'src/prisma.service';
+import { sendResponsive } from 'src/utils';
 
 const select = {
   id: true,
