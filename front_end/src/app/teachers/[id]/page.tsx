@@ -4,7 +4,6 @@ import OverviewTab from "@/app/components/Teacher/tabs/OverviewTab";
 import { ProfileFeed } from "@/app/components/profile/ProfileFeed";
 import CoursesTab from "@/app/components/Teacher/tabs/coursesTab/CoursesTab";
 import { OverviewSkeleton } from "@/app/components/Teacher/tabs/OverviewSkeleton";
-import { DOMAIN } from "@/utils/constants";
 import { useParams } from "next/navigation";
 import { useSocket } from "@/context/WsSocket";
 import { DataActions } from "@/actions/users";
@@ -44,16 +43,10 @@ export default function TeacherProfile() {
             cashCourses={cashCourses || []}
           />
         );
-        return <OverviewTab data={data} />;
     }
   };
   useEffect(() => {
-    // const token = localStorage.getItem("token");
     const getData = async () => {
-      //   const res = await fetch(`${DOMAIN}users/${param?.id}?role=teacher`, {
-      //     headers: { Authorization: `Bearer ${token}` },
-      //   });
-      //   const json = await res.json();
       const result = await DataActions(
         "get",
         `users/${param?.id}?role=teacher`,
