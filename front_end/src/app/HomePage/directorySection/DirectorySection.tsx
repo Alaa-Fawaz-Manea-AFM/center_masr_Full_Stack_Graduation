@@ -1,11 +1,8 @@
-"use client";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import CenterCard from "@/app/components/Center/CenterCard";
 import TeacherCard from "@/app/components/Teacher/TeacherCard";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { DataActions } from "@/actions/users";
 
 const SectionHeader = ({ title, type }: { title: string; type: string }) => (
   <div className="bg-white rounded-2xl shadow-sm p-5 mb-8 flex items-center justify-between border border-slate-100">
@@ -24,23 +21,13 @@ const SectionHeader = ({ title, type }: { title: string; type: string }) => (
   </div>
 );
 
-export default function DirectorySection() {
-  const [data, setData] = useState({
-    center: [],
-    teacher: [],
-  });
-
-  const handleDataHomePage = async () => {
-    const { data } = await axios.get(`${DOMAIN}users/home-page`, {});
-    setData(data.data);
-  };
-
-  useEffect(() => {
-    handleDataHomePage();
-  }, []);
+export default async function DirectorySection() {
+  const {
+    data: { centers = [], teachers = [] },
+  } = await DataActions("get", "users/home-page");
   return (
     <>
-      {data ? (
+      {centers || teachers ? (
         <main className="bg-slate-50 min-h-screen py-12 px-4 md:px-16">
           <div className="max-w-7xl mx-auto">
             <section className="mb-20">
@@ -49,7 +36,7 @@ export default function DirectorySection() {
                 type="centers"
               />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {data?.centers?.map((center: any) => (
+                {centers?.map((center: any) => (
                   <CenterCard key={center.id} center={center} />
                 ))}
               </div>
@@ -61,7 +48,7 @@ export default function DirectorySection() {
                 type="teachers"
               />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {data?.teachers?.map((teacher: any) => (
+                {teachers?.map((teacher: any) => (
                   <TeacherCard key={teacher.id} teacher={teacher} />
                 ))}
               </div>

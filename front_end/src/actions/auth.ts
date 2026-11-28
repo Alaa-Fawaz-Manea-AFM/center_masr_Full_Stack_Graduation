@@ -1,21 +1,14 @@
 "use server";
 
 import { AxiosServer } from "@/lib/axios-server";
-import { AuthFormData } from "@/lib/validation";
 import { Iform } from "@/types/auth";
-// import { AxiosServer } from "@/lib/axios-server";
-// import { IFormSign_up, IFormLog_In } from "@/types";
 import { AxiosResponse } from "axios";
 import { cookies } from "next/headers";
 
 export const loginAndSignUpAction = async (endpoint: string, form: Iform) => {
   try {
     const response = await AxiosServer("post", endpoint, undefined, form);
-    // console.log("====================================");
-    // console.log("response", response);
-    // console.log("====================================");
     await saveAuthCookies(response);
-
     return {
       success: true,
       data: response.data.data || null,
@@ -29,22 +22,6 @@ export const loginAndSignUpAction = async (endpoint: string, form: Iform) => {
     };
   }
 };
-
-// export const signUpAction = async (form: any) => {
-//   try {
-//     const response = await AxiosServer("post", "auth/signup", undefined, form);
-//     await saveAuthCookies(response);
-//     return {
-//       success: true,
-//       data: response.data.data || null,
-//     };
-//   } catch {
-//     return {
-//       success: false,
-//       data: null,
-//     };
-//   }
-// };
 
 const saveAuthCookies = async (response: AxiosResponse) => {
   const cookieStore = await cookies();
@@ -76,44 +53,4 @@ export const logoutAction = async () => {
   cookieStore.delete("accessToken");
 
   return { success: true };
-};
-
-export const updateProfileAction = async (
-  userId: string,
-  updatedData: Partial<any>,
-) => {
-  try {
-    const { data } = await AxiosServer(
-      "patch",
-      `users/${userId}`,
-      undefined,
-      updatedData,
-    );
-
-    return {
-      success: true,
-      message: data.message || "Profile Updated successfully",
-    };
-  } catch {
-    return {
-      success: false,
-      message: "Error updating profile",
-    };
-  }
-};
-
-export const getUserDataAction = async () => {
-  try {
-    const { data } = await AxiosServer("get", "auth/me");
-
-    return {
-      success: true,
-      user: data?.data || null,
-    };
-  } catch {
-    return {
-      success: false,
-      user: null,
-    };
-  }
 };

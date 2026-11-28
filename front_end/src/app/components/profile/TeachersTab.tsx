@@ -9,10 +9,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
-import { getTeacherAction } from "@/actions/users";
 import toast from "react-hot-toast";
+import { DataActions } from "@/actions/users";
 
 const stages = [
   "المراحل التعليمية",
@@ -59,17 +57,10 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
   }, [cache, selectedStage, selectedSubject]);
 
   const handleGetTeachers = useCallback(async () => {
-    // try {
-    // const token = localStorage.getItem("token");
-    // const res = await axios.get(
-    //   `${DOMAIN}center-dashboard/teachers/${centerId}?limit=9`,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   },
-    // );
-    const result = await getTeacherAction(centerId);
+    const result = await DataActions(
+      "get",
+      `center-dashboard/teachers/${centerId}?limit=9`,
+    );
     if (!result.success) {
       toast.error(result.message!);
       return;
@@ -82,9 +73,6 @@ export default function TeachersTab({ centerId, cache, setsetCache }: any) {
         students: result.data,
       };
     });
-    // } catch (error) {
-    //   console.error("Fetch error:", error);
-    // }
   }, [centerId, setsetCache]);
 
   useEffect(() => {

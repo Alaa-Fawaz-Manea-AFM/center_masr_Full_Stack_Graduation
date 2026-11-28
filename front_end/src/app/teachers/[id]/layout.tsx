@@ -3,14 +3,10 @@ import { Star } from "lucide-react";
 import ButtonSendChat from "@/app/components/button/ButtonSendChat";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-// import TeacherProfile from "./page";
 import ButtonFollow from "@/app/components/button/ButtonFollow";
-// import { DOMAIN } from "@/utils/constants";
-// import { useSocket } from "@/context/WsSocket";
 import { OverviewSkeleton } from "@/app/components/Teacher/tabs/OverviewSkeleton";
 import Image from "next/image";
-import { getDataAction } from "@/actions/users";
-// import toast from "react-hot-toast";
+import { DataActions } from "@/actions/users";
 
 export default function RootLayout({
   children,
@@ -18,42 +14,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const param = useParams() as { id: string };
-  // const { socket } = useSocket();
   const router = useRouter();
   const [data, setData] = useState({});
 
   useEffect(() => {
-    // const token = localStorage.getItem("token");
     const getData = async () => {
-      // const res = await fetch(`${DOMAIN}users/${param.id}?role=teacher`, {
-      // headers: { Authorization: `Bearer ${token}` },
-      // });
-      // const json = await res.json();
-      // setData(json.data);
-      const result = await getDataAction(
-        "get",
-        `users/${param.id}?role=teacher`,
-      );
+      const result = await DataActions("get", `users/${param.id}?role=teacher`);
       if (!result.success) {
         router.back();
         return;
       }
-      console.log("====================================");
-      console.log("result 55", result);
-      console.log("====================================");
       setData(result.data);
     };
     if (param?.id) getData();
-
-    // if (!socket || !param.id) return;
-    // socket?.send(
-    //   JSON.stringify({
-    //     type: "get_user_presence",
-    //     payload: {
-    //       userId: param.id,
-    //     },
-    //   }),
-    // );
   }, [param?.id]);
 
   if (!data?.id) return <OverviewSkeleton />;

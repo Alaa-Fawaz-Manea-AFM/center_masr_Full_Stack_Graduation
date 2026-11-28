@@ -3,11 +3,10 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { changePasswordSchema } from "@/lib/schema/schema";
+import { DataActions } from "@/actions/users";
 
 type PasswordFields = "oldPassword" | "newPassword" | "confirmPassword";
 export const forgetPassword = [
@@ -36,6 +35,7 @@ const ChangePasswordPage = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(changePasswordSchema),
@@ -55,31 +55,26 @@ const ChangePasswordPage = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await DataActions(
+      "patch",
+      "auth/change-password",
+      undefined,
+      {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+      },
+    );
 
-      const token = localStorage.getItem("token");
-
-      const res = await axios.patch(
-        `${DOMAIN}auth/change-password`,
-        {
-          oldPassword: data.oldPassword,
-          newPassword: data.newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
-      toast.success(res.data.message || "تم تحديث كلمة المرور");
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "حدث خطأ");
-    } finally {
+    if (!result.success) {
+      toast.error(result.message || "حدث خطأ");
       setLoading(false);
+      return;
     }
+
+    toast.success(result.message || "تم تحديث كلمة المرور");
+    setLoading(false);
+    reset();
   };
 
   return (

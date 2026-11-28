@@ -2,16 +2,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { User, Mail, Lock, Loader2 } from "lucide-react";
-import { DOMAIN } from "@/utils/constants";
 import { authSchema, AuthFormData } from "@/lib/validation";
 import { AuthInput } from "./AuthInput";
-import { AuthResponse, Iform } from "@/types/auth";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { useSocket } from "@/context/WsSocket";
 import { loginAndSignUpAction } from "@/actions/auth";
 import { useUserContext } from "@/context/MyState";
 interface AuthFormProps {
@@ -19,7 +14,6 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
-  // const { setSenderId } = useSocket();
   const { setUser } = useUserContext();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -36,55 +30,22 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const onSubmit = async (values: AuthFormData) => {
     setLoading(true);
     const { terms, ...apiPayload } = values;
-    // const endpoint = mode === "signup" ? "auth/signup" : "auth/login";
-
-    // try {
     const result = await loginAndSignUpAction(
       "auth/login",
       apiPayload as Iform,
     );
-    console.log("====================================");
-    console.log("result", result);
-    console.log("====================================");
     if (!result.success) {
       toast.error(result?.message);
       setLoading(false);
       return;
     }
-    // const { data } = await axios.post<AuthResponse>(
-    //   `${DOMAIN}${endpoint}`,
-    //   apiPayload,
-    //   {
-    //     withCredentials: true,
-    //   },
-    // );
-    // const { accessToken } = data.token;
-    // const { name, imageUrl, role, id } = data.data;
-    // localStorage.setItem("token", accessToken);
-    // localStorage.setItem("userId", id);
-    // localStorage.setItem("userName", name);
-    // localStorage.setItem("userImage", imageUrl || "");
-
-    // Cookies.set("token", accessToken, { expires: 1 });
-    // Cookies.set("role", role, { expires: 1 });
     setUser(result.data);
     toast.success(result.message);
-    window.dispatchEvent(new Event("storage"));
 
-    // setTimeout(() => {
-    //   router.push("/");
-    // }, 500);
+    setTimeout(() => {
+      router.push("/");
+    }, 500);
     setLoading(false);
-    // } catch (error: any) {
-    //   const apiErrors = error.response?.data?.errors;
-    //   if (Array.isArray(apiErrors)) {
-    //     apiErrors.forEach((err: any) => toast.error(err.message));
-    //   } else {
-    //     toast.error(error.response?.data?.message || "فشل الاتصال بالسيرفر");
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   return (

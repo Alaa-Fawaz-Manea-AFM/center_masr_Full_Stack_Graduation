@@ -4,10 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowRight, Search, Settings2, Video, ShieldUser } from "lucide-react";
 import LessonsTab from "./tabs/LessosTab";
 import NotesTab from "./tabs/NotesTab";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
-import { formatDate, formatDateYear } from "@/app/components/helper";
-import { getDataAction } from "@/actions/users";
+import { DataActions } from "@/actions/users";
 
 const CourseContentContainer = () => {
   const [activeTab, setActiveTab] = useState("الحصص");
@@ -25,20 +22,10 @@ const CourseContentContainer = () => {
   const [course, setCourse] = useState({});
 
   const handleGetCourse = async () => {
-    // const token = localStorage.getItem("token");
-    // const res = await axios.get(`${DOMAIN}courses/${courseId}?id=${courseId}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-
-    const result = await getDataAction(
+    const result = await DataActions(
       "get",
       `courses/${courseId}?id=${courseId}`,
     );
-    console.log("====================================");
-    console.log("result 999", result);
-    console.log("====================================");
     if (!result.success) {
       return;
     }
@@ -46,6 +33,7 @@ const CourseContentContainer = () => {
     setCourse(result.data);
   };
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetCourse();
   }, []);
 

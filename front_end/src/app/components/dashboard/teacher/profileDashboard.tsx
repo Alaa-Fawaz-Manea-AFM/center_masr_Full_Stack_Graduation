@@ -1,9 +1,7 @@
 "use client";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import { profileTeacher } from "./constant/constant";
 import { useUserContext } from "@/context/MyState";
-// import { useDashboardTeacherContext } from "@/context/MyState";
 
 const ProfileDashboardTeacher = () => {
   const { user } = useUserContext();

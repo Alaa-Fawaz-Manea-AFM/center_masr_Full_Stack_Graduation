@@ -1,7 +1,6 @@
 "use client";
-import { getDataAction } from "@/actions/users";
+import { DataActions } from "@/actions/users";
 import { useUserContext } from "@/context/MyState";
-import { DOMAIN } from "@/utils/constants";
 import { UserCheck, UserPlus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -21,33 +20,14 @@ const ButtonFollow = ({
   const handleFollow = async () => {
     if (loading) return;
     if (user === null) return toast.error("يرجى تسجيل الدخول أولاً");
-
-    // const token = localStorage.getItem("token");
-
     setLoading(true);
-    // try {
-    // const res = await fetch(`${DOMAIN}followers/${id}`, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${user}`,
-    //   },
-    // });
-
-    // const dataRes = await res.json();
-
-    const result = await getDataAction("post", `followers/${id}`);
-    console.log("====================================");
-    console.log("result 11111", result);
-    console.log("====================================");
+    const result = await DataActions("post", `followers/${id}`);
     if (!result.success) {
       toast.error("حدث خطأ ما");
       setLoading(false);
       return;
     }
-
-    // if (res.ok && dataRes.status !== "fail") {
     const isNowFollowed = result.data.isFollowed;
-
     setData((prev: any) => ({
       ...prev,
       isFollowed: isNowFollowed,
@@ -58,14 +38,6 @@ const ButtonFollow = ({
 
     toast.success(isNowFollowed ? "تمت المتابعة" : "تم إلغاء المتابعة");
     setLoading(false);
-    // } else {
-    // toast.error(dataRes.message || "حدث خطأ ما");
-    //   }
-    // } catch (error) {
-    //   toast.error("مشكلة في الاتصال بالخادم");
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   return (

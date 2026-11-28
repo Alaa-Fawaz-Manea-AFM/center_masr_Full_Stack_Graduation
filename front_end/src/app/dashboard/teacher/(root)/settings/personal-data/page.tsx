@@ -10,22 +10,20 @@ import {
 } from "@/app/components/dashboard/teacher/constant/constant";
 import { openCloudinaryWidget } from "@/lib/cloudinary/widget";
 import { useEffect, useState } from "react";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
-
-import toast from "react-hot-toast";
 import {
   ProfileTeacherFormData,
   profileTeacherSchema,
 } from "@/lib/schema/schema";
+import { DataActions } from "@/actions/users";
+import { useUserContext } from "@/context/MyState";
 
 const sectionHeaderCss =
   "text-xl pr-3 border-r-4 border-[#003F87] text-[#003F87] font-bold mb-6";
 const labelCss = "text-sm font-bold mr-1 block";
 
 const PersonalDataPage = () => {
-  const [userId, setUserId] = useState<string | null>(null);
-
+  const { user } = useUserContext();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -49,65 +47,49 @@ const PersonalDataPage = () => {
 
   useEffect(() => {
     const getmedata = async () => {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get(`${DOMAIN}auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const user = res.data.data;
-
-      setUserId(user.id);
+      if (user === null) return;
       setValue("name", user.name);
-      setValue("imageUrl", user.imageUrl);
+      setValue("imageUrl", user.imageUrl || "");
       setValue("email", user.email);
-      setValue("educationalStage", user.teacher.educationalStage);
+      setValue("educationalStage", user?.teacher.educationalStage || "");
       setValue("classRoom", user.teacher.classRoom[0]);
       setValue("studyMaterial", user.teacher.studyMaterial);
       setValue("qualification", user.teacher.educationalQualification);
-      setValue("experience", Number(user.teacher.experienceYear));
+      setValue("experience", user.teacher.experienceYear);
       setValue("bio", user.teacher.bio);
     };
 
     getmedata();
-  }, []);
+  }, [user]);
   const watchedStage = watch("educationalStage");
 
   const onSubmit = async (formData: ProfileTeacherFormData) => {
-    try {
-      const token = localStorage.getItem("token");
+    if (user === null || formData === undefined) return;
+    setLoading(true);
+    const result = await DataActions("patch", `users/${user.id}`, undefined, {
+      user: {
+        name: formData.name,
+        ...(formData.imageUrl?.trim()
+          ? { imageUrl: formData.imageUrl.trim() }
+          : {}),
+      },
+      teacher: {
+        bio: formData?.bio || "",
+        classRoom: [formData?.classRoom] || [],
+        educationalStage: formData?.educationalStage || "",
+        studyMaterial: formData?.studyMaterial || "",
+        educationalQualification: formData?.qualification || "",
+        experienceYear: Number(formData?.experience) || 0,
+      },
+    });
 
-      const res = await axios.patch(
-        `${DOMAIN}users/${userId}`,
-        {
-          user: {
-            name: formData.name,
-            imageUrl: formData?.imageUrl || "",
-          },
-          teacher: {
-            bio: formData?.bio || "",
-            classRoom: [formData?.classRoom] || [],
-            educationalStage: formData?.educationalStage || "",
-            studyMaterial: formData?.studyMaterial || "",
-            educationalQualification: formData?.qualification || "",
-            experienceYear: Number(formData?.experience) || 0,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
-      toast.success("تم حفظ البيانات بنجاح!");
-    } catch (err) {
+    if (!result.success) {
+      setLoading(false);
       toast.error("حدث خطأ أثناء الحفظ");
-      console.error("ERROR:", err.response?.data || err.message);
+      return;
     }
+    setLoading(false);
+    toast.success("تم حفظ البيانات بنجاح!");
   };
 
   return (
@@ -130,7 +112,6 @@ const PersonalDataPage = () => {
                 type="button"
                 onClick={() =>
                   openCloudinaryWidget((url) => {
-                    setImageValue(url);
                     setValue("imageUrl", url);
                   })
                 }
@@ -167,21 +148,6 @@ const PersonalDataPage = () => {
                   </span>
                 )}
               </div>
-              {/* <div className="space-y-2">
-                <label className={labelCss}>اللقب / المسمى الوظيفي</label>
-                <select
-                  {...register("nickName")}
-                  className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-white appearance-none"
-                >
-                  <option value="أ.">أ. أستاذ</option>
-                  <option value="د.">د. دكتور</option>
-                </select>
-                {errors.nickName && (
-                  <span className="text-red-500 text-xs pr-1">
-                    {errors.nickName.message}
-                  </span>
-                )}
-              </div> */}
             </div>
           </section>
 
@@ -210,7 +176,6 @@ const PersonalDataPage = () => {
                   value={watch("classRoom")}
                   className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-white"
                 >
-                  {/* {classRoom[watchedStage as ClassRoomDashboardTeacher]?.map( */}
                   {(classRoom[watchedStage] || [])?.map((item) => (
                     <option key={item} value={item}>
                       {item}
@@ -307,9 +272,11 @@ const PersonalDataPage = () => {
 
           <div className="flex justify-start pt-4">
             <button
+              disabled={loading}
               type="submit"
-              className="bg-[#003F87] text-white px-12 py-3 rounded-lg font-bold hover:bg-[#002d61] transition-all shadow-lg active:scale-95 cursor-pointer"
+              className={`${loading ? "cursor-not-allowed" : "cursor-pointer"} bg-[#003F87] text-white px-12 py-3 rounded-lg font-bold hover:bg-[#002d61] transition-all shadow-lg active:scale-95`}
             >
+              {loading && "جاري حفظ التعديلات..."}
               حفظ التعديلات
             </button>
           </div>

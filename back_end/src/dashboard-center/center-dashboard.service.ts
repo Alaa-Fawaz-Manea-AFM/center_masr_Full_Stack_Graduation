@@ -14,17 +14,7 @@ export class CenterDashboardService {
 
     return sendResponsive(null, 'create teacher successfully');
   }
-  async findAllTeacher(
-    centerId: string,
-    take = 9,
-    // name?: string,
-    // educationalStage?: string,
-  ) {
-    // const where =
-    //   educationalStage || name
-    //     ? { centerId, educationalStage, user: { name } }
-    //     : { centerId };
-
+  async findAllTeacher(centerId: string, take = 9) {
     const teachers = await this.prisma.teacherByCenter.findMany({
       where: { centerId },
       select: {
@@ -42,10 +32,6 @@ export class CenterDashboardService {
       },
       take,
     });
-
-    console.log('====================================');
-    console.log('teachers', teachers);
-    console.log('====================================');
     return sendResponsive(teachers || [], 'Get All Teachers successfully');
   }
 

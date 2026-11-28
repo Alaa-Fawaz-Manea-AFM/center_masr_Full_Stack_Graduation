@@ -1,44 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LogIn, UserPlus, GraduationCap, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserMenu } from "./UserMenu";
-import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
-import Cookies from "js-cookie";
 import { useUserContext } from "@/context/MyState";
 
 const Nav = () => {
   const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [userName, setUserName] = useState("");
   const pathname = usePathname();
-
-  // useEffect(() => {
-  // if (typeof window !== "undefined") {
-  // const checkAuth = async () => {
-  // const token = Cookies.get("token");
-  // const storedName = localStorage.getItem("userName");
-
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //     setUserName(storedName || "أ. حسن علي");
-  //   } else {
-  //     setIsLoggedIn(false);
-  //   }
-  // };
-
-  // checkAuth();
-
-  // window.addEventListener("storage", checkAuth);
-
-  // return () => window.removeEventListener("storage", checkAuth);
-  // }
-  // }, []);
-
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
   const isLoggedIn = user !== null;
@@ -91,7 +63,11 @@ const Nav = () => {
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center gap-4">
             {isLoggedIn ? (
-              <UserMenu userName={user.name} closeMenu={closeMenu} />
+              <UserMenu
+                userName={user.name}
+                role={user.role}
+                closeMenu={closeMenu}
+              />
             ) : (
               <>
                 <Link
@@ -167,7 +143,11 @@ const Nav = () => {
 
           <div className="flex flex-col gap-4 pt-4">
             {isLoggedIn ? (
-              <UserMenu userName={user?.name} />
+              <UserMenu
+                userName={user.name}
+                role={user.role}
+                closeMenu={closeMenu}
+              />
             ) : (
               <>
                 <Link

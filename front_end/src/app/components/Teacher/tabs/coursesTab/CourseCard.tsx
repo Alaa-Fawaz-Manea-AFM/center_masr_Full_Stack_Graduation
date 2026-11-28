@@ -22,20 +22,11 @@ const CourseCard = ({
 }) => {
   const { time, classRoom, day, studyMaterial, lessonCounts, studentCounts } =
     course;
-
   const router = useRouter();
-
-  // if (!course) return <div>loading...</div>;
-
   const handleNavigation = () => {
-    // const token = Cookies.get("token");
-    // if (token) {
     router.push(
       `/teachers/${userId}/courses/${course?.id}?studyMaterial=${studyMaterial}`,
     );
-    // } else {
-    //   router.push(`/login`);
-    // }
   };
   return (
     <div

@@ -2,22 +2,15 @@
 import { useUserContext } from "@/context/MyState";
 import { useSocket } from "@/context/WsSocket";
 import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const ButtonSendChat = ({ id }: { id: string }) => {
   const router = useRouter();
   const { user } = useUserContext();
-  const {
-    setDataHeader,
-    setConversations,
-    conversations,
-    // senderId,
-    socket,
-  } = useSocket();
+  const { setDataHeader, setConversations, conversations, socket } =
+    useSocket();
 
   const createConversation = async () => {
     if (id === user?.id) {

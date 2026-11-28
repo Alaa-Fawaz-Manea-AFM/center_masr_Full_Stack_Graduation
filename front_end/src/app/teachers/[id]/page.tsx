@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import OverviewTab from "@/app/components/Teacher/tabs/OverviewTab";
-import { centerData } from "@/data/centerProfile";
 import { ProfileFeed } from "@/app/components/profile/ProfileFeed";
 import CoursesTab from "@/app/components/Teacher/tabs/coursesTab/CoursesTab";
-import ReviewsTab from "@/app/components/Teacher/tabs/ReviewsTab";
 import { OverviewSkeleton } from "@/app/components/Teacher/tabs/OverviewSkeleton";
 import { DOMAIN } from "@/utils/constants";
 import { useParams } from "next/navigation";
@@ -17,7 +15,6 @@ export default function TeacherProfile() {
     data: [],
   });
   const [cashCourses, setCacheCourse] = useState([]);
-  const [cacheReviews, setCacheReviews] = useState([]);
   const param = useParams() as { id: string };
   const { socket } = useSocket();
   const [data, setData] = useState({});
@@ -46,15 +43,6 @@ export default function TeacherProfile() {
             cashCourses={cashCourses || []}
           />
         );
-      // case "التقييمات":
-      //   return (
-      //     <ReviewsTab
-      //       teacherId={data?.id}
-      //       setCacheReviews={setCacheReviews}
-      //       cacheReviews={cacheReviews || []}
-      //     />
-      //   );
-      default:
         return <OverviewTab data={data} />;
     }
   };

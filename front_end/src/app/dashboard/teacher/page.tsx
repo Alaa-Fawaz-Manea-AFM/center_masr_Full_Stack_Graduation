@@ -1,11 +1,8 @@
 "use client";
 
+import { DataActions } from "@/actions/users";
 import HeroSectionDashboardTeacherCursers from "@/app/components/dashboard/teacher/HeroSectionDashboardTeacherCursers";
 import { formatDate } from "@/app/components/helper";
-// import { useDashboardTeacherContext } from "@/context/MyState";
-// import { useSocket } from "@/context/WsSocket";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
 import { Trash, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -28,22 +25,17 @@ const CoursesPage = () => {
   const [filter, setFilter] = useState<string>("الثالث الثانوي");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [coursesData, setCoursesData] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(false);
-
   const handleGetTeachers = async () => {
-    const token = localStorage.getItem("token");
-    const { data } = await axios.get(
-      `${DOMAIN}teacher-dashboard/courses?classRoom=الصف ${filter}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    const result = await DataActions(
+      "get",
+      `teacher-dashboard/courses?classRoom=الصف ${filter}`,
     );
-    setCoursesData(data.data.courses);
+    if (!result.success) return;
+    setCoursesData(result.data.courses);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetTeachers();
   }, [filter]);
 

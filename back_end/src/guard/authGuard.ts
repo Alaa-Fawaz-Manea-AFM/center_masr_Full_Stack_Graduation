@@ -21,8 +21,6 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
-
-    // if (isPublic) return true;
     const req = context.switchToHttp().getRequest<Request>();
     const token = req.cookies?.accessToken;
     if (isPublic) {
@@ -43,13 +41,7 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     }
-
-    // const [type, token] = req.headers?.authorization?.split(' ') || [];
-    // if (type !== 'Bearer')
-    //   throw new UnauthorizedException('Invalid token type');
-
     if (!token) throw new UnauthorizedException('You are not logged in');
-
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET_KEY,

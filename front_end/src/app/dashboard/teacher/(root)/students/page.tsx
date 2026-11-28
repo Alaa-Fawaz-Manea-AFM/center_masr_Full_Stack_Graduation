@@ -1,80 +1,5 @@
 "use client";
-const students = [
-  {
-    id: 1,
-    name: "أحمد محمود علي",
-    grade: "الثالث الثانوي",
-    course: "دورة الجبر الشاملة",
-    date: "2024-12-01",
-    time: "10:30 ص",
-  },
-  {
-    id: 2,
-    name: "سارة كمال حسن",
-    grade: "الثالث الثانوي",
-    course: "دورة التفاضل",
-    date: "2024-12-01",
-    time: "11:15 ص",
-  },
-  {
-    id: 3,
-    name: "ياسين مصطفى",
-    grade: "الثاني الثانوي",
-    course: "دورة الهندسة الفراغية",
-    date: "2024-11-30",
-    time: "09:45 ص",
-  },
-  {
-    id: 4,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-  {
-    id: 5,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-  {
-    id: 6,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-  {
-    id: 7,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-  {
-    id: 8,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-  {
-    id: 9,
-    name: "ليلى عبد العزيز",
-    grade: "الثالث الثانوي",
-    course: "دورة الاحصاء والاحتمالات",
-    date: "2024-11-28",
-    time: "01:20 م",
-  },
-];
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
+import { DataActions } from "@/actions/users";
 import { Search, MoreVertical, Users } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -85,23 +10,16 @@ const StudentsTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [coursesCount, setCoursesCount] = useState(0);
   const [coursesData, setCoursesData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   const handleGetTeachers = async () => {
-    const token = localStorage.getItem("token");
-    setLoading(true);
-    const { data } = await axios.get(`${DOMAIN}teacher-dashboard/students`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const result = await DataActions("get", "teacher-dashboard/students");
+    if (!result.success) return;
 
-    setLoading(true);
-    setCoursesData(data?.data?.bookings);
-    setCoursesCount(data?.data?.studentCounts);
+    setCoursesData(result?.data?.bookings);
+    setCoursesCount(result?.data?.studentCounts);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetTeachers();
   }, []);
 
@@ -158,7 +76,7 @@ const StudentsTable = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {coursesData?.map((student) => (
+              {coursesData?.map((student: any) => (
                 <tr
                   key={student.id}
                   className="hover:bg-gray-50 transition-colors group"

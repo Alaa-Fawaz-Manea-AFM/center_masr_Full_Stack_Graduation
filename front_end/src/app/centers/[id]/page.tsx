@@ -8,10 +8,9 @@ import { ProfileSidebar } from "@/app/components/profile/ProfileSidebar";
 import TeachersTab from "@/app/components/profile/TeachersTab";
 import ScheduleTab from "@/app/components/profile/ScheduleTab";
 import LocationTab from "@/app/components/profile/LocationTap";
-// import { DOMAIN } from "@/utils/constants";
 import { useParams, useRouter } from "next/navigation";
 import CenterProfileSkeleton from "@/app/components/profile/CenterProfileSkeleton";
-import { getUsersDataAction } from "@/actions/users";
+import { DataActions } from "@/actions/users";
 
 export default function CenterProfilePage() {
   const param = useParams() as { id: string };
@@ -79,19 +78,11 @@ export default function CenterProfilePage() {
   };
 
   useEffect(() => {
-    // const token = localStorage.getItem("token");
     const getData = async () => {
-      const result = await getUsersDataAction(param.id, "center");
-      console.log("====================================");
-      console.log("result1111", result);
-      console.log("====================================");
+      const result = await DataActions("get", `users/${param.id}?role=center`);
       if (!result.success) {
         return router.back();
       }
-      // const res = await fetch(`${DOMAIN}users/${param.id}?role=center`, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-      // const json = await res.json();
       setCenterData(result.data);
     };
 

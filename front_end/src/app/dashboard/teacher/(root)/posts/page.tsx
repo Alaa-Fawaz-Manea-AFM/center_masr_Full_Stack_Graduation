@@ -1,46 +1,11 @@
 "use client";
 import Image from "next/image";
-import {
-  Plus,
-  SlidersHorizontal,
-  Trash2,
-  PencilLine,
-  MessageCircle,
-  Heart,
-  MessageSquare,
-  Pencil,
-  Clock,
-} from "lucide-react";
-import Link from "next/link";
+import { Plus, SlidersHorizontal, MessageCircle, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
 import ButtonLikes from "@/app/components/button/ButtonLike";
 import { formatDate } from "@/app/components/helper";
 import { useUserContext } from "@/context/MyState";
-// import { useDashboardTeacherContext } from "@/context/MyState";
-
-const postsData = [
-  {
-    id: 1,
-    author: "أ. حسن علي عبدالله",
-    role: "رياضيات - المرحلة الثانوية",
-    time: "2 ي . الساعة 8:00 م",
-    content: "غداً الثلاثاء محاضرة الجبر",
-    comments: 20,
-    likes: 18,
-  },
-  {
-    id: 2,
-    author: "أ. حسن علي عبدالله",
-    role: "رياضيات - المرحلة الثانوية",
-    time: "2 ي . الساعة 8:00 م",
-    content:
-      "بكره الثلاثاء 30/9 \nجاهز تفهم الرياضيات........... بكل بساطه............ يلا بينا \nمواعيد محاضراتنا إن شاء الله",
-    comments: 2,
-    likes: 6,
-  },
-];
+import { DataActions } from "@/actions/users";
 
 type PostType = {
   id: number;
@@ -55,26 +20,19 @@ type PostType = {
 export default function PostsManagement() {
   const { user } = useUserContext();
   const [posts, setPosts] = useState<PostType[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-
   const handleGetPosts = async () => {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-
-    const { data } = await axios.get(
-      `${DOMAIN}posts?userId=${userId}&role=teacher`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    if (user === null) return;
+    const result = await DataActions(
+      "get",
+      `posts?userId=${user.id}&role=teacher`,
     );
+    if (!result.success) return;
 
-    setPosts(data?.data?.data);
+    setPosts(result?.data?.data);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetPosts();
   }, []);
 

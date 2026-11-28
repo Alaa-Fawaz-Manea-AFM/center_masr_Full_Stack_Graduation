@@ -64,10 +64,6 @@ export class PostService {
 
   async getAllPosts(filters: GetAllPostsDto, userId: string, page = 1) {
     const limit = 6;
-    console.log('====================================');
-    console.log('userId 00', userId);
-    console.log('====================================');
-
     const posts = await this.prisma.post.findMany({
       where: filters,
       orderBy: { createdAt: 'desc' },
@@ -84,10 +80,6 @@ export class PostService {
         ...optionLike(userId),
       },
     });
-
-    // console.log('====================================');
-    // console.log(posts);
-    // console.log('====================================');
     return sendResponsive(
       {
         meta: {

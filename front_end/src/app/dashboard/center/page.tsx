@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { Search, Plus, MoreVertical } from "lucide-react";
 import AddTeacherModal from "@/app/components/dashboard/center/AddTeacherModal";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
+import { DataActions } from "@/actions/users";
 
 const TeachersPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,33 +16,20 @@ const TeachersPage = () => {
     const controller = new AbortController();
 
     const fetchTeachers = async () => {
-      try {
-        setLoading(true);
+      setLoading(true);
 
-        let category = activeCategory;
-        if (activeCategory === "الكل") category = "";
-
-        const token = localStorage.getItem("token");
-
-        const res = await axios.get(`${DOMAIN}center-dashboard/teachers`, {
-          params: {
-            name: searchTerm,
-            educationalStage: category,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          signal: controller.signal,
-        });
-
-        setData(res?.data?.data || []);
-      } catch (err: any) {
-        if (err.name !== "CanceledError") {
-          console.error("Error fetching teachers:", err);
-        }
-      } finally {
+      let category = activeCategory;
+      if (activeCategory === "الكل") category = "";
+      const result = await DataActions("get", "center-dashboard/teachers", {
+        name: searchTerm,
+        educationalStage: category,
+      });
+      if (!result.success) {
         setLoading(false);
+        return;
       }
+      setData(result?.data?.data || []);
+      setLoading(false);
     };
 
     const delayDebounce = setTimeout(() => {
@@ -81,12 +67,7 @@ const TeachersPage = () => {
         </div>
 
         <div className="flex items-center gap-2 pb-2">
-          {[
-            "الكل",
-            "ابتدائي",
-            "اعدادي",
-            "ثانوي",
-          ].map((cat) => (
+          {["الكل", "ابتدائي", "اعدادي", "ثانوي"].map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}

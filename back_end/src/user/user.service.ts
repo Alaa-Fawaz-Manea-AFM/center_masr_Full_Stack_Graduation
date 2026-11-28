@@ -51,36 +51,7 @@ export class UsersService {
             select: { id: true },
           }),
     ]);
-
-    // if (!user || user.role !== role)
-    // throw new NotFoundException('User not found');
     const isFollowed = !!follow;
-    // const user = await this.prisma.user.findUnique({
-    //   where: { id: targetUserId },
-    //   include: {
-    //     [role]: includeAndOmit,
-    //   },
-    //   omit: { email: true, password: true, updatedAt: true },
-    // });
-
-    // if (!user || user.role !== role)
-    //   throw new NotFoundException('User not found');
-
-    // let isFollowed = false;
-    // if (currentUserId) {
-    //   const follow = await this.prisma.follower.findUnique({
-    //     where: {
-    //       followingId_followerId: {
-    //         followerId: currentUserId,
-    //         followingId: targetUserId,
-    //       },
-    //     },
-    //     select: { id: true },
-    //   });
-
-    //   isFollowed = !!follow;
-    // }
-
     return sendResponsive(
       {
         ...user,

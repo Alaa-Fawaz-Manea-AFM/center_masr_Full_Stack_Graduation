@@ -1,9 +1,7 @@
 import { Search, ListFilter } from "lucide-react";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import CourseCard from "./CourseCard";
-import { DOMAIN } from "@/utils/constants";
-import { getDataAction } from "@/actions/users";
-import toast from "react-hot-toast";
+import { DataActions } from "@/actions/users";
 
 const CoursesTab = ({
   userId,
@@ -15,24 +13,9 @@ const CoursesTab = ({
   const [activeGrade, setActiveGrade] = useState("الثالث الثانوي");
 
   const getData = useCallback(async () => {
-    // try {
-    // const token = localStorage.getItem("token");
-    // const res = await fetch(`${DOMAIN}courses?id=${teacherId}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-
-    // const json = await res.json();
-    const result = await getDataAction("get", `courses?id=${teacherId}`);
+    const result = await DataActions("get", `courses?id=${teacherId}`);
     if (!result.success) return;
-    console.log("====================================");
-    console.log("result 666", result);
-    console.log("====================================");
     setCacheCourse(result.data);
-    // } catch (error) {
-    //   console.error("Error fetching courses:", error);
-    // }
   }, [teacherId, setCacheCourse]);
 
   useEffect(() => {

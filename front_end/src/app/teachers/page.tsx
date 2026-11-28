@@ -5,9 +5,8 @@ import { ListFilter } from "lucide-react";
 import TeachersHeader from "../components/Teacher/TeachersHeader";
 import TeachersFilters from "../components/Teacher/TeachersFilters";
 import TeacherCard from "../components/Teacher/TeacherCard";
-import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
 import CenterCardSkeleton from "../components/Center/CenterCardSkeleton";
+import { DataActions } from "@/actions/users";
 
 export default function TeachersPage() {
   const [search, setSearch] = useState("");
@@ -28,20 +27,16 @@ export default function TeachersPage() {
   const [isSorted, setIsSorted] = useState(false);
 
   const handleGetTeachers = useCallback(async () => {
-    try {
-      setLoading(true);
-      const {
-        data: { data },
-      } = await axios.get(`${DOMAIN}users?role=teacher`);
-      setAllTeachers(data);
-    } catch {
-      // console.log("");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const result = await DataActions("get", "users?role=teacher");
+    if (!result.success) return setLoading(false);
+
+    setAllTeachers(result.data);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetTeachers();
   }, [handleGetTeachers]);
 

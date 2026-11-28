@@ -1,7 +1,6 @@
 "use client";
-import { getUserDataAction } from "@/actions/auth";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
+import { DataActions } from "@/actions/users";
+import { TeacherTyep } from "@/types/teacher";
 import {
   createContext,
   Dispatch,
@@ -22,6 +21,7 @@ type UserType = {
   followingCounts: number;
   postCounts: number;
   createdAt: Date;
+  teacher: TeacherTyep;
 };
 
 type ValueType = {
@@ -40,23 +40,11 @@ export const useUserContext = () => {
 
 const MyState = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
-
-  // const [dataProfile, setDataProfile] = useState<UserType | null>(null);
-
   useEffect(() => {
     const fetchUser = async () => {
-      // const token = localStorage.getItem("token");
-      // const res = await axios.get(`${DOMAIN}auth/me`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
-      const result = await getUserDataAction();
-      console.log("====================================");
-      console.log("result000", result);
-      console.log("====================================");
+      const result = await DataActions("get", "auth/me");
       if (result.success) {
-        setUser(result.user);
+        setUser(result.data.user);
       } else {
         setUser(null);
       }

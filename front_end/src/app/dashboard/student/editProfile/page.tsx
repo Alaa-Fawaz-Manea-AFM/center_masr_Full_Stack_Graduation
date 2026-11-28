@@ -51,16 +51,6 @@ const EditProfilePage = () => {
                   className="p-4 border border-[#9CA3AF] rounded-2xl text-right text-[#9CA3AF] text-[16px] focus:ring-2 focus:ring-slate-200 outline-none transition-all font-bold"
                 />
               </div>
-              {/* <div className="flex flex-col gap-2">
-                <label className="font-medium text-black pr-2 text-[16px]">
-                  اسم العائلة
-                </label>
-                <input
-                  {...register("lastName")}
-                  placeholder="جاري التحميل..."
-                  className="p-4 border border-[#9CA3AF] rounded-2xl text-right text-[#9CA3AF] text-[16px] focus:ring-2 focus:ring-slate-200 outline-none transition-all font-bold"
-                />
-              </div> */}
             </div>
           </div>
 

@@ -1,12 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { ChevronDown, GraduationCap } from "lucide-react";
-import { scheduleData } from "@/data/centerProfile";
-import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
 import Image from "next/image";
 import { formatDateTime } from "../helper";
-import { getDataAction } from "@/actions/users";
+import { DataActions } from "@/actions/users";
 import toast from "react-hot-toast";
 
 const stageConfig: Record<string, string[]> = {
@@ -51,25 +48,10 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
 
   const handleGetWeeks = useCallback(async () => {
     if (selectedGrade === "الصف التعليمي") return;
-
-    // try {
-    // const token = localStorage.getItem("token");
-    // const res = await axios.get(
-    //   `${DOMAIN}weekly-schedule/${centerId}?classRoom=${selectedGrade}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // );
-    const result = await getDataAction(
+    const result = await DataActions(
       "get",
       `weekly-schedule/${centerId}?classRoom=${selectedGrade}`,
     );
-    console.log("====================================");
-    console.log("result 444", result);
-    console.log("====================================");
-
     if (!result.success) {
       toast.error("لا يوجد جدول حصص ");
       setCache((pre: any) => ({
@@ -83,9 +65,6 @@ export default function ScheduleTab({ centerId, setCache, cashWeeks }: any) {
       ...pre,
       weeks: result?.data?.schedule || {},
     }));
-    // } catch (error) {
-    //   console.error("Error fetching schedule:", error);
-    // }
   }, [centerId, selectedGrade, setCache]);
 
   useEffect(() => {

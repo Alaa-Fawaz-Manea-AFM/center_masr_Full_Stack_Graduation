@@ -1,49 +1,13 @@
 "use client";
-import { getDataAction } from "@/actions/users";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
+import { DataActions } from "@/actions/users";
 import { Video, Lock } from "lucide-react";
 import { useEffect } from "react";
-const lessons = [
-  {
-    id: 1,
-    title: "الأعداد المركبة",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: false,
-  },
-  {
-    id: 2,
-    title: "الأعداد المركبة - خواص الوحدة التخيلية",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: false,
-  },
-  {
-    id: 3,
-    title: "تطبيقات علي خواص الوحدة التخيلية",
-    duration: "45 دقيقة",
-    date: "01 - 03 - 2025",
-    isLocked: true,
-  },
-];
 
 const LessonsTab = ({ searchQuery, setCache, cache, courseId }: any) => {
   const handleGetLessons = async () => {
     if (cache?.length > 0) return;
 
-    // const token = localStorage.getItem("token");
-    // const res = await axios.get(`${DOMAIN}courses/lessons?id=${courseId}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-
-    const result = await getDataAction("get", `courses/lessons?id=${courseId}`);
-
-    console.log("====================================");
-    console.log("result 777", result);
-    console.log("====================================");
+    const result = await DataActions("get", `courses/lessons?id=${courseId}`);
     if (!result.success) {
       return;
     }

@@ -7,10 +7,6 @@ import ButtonSendChat from "../button/ButtonSendChat";
 
 export const ProfileHeader = ({ data }: any) => {
   const [dataHeader, setDataHeader] = useState<UserData>(data);
-  // useEffect(() => {
-  //   setDataHeader(data);
-  // }, [data]);
-
   return (
     <div className="relative bg-white shadow-sm pb-6">
       <div className="relative h-48 md:h-72 overflow-hidden">
@@ -28,13 +24,7 @@ export const ProfileHeader = ({ data }: any) => {
       <div className="max-w-7xl mx-auto px-6 relative">
         <div className="flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20">
           <div data-aos="zoom-in" className="relative group">
-            <div className="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white bg-white shadow-md overflow-hidden z-20">
-              {/* <Image
-                src={dataHeader?.imageUrl || ""}
-                alt="Center Logo"
-                className="w-full h-full object-cover"
-              /> */}
-            </div>
+            <div className="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-white bg-white shadow-md overflow-hidden z-20"></div>
           </div>
 
           <div
@@ -53,14 +43,11 @@ export const ProfileHeader = ({ data }: any) => {
           </div>
 
           <div data-aos="zoom-in" className="flex gap-2 pb-2">
-            {/* <button className="bg-[#2E637C] hover:bg-[#1c5570] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-200 flex items-center gap-2 cursor-pointer"> */}
             <ButtonFollow
               id={dataHeader?.id}
               data={dataHeader}
               setData={setDataHeader}
             />
-            {/* <Plus size={18} /> متابعة */}
-            {/* </button> */}
             <ButtonSendChat id={dataHeader?.id} />
           </div>
         </div>

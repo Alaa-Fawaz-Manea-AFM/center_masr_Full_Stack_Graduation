@@ -468,7 +468,6 @@ export class HomeController {
         window.toggleSection = toggleSection;
         window.copyToClipboard = copyToClipboard;
 
-        // التنقل السلس
         document.querySelectorAll('.sidebar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();

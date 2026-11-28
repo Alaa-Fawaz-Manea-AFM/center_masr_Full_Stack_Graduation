@@ -1,96 +1,15 @@
 "use client";
-import { getDataAction } from "@/actions/users";
+import { DataActions } from "@/actions/users";
 import { formatDate } from "@/app/components/helper";
-import { DOMAIN } from "@/utils/constants";
-import axios from "axios";
 import { FileText, Lock, Download, FolderOpen } from "lucide-react";
 import { useEffect } from "react";
 
-//   {
-//     id: 1,
-//     title: "الأعداد المركبة",
-//     info: "32 MB . 45 صفحة",
-//     date: "02 - 03 - 2026",
-//     isLocked: false,
-//   },
-//   {
-//     id: 2,
-//     title: "الأعداد المركبة - خواص الوحدة التخيلية",
-//     info: "12 MB . 21 صفحة",
-//     date: "09 - 03 - 2026",
-//     isLocked: false,
-//   },
-//   {
-//     id: 3,
-//     title: "الصورة الجبرية للعدد المركب",
-//     info: "احجز الحصة لفتح المذكرة",
-//     date: "16 - 03 - 2026",
-//     isLocked: true,
-//   },
-// ];
-// const homework = [
-//   {
-//     id: 1,
-//     title: "واجب علي الأعداد المركبة",
-//     info: "32 MB . 22 صفحة",
-//     date: "12 - 04 - 2026",
-//     isLocked: false,
-//   },
-//   {
-//     id: 2,
-//     title: "الأعداد المركبة - خواص الوحدة التخيلية",
-//     info: "12 MB . 21 صفحة",
-//     date: "09 - 03 - 2026",
-//     isLocked: false,
-//   },
-//   {
-//     id: 3,
-//     title: "الصورة الجبرية للعدد المركب",
-//     info: "احجز الحصة لفتح المذكرة",
-//     date: "16 - 03 - 2026",
-//     isLocked: true,
-//   },
-// ];
-// const exam = [
-//   {
-//     id: 1,
-//     title: "امتحان علي الأعداد المركبة",
-//     info: "32 MB . 45 صفحة",
-//     date: "22 - 02 - 2026",
-//     isLocked: false,
-//   },
-//   {
-//     id: 2,
-//     title: "الأعداد المركبة - خواص الوحدة التخيلية",
-//     info: "12 MB . 21 صفحة",
-//     date: "09 - 03 - 2026",
-//     isLocked: true,
-//   },
-//   {
-//     id: 3,
-//     title: "الصورة الجبرية للعدد المركب",
-//     info: "احجز الحصة لفتح المذكرة",
-//     date: "16 - 03 - 2026",
-//     isLocked: true,
-//   },
-// ];
 const NotesTab = ({ cache, setCache, courseId, searchQuery, mode }: any) => {
   const data = cache[mode] || [];
 
   const handleGetLessons = async () => {
     if (cache[mode]?.length > 0) return;
-
-    // const token = localStorage.getItem("token");
-    // const res = await axios.get(`${DOMAIN}${mode}?id=${courseId}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-    const result = await getDataAction("get", `${mode}?id=${courseId}`);
-
-    console.log("====================================");
-    console.log("result 888", result);
-    console.log("====================================");
+    const result = await DataActions("get", `${mode}?id=${courseId}`);
     if (!result.success) {
       return;
     }
@@ -140,7 +59,6 @@ const NotesTab = ({ cache, setCache, courseId, searchQuery, mode }: any) => {
                 {mode === "exams"
                   ? formatDate(note.duration)
                   : formatDate(note.createdAt)}
-                {/* {note.isLocked ? "" : note.info + " ."} */}
               </p>
             </div>
           </div>

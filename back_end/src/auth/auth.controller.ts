@@ -39,9 +39,8 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { userId } = req.user;
-    return this.authService.logout(userId, res);
+  async logout(@Res({ passthrough: true }) res: Response) {
+    return this.authService.logout(res);
   }
 
   @Patch('change-password')

@@ -16,17 +16,6 @@ import { compare, hash } from 'bcrypt';
 import { CookieOptions, Response } from 'express';
 import { ChangePasswordDto } from '../validators/changePassword.dto';
 
-// const secureCookieOptions = (type = 'accessToken') => {
-//   if (process.env.NODE_ENV === 'development') return {};
-//   return {
-//     httpOnly: true,
-//     secure: true,
-//     sameSite: 'strict',
-//     path: '/',
-//     maxAge: type === 'refresh' ? 7 * 24 * 60 * 60 : 1 * 24 * 60 * 60,
-//   };
-// };
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -42,7 +31,7 @@ export class AuthService {
       secure: this.config.nodeEnv === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: +this.config.COOKIE_MAX_AGE1,
+      maxAge: this.config.COOKIE_MAX_AGE1,
     };
   };
 
@@ -76,26 +65,8 @@ export class AuthService {
         profileId: roleModel.id,
         role,
       };
-
       const accessToken = await this.JWTSign(payload);
-
-      // const refreshToken = await this.JWTSign(payload, true);
-
-      // const hashRefreshToken = await hash(refreshToken, 12);
-
-      // await prisma.refreshToken.upsert({
-      //   where: { userId },
-      //   update: { token: hashRefreshToken },
-      //   create: { userId, token: hashRefreshToken },
-      // });
-
       res.cookie('accessToken', accessToken, this.secureCookieOptions());
-      // res.cookie(
-      //   'refreshToken',
-      //   refreshToken,
-      //   this.secureCookieOptions('refresh'),
-      // );
-
       return sendResponsive(
         {
           id: userId,
@@ -105,10 +76,6 @@ export class AuthService {
           profileId: roleModel.id,
         },
         'Logged in successfully',
-        // {
-        //   accessToken,
-        //   refreshToken,
-        // },
       );
     });
   }
@@ -158,24 +125,7 @@ export class AuthService {
     };
 
     const accessToken = await this.JWTSign(payload);
-
-    // const refreshToken = await this.JWTSign(payload, true);
-
-    // const hashRefreshToken = await hash(refreshToken, 12);
-
-    // await this.prisma.refreshToken.upsert({
-    //   where: { userId },
-    //   update: { token: hashRefreshToken },
-    //   create: { userId, token: hashRefreshToken },
-    // });
-
     res.cookie('accessToken', accessToken, this.secureCookieOptions());
-    // res.cookie(
-    //   'refreshToken',
-    //   refreshToken,
-    //   this.secureCookieOptions('refresh'),
-    // );
-
     return sendResponsive(
       {
         id: userId,
@@ -185,20 +135,11 @@ export class AuthService {
         profileId,
       },
       'Logged in successfully',
-      // {
-      //   accessToken,
-      //   refreshToken,
-      // },
     );
   }
 
-  async logout(userId: string, res: Response) {
-    // await this.prisma.refreshToken.deleteMany({
-    //   where: { userId },
-    // });
-
+  async logout(res: Response) {
     res.clearCookie('accessToken');
-
     return sendResponsive(null, 'Logged out successfully');
   }
 

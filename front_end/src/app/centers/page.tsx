@@ -5,9 +5,8 @@ import CentersHeader from "../components/Center/CentersHeader";
 import CentersFilters from "../components/Center/CentersFilters";
 import CenterCard from "../components/Center/CenterCard";
 import { ListFilter } from "lucide-react";
-import axios from "axios";
-import { DOMAIN } from "@/utils/constants";
 import CenterCardSkeleton from "../components/Center/CenterCardSkeleton";
+import { DataActions } from "@/actions/users";
 
 export default function CentersPage() {
   const [search, setSearch] = useState("");
@@ -26,19 +25,14 @@ export default function CentersPage() {
   const [isFiltered, setIsFiltered] = useState(false);
 
   const handleGetCenters = useCallback(async () => {
-    try {
-      setLoading(true);
-      const {
-        data: { data },
-      } = await axios.get(`${DOMAIN}users?role=center`);
-      setAllCenters(data);
-    } catch (err) {
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const result = await DataActions("get", "users?role=center");
+    if (!result.success) return setLoading(false);
+    setAllCenters(result.data);
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     handleGetCenters();
   }, [handleGetCenters]);
 
